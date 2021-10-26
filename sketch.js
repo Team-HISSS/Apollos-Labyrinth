@@ -9,77 +9,27 @@ class GameObj {
   }
 }
 
-class explosionObj {
-  constructor(a) {
-    this.position = new p5.Vector(0, 0);
-    this.direction = new p5.Vector(0, 0);
-    this.size = random(1, 3);
-    if (a === 0) {
-        this.c1 = random(0, 250);
-    }
-    else {
-        this.c1 = random(100, 255);
-    }
-    if (a === 1) {
-        this.c2 = random(0, 250);
-    }
-    else {
-        this.c2 = random(100, 255);
-    }
-    if (a === 3) {
-        this.c3 = random(0, 250);
-    }
-    else {
-        this.c3 = random(100, 255);
-    }
-    this.timer = 0;
+class ArrowObj{
+  constructor(x,y, angle){
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
+    this.vec = new p5.Vector(0, -1);
+    this.vec.set(cos(this.angle), sin(this.angle));
   }
-  
-  //// EXPERIMENT direction of explosion /////
-  draw() {
-    fill(this.c1, this.c2, this.c3, this.timer);        // 4th value fader
-    noStroke();
-    ellipse(this.position.x, this.position.y, this.size, this.size);
-
-    this.position.x += this.direction.y*cos(this.direction.x);
-    this.position.y += this.direction.y*sin(this.direction.x);
-/*  this.position.add(this.direction); // random cartesian direction */
-    this.position.y += (90/(this.timer + 100));    //gravity
-    this.timer--;
+  draw(){
+    push();
+    translate(this.x, this.y);
+    rotate(this.angle); 
+    
+    image(arrowImg, this.x, this.y, 25, 25);
+    
+    rotate(-this.angle);
+    translate(-this.x, -this.y); 
+    pop();
   }
-}
-
-///// EXPERIMENT number of particles ////
-class fireworkObj {
-  constructor(a) {
-    this.position = new p5.Vector(200, 380);
-    this.direction = new p5.Vector(0, 0);
-    this.target = new p5.Vector(mouseX, mouseY);
-    this.step = 0;
-    this.explosions = [];
-    for (var i = 0; i < 200; i++) {
-        this.explosions.push(new explosionObj(a));
-    }
-  }
-  
-  //// EXPERIMENT direction of explosion /////
-  draw() {
-    fill(255, 255, 255);
-    noStroke();
-    ellipse(this.position.x, this.position.y, 2, 2);
-
-    this.position.add(this.direction);
-    if (dist(this.position.x, this.position.y, this.target.x, this.target.y) < 4) {
-        this.step = 2;
-        for (var i = 0; i < this.explosions.length; i++) {
-            this.explosions[i].position.set(this.target.x, this.target.y);
-
-            this.explosions[i].direction.set(random(0, 360), random(-0.3, 0.3));
-/*          this.explosions[i].direction.set(random(-0.3, 0.3),
-                random(-0.3, 0.3)); // cartesian (instead of polar) direction */
-            this.explosions[i].timer = 180;
-        }
-    }
+  fall(range){
+    
   }
 }
 
@@ -90,17 +40,17 @@ function mouseClicked() {
 
   //start game is pressed to start the game screen
   if (game.screen == 0) {
-    if (x >= 135 && x <= 275 && y >= 85 && y <= 120) {
+    if (x >= 10 && x <= 160 && y >= 345 && y <= 380) {
       game.screen = 2;
     }
     //rules are pressed to go to rules screen
-    if (x >= 140 && x <= 275 && y >= 345 && y <= 380) {
+    if (x >= 240 && x <= 390 && y >= 345 && y <= 380) {
       game.screen = 1;
     }
   }
   //back arrow in rules screen goes to main screen
   if (game.screen == 1) {
-    if (x >= 90 && x <= 160 && y >= 10 && y <= 52) {
+    if (x >= 160 && x <= 240 && y >= 350 && y <= 392) {
       game.screen = 0;
     }
   }
@@ -112,10 +62,16 @@ var startScreenGreen = 0;
 var firework; 
 let startSong, mapSong, bossSong;
 let parthenon; 
+var beamChoice = [0,0,0,0,0,0,0,0]; 
+var arrowFallingList = []; 
 
 function preload(){
   startSong = loadSound("./dark-forest.mp3", loaded);
-  parthenon = loadImage('parthenon.png');
+  parthenon = loadImage('temple.png');
+  sunImage = loadImage('sun.png');
+  sunBeam1 = loadImage('sunbeam1.png');
+  sunBeam2 = loadImage('sunbeam2.png');
+  arrowImg = loadImage('arrow.png'); 
 }
 
 function loaded(){
@@ -124,85 +80,137 @@ function loaded(){
 function setup() {
   createCanvas(400, 400);
   //startSong = loadSound('assets/dark-forest.mp3');
-  firework = [new fireworkObj(0), new fireworkObj(1), new fireworkObj(2), new fireworkObj(0)];
+  arrowFallingList = [new ArrowObj(random(25,375), -50, PI/2), new ArrowObj(random(25,375), -50, PI/2), new ArrowObj(random(25,375), -50, PI/2)]; 
 }
 
 function draw() {
   
-  background(255, 0 , 0);
   //starting screen for game
   if(game.screen == 0){
     
+    background(135,206,235);
+    
+    
+    
+    noStroke();
     //sky
     fill(135,206,235);
     rect(0,0, 400, 400);
     
-    //sun
-    fill(255,100, 0);
-    ellipse(0,0, 100, 100);
+    //makes sun beams flicker
+    push();
+    
+    translate(50,50);
+    
+    for(var i = 0; i < beamChoice.length; i++)
+    {
+      
+      if(beamChoice[i] <= 20)
+      {
+        image(sunBeam2, 0, 0, 100, 100);
+        beamChoice[i]++;
+      }
+    else{
+      image(sunBeam1, 0, 0, 100, 100);
+      beamChoice[i]++; 
+      if(beamChoice[i] >= 40){
+        beamChoice[i] = 0; 
+      }
+    }
+      rotate(PI/4);
+      //print(beamChoice[i]);
+    } 
+    pop();
+    
+    //draw sun
+    image(sunImage, -25, -25, 150, 150);
+    //draw parthenon
+    image(parthenon, 150, 200, 100, 100);
+    
+    
     
     //hill
     fill(0,51,0);
     ellipse(200, 400, 700, 200);
     
-    //pillars for parthenon
-    fill(255);
-    rect(25, 250, 10, 75);
-    rect(375, 250, 10, 75);
+    // for(var i = 0; i < arrowFallingList[i].length; i++){
+    //   arrowFallingList[i].draw();
+    //   arrowFallingList[i].fall(random()); 
+    // }
     
-    startScreenGreen += 0.5; 
+    startScreenGreen += 2; 
     if(startScreenGreen >= 165)
     {
       startScreenGreen = 0; 
-      //fireball explosions
     }
-    
-    
-    image(parthenon, 0,0);
-    
+
     //Title
-    fill(255, startScreenGreen, 0);
-    stroke(255, startScreenGreen, 0);
+    fill(255, 0, 0);
+    stroke(255,0, 0);
     text("Apollo's Labyrinth", 65, 50);
     
-    
-    //rect around start
-    text("START", 150, 115);
-    
-    //fill(238, 50, 51);
     textSize(20);
-    text("Click rules to learn to play:", 85, 335);
+    text("Click start to play or the rules:", 75, 335);
+    
+    
+    fill(255, startScreenGreen, 0);
+    stroke(255, startScreenGreen, 0);
+    //rect around start
     textSize(35);
-    text("RULES", 150, 375);
+    text("START", 25, 375);
+    text("RULES", 255, 375);
     
     noFill();
-    //rect around start
-    rect(140, 345, 135, 35);
     //rect around rules
-    rect(135, 85, 140, 35);
-
+    rect(10, 345, 150, 35);
+    //rect around start
+    rect(240, 345, 150, 35);
+    
     
   }
   
   //instructuions screen
   else if(game.screen == 1){
+    background(135,206,235);   
     
+    noStroke();
     //sky
     fill(135,206,235);
     rect(0,0, 400, 400);
     
-    //sun
-    fill(255,100, 0);
-    ellipse(0,0, 100, 100);
+    //makes sun beams flicker
+    push();
+    
+    translate(50,50);
+
+    for(var i = 0; i < beamChoice.length; i++)
+    {
+      
+      if(beamChoice[i] <= 20)
+      {
+        image(sunBeam2, 0, 0, 100, 100);
+        beamChoice[i]++;
+      }
+    else{
+      image(sunBeam1, 0, 0, 100, 100);
+      beamChoice[i]++; 
+      if(beamChoice[i] >= 40){
+        beamChoice[i] = 0; 
+      }
+    }
+      rotate(PI/4);
+      //print(beamChoice[i]);
+    } 
+    pop();
+    
+    //draw sun
+    image(sunImage, -25, -25, 150, 150);
+    //draw parthenon
+    image(parthenon, 150, 200, 100, 100);
     
     //hill
     fill(0,51,0);
     ellipse(200, 400, 700, 200);
-    
-    //pillars for parthenon
-    fill(255);
-    rect(25, 250, 10, 75);
-    rect(375, 250, 10, 75);
     
     fill(0);
     stroke(0);
@@ -216,27 +224,30 @@ function draw() {
     text("-Conquer each of the rooms.", 50, 160);
     text("Collect all 3 keys to win.", 50, 180);
     fill(255);
-    text("Click the arrow to go the to main menu.", 25, 350);
+    text("Click the arrow to go the to main menu.", 25, 340);
     
     noStroke();
     //back arrow
     textSize(50);
-    rect(90, 25, 35, 15);
-    triangle(90, 15, 90, 50, 60, 32);
+    rect(195, 362.5, 40, 15);
+    triangle(195, 355, 195, 385, 165, 370);
     stroke(255);
     noFill();
-    rect(55, 10, 80, 42);   
+    
+    //bounding box for back screen
+    rect(160, 350, 80, 42);
   }
   //game screen
   else if(game.screen == 2){
+    background(255);
     startSong.stop();
     stroke(0);
     fill(0);
     text("Game Screen" , 100, 200);
-    
   }
   //game over screen
   else if(game.screen == 3){
+    background(255);
     stroke(0);
     fill(0);
     text("Game Over" , 100, 200);
