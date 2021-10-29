@@ -1,3 +1,15 @@
+
+class GameObj {
+  //Game object class
+  constructor() {
+    //tilemap array
+    this.tileMap = [];
+    
+    //private members of game
+    this.screen = 0;
+  }
+}
+
 class knightObj{
   constructor(x, y, speed){
     this.speed = speed;
@@ -21,18 +33,6 @@ class knightObj{
     if (this.x < -width){
       this.x = 40;
     }
-  }
-}
-
-
-class GameObj {
-  //Game object class
-  constructor() {
-    //tilemap array
-    this.tileMap = [];
-    
-    //private members of game
-    this.screen = 0;
   }
 }
 
@@ -67,11 +67,11 @@ function mouseClicked() {
 
   //start game is pressed to start the game screen
   if (game.screen == 0) {
-    if (x >= 10 && x <= 160 && y >= 345 && y <= 380) {
+    if (x >= 20 && x <= 170 && y >= 345 && y <= 380) {
       game.screen = 2;
     }
     //rules are pressed to go to rules screen
-    if (x >= 240 && x <= 390 && y >= 345 && y <= 380) {
+    if (x >= 200 && x <= 380 && y >= 345 && y <= 380) {
       game.screen = 1;
     }
   }
@@ -92,11 +92,21 @@ let parthenon;
 var beamChoice = [0,0,0,0,0,0,0,0]; 
 var arrowFallingList = []; 
 
+var tileSquare = 0;
+var tileUneven = 0;
+var tileFancy = 0; 
+
 var spriteSheet;
 var runAnimation = [];
 var index = 0;
 var speed = 0.3;
 var knight;
+
+var doorway = 0;
+var door = 0; 
+var wall1 = 0;
+var wall2 = 0;
+var roof = 0;
 
 function preload(){
   startSong = loadSound("./dark-forest.mp3", loaded);
@@ -106,11 +116,13 @@ function preload(){
   sunBeam2 = loadImage('sunbeam2.png');
   arrowImg = loadImage('arrow.png');
   spriteSheet = loadImage('SpriteSheet.png');
+  architSheet = loadImage('Ancient_Greek_Architecture.png');
 }
 
 function loaded(){
   startSong.loop();
 }
+
 function setup() {
   createCanvas(400, 400);
   //startSong = loadSound('assets/dark-forest.mp3');
@@ -130,7 +142,27 @@ function setup() {
   runAnimation.push(get(355, 206, 40, 44));
   //imageMode(CENTER);
   knight = new knightObj(-200, 300, 0.3);
+  
+  //draw tiles
+  image(architSheet, 0, 0, 400, 400);
+  tileSquare = get(120, 180, 60, 60);
+  tileUneven = get(180, 180, 60, 60);
+  tileFancy = get(240, 220, 60, 60);
+  
+  //draw doors and walls
+  image(architSheet, 0, 0, 400, 400);
+  tileSquare = get(120, 180, 60, 60);
+  tileUneven = get(180, 180, 60, 60);
+  tileFancy = get(240, 220, 60, 60);
+  doorway = get(360, 180, 40, 40);
+  door = get(369, 367, 22, 30);
+  wall1 = get(20, 300, 60, 60);
+  roof = get(320, 45, 60, 55);
+  wall2 = get(200, 120, 40, 40);
+  
 }
+
+var step = 0;
 
 function draw() {
   
@@ -138,53 +170,26 @@ function draw() {
   if(game.screen == 0){
     
     background(135,206,235);
-
+    
     
     noStroke();
-    //sky
-    fill(135,206,235);
-    rect(0,0, 400, 400);
     
-    //makes sun beams flicker
-    push();
     
-    translate(50,50);
-    
-    for(var i = 0; i < beamChoice.length; i++)
-    {
-      
-      if(beamChoice[i] <= 20)
-      {
-        image(sunBeam2, 0, 0, 100, 100);
-        beamChoice[i]++;
-      }
-    else{
-      image(sunBeam1, 0, 0, 100, 100);
-      beamChoice[i]++; 
-      if(beamChoice[i] >= 40){
-        beamChoice[i] = 0; 
-      }
+    for(var i = 0; i < 20; i++){
+      for(var j = 0; j < 20; j++)
+        image(tileSquare, i * 20, j * 20, 20, 20);
     }
-      rotate(PI/4);
-      //print(beamChoice[i]);
-    } 
-    pop();
+    image(parthenon, 100, 60, 200, 200);
+    for(var i = 0; i < 20; i++){
+      image(wall1, i * 20, 0, 20, 20);
+      image(wall1, i * 20, 380, 20, 20);
+    }
+    for(var i = 0; i < 20; i++){
+      image(wall1, 0, i * 20, 20, 20);
+      image(wall1, 380, i * 20, 20, 20);
+    }
     
-    //draw sun
-    image(sunImage, -25, -25, 150, 150);
-    //draw parthenon
-    image(parthenon, 150, 200, 100, 100);
     
-    
-    
-    //hill
-    fill(0,51,0);
-    ellipse(200, 400, 700, 200);
-    
-    // for(var i = 0; i < arrowFallingList[i].length; i++){
-    //   arrowFallingList[i].draw();
-    //   arrowFallingList[i].fall(random()); 
-    // }
     
     startScreenGreen += 2; 
     if(startScreenGreen >= 165)
@@ -205,14 +210,15 @@ function draw() {
     stroke(255, startScreenGreen, 0);
     //rect around start
     textSize(35);
-    text("START", 25, 375);
-    text("RULES", 255, 375);
+    text("START", 35, 375);
+    text("RULES", 245, 375);
+    
     
     noFill();
     //rect around rules
-    rect(10, 345, 150, 35);
+    rect(20, 345, 150, 35);
     //rect around start
-    rect(240, 345, 150, 35);
+    rect(230, 345, 150, 35);
     
     
     //knight running
@@ -228,7 +234,18 @@ function draw() {
     //   index = index + speed;
     //   pop();
     // image(runAnimation[8],200, 200);
+        //draw parthenon
+    //image(parthenon, 150, 140, 100, 100);
     
+    //try to transition into darkness for game screen
+    // for(var i = 0; i < 100; i++){
+    //   image(doorway, 150 , 140 - step, step + 100, step + 100);
+    //   step += 0.01;
+    // }
+    
+    // image(doorway, 180 , 200, 40, 40);
+    // image(door, 188, 205, 23, 35);
+    // image(roof, 180, 160 , 40, 42);
   }
   
   //instructuions screen
@@ -279,7 +296,7 @@ function draw() {
     textSize(30);
     text("Rules", 150, 50);
     textSize(20);
-    text("-Move with WSAD.", 50, 80);
+    text("-Move with WASD.", 50, 80);
     text("-Shoot with the arrow keys.", 50, 100);
     text("-Avoid enemies and their projectiles.", 50, 120);
     text("-Kill all enemies in a room to move on.", 50, 140);
