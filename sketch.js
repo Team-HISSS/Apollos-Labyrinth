@@ -30,7 +30,7 @@ class harpyObj {
         this.index += this.speed;
         this.x += this.speed * 9;
         if (this.x > width) {
-            this.x = 40;
+            this.x = -10;
         }
     }
 }
@@ -346,7 +346,10 @@ function draw() {
         triangle(195, 355, 195, 385, 165, 370);
         stroke(255);
         noFill();
-
+        knight.run();
+        knight.runAnimate();
+        harpy.fly();
+        harpy.flyAnimate();
         //bounding box for back screen
         rect(160, 350, 80, 42);
     }
