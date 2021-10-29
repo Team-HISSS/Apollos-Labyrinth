@@ -1,3 +1,30 @@
+class knightObj{
+  constructor(x, y, speed){
+    this.speed = speed;
+    this.index = 0;
+    this.x = x;
+    this.y = y
+  }
+  run(){
+  var curIndex = floor(this.index%runAnimation.length);
+    push();
+    scale(-1, 1);
+  // translate(-200, 200);
+  // rotate(PI/2);
+  
+    image(runAnimation[curIndex],this.x, this.y);
+    pop();
+  }
+  runAnimate(){
+    this.index += this.speed;
+    this.x -= this.speed*5;
+    if (this.x < -width){
+      this.x = 40;
+    }
+  }
+}
+
+
 class GameObj {
   //Game object class
   constructor() {
@@ -65,13 +92,20 @@ let parthenon;
 var beamChoice = [0,0,0,0,0,0,0,0]; 
 var arrowFallingList = []; 
 
+var spriteSheet;
+var runAnimation = [];
+var index = 0;
+var speed = 0.3;
+var knight;
+
 function preload(){
   startSong = loadSound("./dark-forest.mp3", loaded);
   parthenon = loadImage('temple.png');
   sunImage = loadImage('sun.png');
   sunBeam1 = loadImage('sunbeam1.png');
   sunBeam2 = loadImage('sunbeam2.png');
-  arrowImg = loadImage('arrow.png'); 
+  arrowImg = loadImage('arrow.png');
+  spriteSheet = loadImage('SpriteSheet.png');
 }
 
 function loaded(){
@@ -81,6 +115,21 @@ function setup() {
   createCanvas(400, 400);
   //startSong = loadSound('assets/dark-forest.mp3');
   arrowFallingList = [new ArrowObj(random(25,375), -50, PI/2), new ArrowObj(random(25,375), -50, PI/2), new ArrowObj(random(25,375), -50, PI/2)]; 
+  
+  //knight animations
+  image(spriteSheet, 0, 200, 400, 50);
+  runAnimation.push(get(0, 206, 40, 44));
+  runAnimation.push(get(40, 206, 40, 44));
+  runAnimation.push(get(80, 206, 40, 44));
+  runAnimation.push(get(120, 206, 40, 44));
+  runAnimation.push(get(160, 206, 40, 44));
+  runAnimation.push(get(200, 206, 40, 44));
+  runAnimation.push(get(240, 206, 40, 44));
+  runAnimation.push(get(280, 206, 40, 44));
+  runAnimation.push(get(320, 206, 35, 43));
+  runAnimation.push(get(355, 206, 40, 44));
+  //imageMode(CENTER);
+  knight = new knightObj(-200, 300, 0.3);
 }
 
 function draw() {
@@ -89,8 +138,7 @@ function draw() {
   if(game.screen == 0){
     
     background(135,206,235);
-    
-    
+
     
     noStroke();
     //sky
@@ -166,6 +214,20 @@ function draw() {
     //rect around start
     rect(240, 345, 150, 35);
     
+    
+    //knight running
+    var curIndex = floor(index%runAnimation.length);
+    knight.run();
+    knight.runAnimate();
+    //   push();
+    //   scale(-1, 1);
+    //   // translate(-200, 200);
+    //   // rotate(PI/2);
+  
+    //   image(runAnimation[curIndex],-410, 200);
+    //   index = index + speed;
+    //   pop();
+    // image(runAnimation[8],200, 200);
     
   }
   
