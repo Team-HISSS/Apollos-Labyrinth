@@ -284,7 +284,7 @@ function draw() {
     text("-Avoid enemies and their projectiles.", 50, 120);
     text("-Kill all enemies in a room to move on.", 50, 140);
     text("-Conquer each of the rooms.", 50, 160);
-    text("Collect all 3 keys to win.", 50, 180);
+    text("-Collect all 3 keys to win.", 50, 180);
     fill(255);
     text("Click the arrow to go the to main menu.", 25, 340);
     
