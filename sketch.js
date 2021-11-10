@@ -68,6 +68,10 @@ function mouseClicked() {
   var beamChoice = [0, 0, 0, 0, 0, 0, 0, 0];
   var arrowFallingList = [];
   let archerRight = [];
+  let up = [];
+  let right = [];
+  let left = [];
+  let down = [];
   
   var tileSquare = 0;
   var tileUneven = 0;
@@ -157,7 +161,7 @@ function mouseClicked() {
     wall2 = get(200, 120, 40, 40);
   
     // Creates archer and moving names of authors
-    archer = new ArcherObj(archerRight, 'r', 100, 250);
+    archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
     game = new GameObj();
   
@@ -343,7 +347,7 @@ function mouseClicked() {
       }
       
       game.player.draw();
-      game.player.move();
+      game.player.checkMovement();
             
       for(var i = 0; i < game.harpies.length; i++){
         game.harpies[i].draw();
