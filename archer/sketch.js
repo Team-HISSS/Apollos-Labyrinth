@@ -3,22 +3,25 @@ let picture;
 
 function preload(){
   spritesheet = loadImage('spritesheet.png');
-  picture = loadImage('x.png');
+  picture = loadImage('archer_spriteSheet.png');
 }
 
 let walk_up, run_right, run, shoot;
+let archer;
 // let walkingAnimation = [];
 // let shootingAnimation = [];
 // let walkingUpAnimation = [];
 let up = [];
 let right = [];
+let down = [];
+let left = [];
 
 function setup() {
   
   captureAllAnimation();
   createCanvas(4032, 976);
-  walk_up = new Archer(up, 'w', 100, 100);
-  run_right = new Archer(right, 'r', 100, 100);
+  // walk_up = new Archer(up, 'w', 100, 100);
+  archer = new Archer(100, 100);
   // walk = new Archer(walkingAnimation, 'w', 100, 100);
   // shoot = new Archer(shootingAnimation, 's', 100, 300);
   // run = new Archer(walkingAnimation, 'r', 100, 200);
@@ -51,8 +54,10 @@ function draw() {
   // grid();
   // walk_up.draw();
   // walk.move_up();
-  run_right.draw();
-  run_right.move();
-  
+  archer.draw();
+  archer.checkMovement();
+  // archer.run_right();
+  // archer.run_up();
+  // archer.run_left();
   
 }
