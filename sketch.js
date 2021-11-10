@@ -21,32 +21,7 @@ class GameObj {
     }
 }
 
-// Creates Harpy Object class which is used to create and move the harpy
-class harpyObj {
-    constructor(x, y, speed) {
-        this.speed = speed;
-        this.index = 0;
-        this.x = x;
-        this.y = y
-    }
-    fly() {
-        var curIndex = floor(this.index % flyHarpy.length);
-        push();
-        // scale(-1, 1);
-        // translate(-200, 200);
-        // rotate(PI/2);
 
-        image(flyHarpy[curIndex], this.x, this.y);
-        pop();
-    }
-    flyAnimate() {
-        this.index += this.speed;
-        this.x += this.speed * 9;
-        if (this.x > width) {
-            this.x = -10;
-        }
-    }
-}
 var harpySprite;
 var flyHarpy = [];
 var harpy;
@@ -180,16 +155,18 @@ let name;
 
 // Preloads the images and mp3 file for the game
 function preload() {
-    startSong = loadSound("./dark-forest.mp3", loaded);
-    parthenon = loadImage('temple.png');
-    sunImage = loadImage('sun.png');
-    sunBeam1 = loadImage('sunbeam1.png');
-    sunBeam2 = loadImage('sunbeam2.png');
-    arrowImg = loadImage('arrow.png');
-    spriteSheet = loadImage('SpriteSheet.png');
-    architSheet = loadImage('Ancient_Greek_Architecture.png');
-    harpySprite = loadImage('harpy_sprite.png');
-    archerSprite = loadImage('archer_spriteSheet.png');
+    startSong = loadSound("./resources/dark-forest.mp3", loaded);
+    parthenon = loadImage('/resources/temple.png');
+    sunImage = loadImage('/resources/sun.png');
+    sunBeam1 = loadImage('/resources/sunbeam1.png');
+    sunBeam2 = loadImage('/resources/sunbeam2.png');
+    arrowImg = loadImage('/resources/arrow.png');
+    architSheet = loadImage('/resources/Ancient_Greek_Architecture.png');
+    
+    // Sprite sheets
+    harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
+    archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
+    spriteSheet = loadImage('/resources/sprites/SpriteSheet.png');
 }
 
 // Puts the song on loop, so that the music plays throughout the game
