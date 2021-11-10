@@ -12,29 +12,7 @@ var harpySprite;
 var flyHarpy = [];
 var harpy;
   
-// Creates Name Object class which is used to display a moving 
-// sequence of names of the authors of the game
-class NameObj{
-    constructor(x, y){
-    this.x = x;
-    this.y = y;
-    }
-    draw(){
-    push();
-        textSize(18);
-        fill(0);  
-        stroke(0);
-        text("By Skyler Smith, Shlok Aggarwal, Sarang Rajeev", this.x, this.y)
-    pop();
-    this.move();
-    }
-    move(){
-    this.x -= 1;
-    if(this.x < -400){
-        this.x = 400;
-    }
-    }
-}
+
 
   //if mouse is clicked in main menu
 function mouseClicked() {
@@ -83,7 +61,10 @@ function mouseClicked() {
   var speed = 0.3;
   var knight;
   let archer;
-  
+
+  var snakeSheet; 
+  var snakeAnimations;
+
   var doorway = 0;
   var door = 0;
   var wall1 = 0;
@@ -104,6 +85,8 @@ function mouseClicked() {
     spriteSheet = loadImage('/resources/sprites/SpriteSheet.png');
     harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
+    snakeSheet = loadImage("snakeSheet.png");
+
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -127,7 +110,7 @@ function mouseClicked() {
     flyHarpy.push(get(5, 340, 65, 45));
     flyHarpy.push(get(70, 340, 70, 45));
     flyHarpy.push(get(140, 340, 50, 45));
-    harpy = new HarpyObj(200, 50, 0.1);
+    harpy = new HarpyObj(200, 50);
     clear();
     image(spriteSheet, 0, 200, 400, 50);
     runAnimation.push(get(0, 206, 40, 44));
@@ -159,7 +142,18 @@ function mouseClicked() {
     wall1 = get(20, 300, 60, 60);
     roof = get(320, 45, 60, 55);
     wall2 = get(200, 120, 40, 40);
+
+    image(snakeSheet, 0, 0, 400, 400);
   
+    //3 horizontal animations
+    snake_1 = get(10, 130, 20, 35);
+    snake_2 = get(47.5, 130, 20, 35);
+    snake_3 = get(87.5, 130, 20, 35);
+    //2 vertical animations
+    snake_5 = get(50, 360, 20, 40);
+    snake_6 = get(90, 360 , 20 ,40);
+    snakeAnimations = [snake_1, snake_2, snake_3, snake_5, snake_6];
+
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
@@ -167,6 +161,7 @@ function mouseClicked() {
   
   //initialize tilemap
   game.initializeTileMap();
+  
   }
   
   function createWalls(){
@@ -361,10 +356,10 @@ function mouseClicked() {
       for(var i = 0; i < game.doors.length; i++){
         game.doors[i].draw();
       }
-      
-      
-      
+
+      game.map.printMap();
     }
+
     //game over screen
     else if (game.screen == 3) {
         background(255);
@@ -374,3 +369,28 @@ function mouseClicked() {
     }
   
   }
+
+
+  function move(){
+    if(keyIsDown(UP_ARROW)){
+    xPos += -speed;
+  }
+   if(keyIsDown(DOWN_ARROW)){
+    xPos += speed;
+  }
+  if(keyIsDown(LEFT_ARROW)){
+    yPos += -speed;
+  }
+   if(keyIsDown(RIGHT_ARROW)){
+    yPos += speed;
+  }
+}
+
+function rotateAround(){
+  if(mouseX>width/2){
+    angle += 0.01;
+  }
+  if(mouseX< width/2){
+    angle += 0.001;
+  }
+}
