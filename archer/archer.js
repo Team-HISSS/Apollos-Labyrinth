@@ -11,7 +11,7 @@ let KEY_A = 65;
 let KEY_D = 68;
 let KEY_S = 83;
 
-// Class for the archer
+// Class for the archers
 class Archer{
   constructor(x, y){
     this.action = ' ';
@@ -22,6 +22,7 @@ class Archer{
     this.h = 100;
     this.x = x;
     this.y = y;
+    this.size = 100;
     this.index = 0;
     // this.size = this.animation.length;
     this.flip = 1;
@@ -85,22 +86,25 @@ class Archer{
     this.chooseAction();
     
     // Run
-    if(this.action == 'r'){
+    if(this.action == ' '){
+      image(up[0], this.x, this.y, this.size, this.size)
+    }
+    else if(this.action == 'r'){
       if(this.animationChoice == 'rr'){
         let index = floor(this.index) % right.length;
-        image(right[index], this.x, this.y, 200, 200);  
+        image(right[index], this.x, this.y, this.size, this.size);  
       }
       else if(this.animationChoice == 'ru'){
         let index = floor(this.index) % up.length;
-        image(up[index], this.x, this.y, 200, 200);  
+        image(up[index], this.x, this.y, this.size, this.size);  
       }
       else if(this.animationChoice == 'rd'){
         let index = floor(this.index) % down.length;
-        image(down[index], this.x, this.y, 200, 200);  
+        image(down[index], this.x, this.y, this.size, this.size);  
       }
       else if(this.animationChoice == 'rl'){
         let index = floor(this.index) % left.length;
-        image(left[index], this.x, this.y, 200, 200);  
+        image(left[index], this.x, this.y, this.size, this.size);  
       }
     }
     
