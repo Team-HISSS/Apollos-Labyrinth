@@ -8,101 +8,35 @@
 // DATE:    October 29, 2021
 
 // Link to demo: https://preview.p5js.org/sarang_r/present/UL5m8Ulab
-
-// Creates the Game Object class containing the tilemap
-class GameObj {
-    //Game object class
-    constructor() {
-        //tilemap array
-        this.tileMap = [];
-
-        //private members of game
-        this.screen = 0;
-    }
-}
-
-
 var harpySprite;
 var flyHarpy = [];
 var harpy;
-
-// Creates Knight Object class which is used to create and move the knight
-class knightObj {
-    constructor(x, y, speed) {
-        this.speed = speed;
-        this.index = 0;
-        this.x = x;
-        this.y = y
-    }
-    run() {
-        var curIndex = floor(this.index % runAnimation.length);
-        push();
-        scale(-1, 1);
-        // translate(-200, 200);
-        // rotate(PI/2);
-
-        image(runAnimation[curIndex], this.x, this.y);
-        pop();
-    }
-    runAnimate() {
-        this.index += this.speed;
-        this.x -= this.speed * 5;
-        if (this.x < -width) {
-            this.x = 100;
-        }
-    }
-}
-
+  
 // Creates Name Object class which is used to display a moving 
 // sequence of names of the authors of the game
 class NameObj{
-  constructor(x, y){
+    constructor(x, y){
     this.x = x;
     this.y = y;
-  }
-  draw(){
+    }
+    draw(){
     push();
-      textSize(18);
-      fill(0);  
-      stroke(0);
-      text("By Skyler Smith, Shlok Aggarwal, Sarang Rajeev", this.x, this.y)
+        textSize(18);
+        fill(0);  
+        stroke(0);
+        text("By Skyler Smith, Shlok Aggarwal, Sarang Rajeev", this.x, this.y)
     pop();
     this.move();
-  }
-  move(){
+    }
+    move(){
     this.x -= 1;
     if(this.x < -400){
-      this.x = 400;
+        this.x = 400;
     }
-  }
-}
-
-// Creates Arrow Object class which is used to create and move the arrow
-class ArrowObj {
-    constructor(x, y, angle) {
-        this.x = x;
-        this.y = y;
-        this.angle = angle;
-        this.vec = new p5.Vector(0, -1);
-        this.vec.set(cos(this.angle), sin(this.angle));
-    }
-    draw() {
-        push();
-        translate(this.x, this.y);
-        rotate(this.angle);
-
-        image(arrowImg, this.x, this.y, 25, 25);
-
-        rotate(-this.angle);
-        translate(-this.x, -this.y);
-        pop();
-    }
-    fall(range) {
-
     }
 }
 
-//if mouse is clicked in main menu
+  //if mouse is clicked in main menu
 function mouseClicked() {
     var x = mouseX;
     var y = mouseY;
@@ -124,37 +58,37 @@ function mouseClicked() {
         }
     }
 }
-
-//public variables
-var game = new GameObj();
-var startScreenGreen = 0;
-var firework;
-let startSong, mapSong, bossSong;
-let parthenon;
-var beamChoice = [0, 0, 0, 0, 0, 0, 0, 0];
-var arrowFallingList = [];
-let archerRight = [];
-
-var tileSquare = 0;
-var tileUneven = 0;
-var tileFancy = 0;
-
-var spriteSheet;
-var runAnimation = [];
-var index = 0;
-var speed = 0.3;
-var knight;
-let archer;
-
-var doorway = 0;
-var door = 0;
-var wall1 = 0;
-var wall2 = 0;
-var roof = 0;
-let name;
-
-// Preloads the images and mp3 file for the game
-function preload() {
+  
+  //public variables
+  var game;
+  var startScreenGreen = 0;
+  var firework;
+  let startSong, mapSong, bossSong;
+  let parthenon;
+  var beamChoice = [0, 0, 0, 0, 0, 0, 0, 0];
+  var arrowFallingList = [];
+  let archerRight = [];
+  
+  var tileSquare = 0;
+  var tileUneven = 0;
+  var tileFancy = 0;
+  
+  var spriteSheet;
+  var runAnimation = [];
+  var index = 0;
+  var speed = 0.3;
+  var knight;
+  let archer;
+  
+  var doorway = 0;
+  var door = 0;
+  var wall1 = 0;
+  var wall2 = 0;
+  var roof = 0;
+  let name;
+  
+  // Preloads the images and mp3 file for the game
+  function preload() {
     startSong = loadSound("./resources/dark-forest.mp3", loaded);
     parthenon = loadImage('/resources/temple.png');
     sunImage = loadImage('/resources/sun.png');
@@ -162,20 +96,19 @@ function preload() {
     sunBeam2 = loadImage('/resources/sunbeam2.png');
     arrowImg = loadImage('/resources/arrow.png');
     architSheet = loadImage('/resources/Ancient_Greek_Architecture.png');
-    
-    // Sprite sheets
+
+    spriteSheet = loadImage('/resources/sprites/SpriteSheet.png');
     harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
-    spriteSheet = loadImage('/resources/sprites/SpriteSheet.png');
-}
-
-// Puts the song on loop, so that the music plays throughout the game
-function loaded() {
+  }
+  
+  // Puts the song on loop, so that the music plays throughout the game
+  function loaded() {
     startSong.loop();
-}
-
-// Captures all the pictures 
-function setup() {
+  }
+  
+  // Captures all the pictures 
+  function setup() {
     captureAllAnimation();
     createCanvas(400, 400);
     //startSong = loadSound('assets/dark-forest.mp3');
@@ -183,14 +116,14 @@ function setup() {
     arrowFallingList = [new ArrowObj(random(25, 375), -50, PI / 2), 
                         new ArrowObj(random(25, 375), -50, PI / 2), 
                         new ArrowObj(random(25, 375), -50, PI / 2)];
-
+  
     //knight animations
     background(0, 220, 0, 0);
     image(harpySprite, 0, 200);
     flyHarpy.push(get(5, 340, 65, 45));
     flyHarpy.push(get(70, 340, 70, 45));
     flyHarpy.push(get(140, 340, 50, 45));
-    harpy = new harpyObj(200, 50, 0.1);
+    harpy = new HarpyObj(200, 50, 0.1);
     clear();
     image(spriteSheet, 0, 200, 400, 50);
     runAnimation.push(get(0, 206, 40, 44));
@@ -205,13 +138,13 @@ function setup() {
     runAnimation.push(get(355, 206, 40, 44));
     //imageMode(CENTER);
     knight = new knightObj(-100, 300, 0.3);
-
+  
     //draw tiles
     image(architSheet, 0, 0, 400, 400);
     tileSquare = get(120, 180, 60, 60);
     tileUneven = get(180, 180, 60, 60);
     tileFancy = get(240, 220, 60, 60);
-
+  
     //draw doors and walls
     image(architSheet, 0, 0, 400, 400);
     tileSquare = get(120, 180, 60, 60);
@@ -224,11 +157,15 @@ function setup() {
     wall2 = get(200, 120, 40, 40);
   
     // Creates archer and moving names of authors
-    archer = new Archer(archerRight, 'r', 100, 250);
+    archer = new ArcherObj(archerRight, 'r', 100, 250);
     name = new NameObj(35, 395);
-}
-
-function createWalls(){
+    game = new GameObj();
+  
+  //initialize tilemap
+  game.initializeTileMap();
+  }
+  
+  function createWalls(){
   for (var i = 0; i < 20; i++) {
       for (var j = 0; j < 20; j++)
           image(tileSquare, i * 20, j * 20, 20, 20);
@@ -242,41 +179,41 @@ function createWalls(){
       image(wall1, 0, i * 20, 20, 20);
       image(wall1, 380, i * 20, 20, 20);
   }
-}
-
-var step = 0;
-
-function draw() {
-
+  }
+  
+  var step = 0;
+  
+  function draw() {
+  
     //   //starting screen for game
     if (game.screen == 0) {
-
+  
         background(135, 206, 235);
         noStroke();
-
+  
         createWalls();
-
+  
         startScreenGreen += 2;
         if (startScreenGreen >= 165) {
             startScreenGreen = 0;
         }
-
+  
         //Title
         fill(255, 0, 0);
         stroke(255, 0, 0);
         text("Apollo's Labyrinth", 65, 50);
-
+  
         textSize(20);
         text("Click start to play or the rules:", 75, 335);
-
-
+  
+  
         fill(255, startScreenGreen, 0);
         stroke(255, startScreenGreen, 0);
         //rect around start
         textSize(35);
         text("START", 35, 375);
         text("RULES", 245, 375);
-
+  
         push();
           
         pop();
@@ -285,11 +222,11 @@ function draw() {
         rect(20, 345, 150, 35);
         //rect around start
         rect(230, 345, 150, 35);
-
-
+  
+  
         // knight and archer running
         // harpy flying
-
+  
         knight.run();
         knight.runAnimate();
         harpy.fly();
@@ -301,41 +238,41 @@ function draw() {
         //   scale(-1, 1);
         //   // translate(-200, 200);
         //   // rotate(PI/2);
-
+  
         //   image(runAnimation[curIndex],-410, 200);
         //   index = index + speed;
         //   pop();
         // image(runAnimation[8],200, 200);
         //draw parthenon
         //image(parthenon, 150, 140, 100, 100);
-
+  
         //try to transition into darkness for game screen
         // for(var i = 0; i < 100; i++){
         //   image(doorway, 150 , 140 - step, step + 100, step + 100);
         //   step += 0.01;
         // }
-
+  
         // image(doorway, 180 , 200, 40, 40);
         // image(door, 188, 205, 23, 35);
         // image(roof, 180, 160 , 40, 42);
     }
-
-    //instructuions screen
+  
+    //instructions screen
     else if (game.screen == 1) {
         background(135, 206, 235);
-
+  
         noStroke();
         //sky
         fill(135, 206, 235);
         rect(0, 0, 400, 400);
-
+  
         //makes sun beams flicker
         push();
-
+  
         translate(50, 50);
-
+  
         for (var i = 0; i < beamChoice.length; i++) {
-
+  
             if (beamChoice[i] <= 20) {
                 image(sunBeam2, 0, 0, 100, 100);
                 beamChoice[i]++;
@@ -351,16 +288,16 @@ function draw() {
             //print(beamChoice[i]);
         }
         pop();
-
+  
         //draw sun
         image(sunImage, -25, -25, 150, 150);
         //draw parthenon
         image(parthenon, 150, 200, 100, 100);
-
+  
         //hill
         fill(0, 51, 0);
         ellipse(200, 400, 700, 200);
-
+  
         fill(0);
         stroke(0);
         textSize(30);
@@ -374,7 +311,7 @@ function draw() {
         text("-Collect all 3 keys to win.", 50, 180);
         fill(255);
         text("Click the arrow to go the to main menu.", 25, 340);
-
+  
         noStroke();
         //back arrow
         textSize(50);
@@ -398,6 +335,31 @@ function draw() {
         stroke(0);
         fill(0);
         text("Game Screen", 100, 200);
+      
+      for (var i = 0; i < 20; i++) {
+        for (var j = 0; j < 20; j++){
+          image(tileSquare, i * 20, j * 20, 20, 20);
+        }
+      }
+      
+      game.player.draw();
+      game.player.move();
+            
+      for(var i = 0; i < game.harpies.length; i++){
+        game.harpies[i].draw();
+      }
+      for(var i = 0; i < game.walls.length; i++){
+        game.walls[i].draw();
+      }
+      for(var i = 0; i < game.doors.length; i++){
+        game.doors[i].draw();
+      }
+      for(var i = 0; i < game.doors.length; i++){
+        game.doors[i].draw();
+      }
+      
+      
+      
     }
     //game over screen
     else if (game.screen == 3) {
@@ -406,5 +368,5 @@ function draw() {
         fill(0);
         text("Game Over", 100, 200);
     }
-
-}
+  
+  }

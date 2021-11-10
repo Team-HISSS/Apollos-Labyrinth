@@ -1,13 +1,13 @@
 // Speed and Frame Rates of the archer in different actions
-let walkSpeed = 0.3;
-let walkFrameRate = 0.3;
-let runSpeed = 1;
-let runFrameRate = 1;
-let shootSpeed = 0;
-let shootFrameRate = 0.3;
+let archerWalkSpeed = 0.3;
+let archerWalkFrameRate = 0.3;
+let archerRunSpeed = 1;
+let archerRunFrameRate = 1;
+let archerShootSpeed = 0;
+let archerShootFrameRate = 0.3;
 
 // Class for the archer
-class Archer{
+class ArcherObj{
   constructor(animation, action, x, y){
     this.action = action;
     this.chooseAction();
@@ -26,18 +26,18 @@ class Archer{
   chooseAction(){
     switch(this.action){
       case 'w':
-        this.speed = walkSpeed;
-        this.frameRate = walkFrameRate;
+        this.speed = archerWalkSpeed;
+        this.frameRate = archerWalkFrameRate;
       break;
       
       case 'r':
-        this.speed = runSpeed;
-        this.frameRate = runFrameRate;
+        this.speed = archerRunSpeed;
+        this.frameRate = archerRunFrameRate;
       break;
       
       case 's':
-        this.speed = shootSpeed;
-        this.frameRate = shootFrameRate;
+        this.speed = archerShootSpeed;
+        this.frameRate = archerShootFrameRate;
       break;
     }
   }

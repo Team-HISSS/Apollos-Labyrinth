@@ -1,11 +1,18 @@
 // Creates Harpy Object class which is used to create and move the harpy
-class harpyObj {
+class HarpyObj {
     constructor(x, y, speed) {
         this.speed = speed;
         this.index = 0;
         this.x = x;
-        this.y = y
+        this.y = y;
+        this.curIndex = 0;
     }
+    
+    draw(){
+        
+        image(flyHarpy[this.curIndex], this.x, this.y);
+    }
+
     fly() {
         var curIndex = floor(this.index % flyHarpy.length);
         push();
