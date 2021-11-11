@@ -308,8 +308,8 @@ function mouseClicked() {
           image(tileSquare, game.tiles[i].x, game.tiles[i].y, 20, 20);
       }
       
-      // game.player.draw();
-      // game.player.checkMovement();
+      game.player.draw();
+      game.player.checkMovement();
             
       for(var i = 0; i < game.harpies.length; i++){
         game.harpies[i].draw();
