@@ -17,7 +17,7 @@ class GameObj {
         "w                  w",
         "w                  w",
         "w                  w",
-        "w                  w",
+        "w        s         w",
         "w                  w",
         "w         h        w",
         "w                  w",
@@ -41,7 +41,7 @@ class GameObj {
   
     //nested loop through the tile map
     for (var i = 0; i < 20; i++) {
-      for (var j = 0; j < 60; j++) {
+      for (var j = 0; j < 20; j++) {
         //determines which character to draw from tilemap
         switch (this.tileMap[i][j]) {
           case "w":
@@ -52,10 +52,13 @@ class GameObj {
             break;
   
           case "h":
-            this.harpies.push(new HarpyObj(j * 20, i * 20, this.enemyNum));
+            this.harpies.push(new HarpyObj(j * 20, i * 20));
             break;
           case "d":
-            this.doors.push(new DoorObj(j * 20, i * 20, this.enemyNum));
+            this.doors.push(new DoorObj(j * 20, i * 20));
+            break;
+          case "d":
+            this.snakes.push(new SnakeObj(j * 20, i * 20));
             break;
         }
       }

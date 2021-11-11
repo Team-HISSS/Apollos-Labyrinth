@@ -85,7 +85,7 @@ function mouseClicked() {
     spriteSheet = loadImage('/resources/sprites/SpriteSheet.png');
     harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
-    snakeSheet = loadImage("snakeSheet.png");
+    snakeSheet = loadImage('/resources/snakeSheet.png');
 
   }
   
@@ -357,7 +357,7 @@ function mouseClicked() {
         game.doors[i].draw();
       }
 
-      game.map.printMap();
+      //game.map.printMap();
     }
 
     //game over screen

@@ -2,8 +2,7 @@ class RoomObj{
   constructor(x,y, neighbors){
     this.x = x; 
     this.y = y; 
-    this.neighbors = neighbors; 
-    this.canEnter = canEnter;
+    this.neighbors = neighbors;
     this.grid = [
       "wwwwwwwww  wwwwwwwww",
       "w                  w",
