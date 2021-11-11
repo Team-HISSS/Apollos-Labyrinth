@@ -13,7 +13,9 @@ let KEY_S = 83;
 
 // Class for the archer
 class ArcherObj{
-  constructor(animation, action, x, y){
+  constructor(animation, action, x, y, rx, ry){
+    this.rx = rx;
+    this.ry = ry;
     this.action = ' ';
     // this.chooseAction();
     // this.animation = animation;
@@ -74,7 +76,10 @@ class ArcherObj{
   // Draws the frame
   draw(){
     this.chooseAction();
-    
+    push();
+    var roomOffsetX = game.player.rx * 400;
+    var roomOffsetY = game.player.ry *400;
+    translate(roomOffsetX, roomOffsetY)
     // Run
     if(this.action == ' '){
       image(up[0], this.x, this.y, this.size, this.size)
@@ -97,7 +102,7 @@ class ArcherObj{
         image(left[index], this.x, this.y, this.size, this.size);  
       }
     }
-    
+    pop();
   }
 
   // Moves the archer relative to the canvas

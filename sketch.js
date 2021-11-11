@@ -230,6 +230,7 @@ function mouseClicked() {
   
     //instructions screen
     else if (game.screen == 1) {
+
         background(135, 206, 235);
   
         noStroke();
@@ -301,6 +302,10 @@ function mouseClicked() {
     }
     //game screen
     else if (game.screen == 2) {
+      // push()
+      // var roomOffsetX = game.player.rx * 400 + 200;
+      // var roomOffsetY = game.player.ry *400 + 200;
+      // translate(roomOffsetX, roomOffsetY)
         background(255);
         startSong.stop();
       
@@ -322,9 +327,9 @@ function mouseClicked() {
         game.doors[i].draw();
       }
 
-      //game.map.printMap();
+      game.map.printMap();
+      // pop();
     }
-
     //game over screen
     else if (game.screen == 3) {
         background(255);
