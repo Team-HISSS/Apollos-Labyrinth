@@ -40,6 +40,9 @@ class Tilemap{
 
     this.generateRooms();
     
+    //hardcode starting players location
+    this.rooms[0].grid[7] = "w        p         w"
+    
   }
 
   generateMap(x,y, left){
@@ -154,19 +157,19 @@ class Tilemap{
             }
           }
           //down neighbor
-          else if(y + 1 < this.height){
+          if(y + 1 < this.height){
             if(this.map[x][y + 1] == 1){
               this.neighbors[k][1] = 1; 
             }
           }
           //left neighbor
-          else if(x - 1 >= 0){
+          if(x - 1 >= 0){
             if(this.map[x - 1][y] == 1){
               this.neighbors[k][2] = 1; 
             }
           }
           //right neighbor
-          else if(x + 1 > this.width){
+          if(x + 1 < this.width){
             if(this.map[x + 1][y] == 1){
               this.neighbors[k][3] = 1; 
             }
@@ -182,7 +185,7 @@ class Tilemap{
       this.rooms[i] = new RoomObj(this.neighbors[i][4], this.neighbors[i][5], [this.neighbors[i][0], this.neighbors[i][1], this.neighbors[i][2], this.neighbors[i][3]]);
     }
   }
-  
+
   //return array of locations of all end rooms
   findEndRooms(){
     var endRoomsList = [];

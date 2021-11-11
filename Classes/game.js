@@ -9,9 +9,10 @@ class GameObj {
       this.harpies = [];
       this.doors = [];
       this.snakes = [];
+      this.tiles = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(6,6, int(random(4,7)));
+      this.tm = new Tilemap(6,6, int(random(10,20)));
       this.currRoom = 0;
     }
     //initially draw tile map onto canvas
@@ -24,7 +25,7 @@ class GameObj {
         for(var j = 0; j < this.tm.rooms[k].grid[0].length; j++){
           switch (this.tm.rooms[k].grid[i][j]) {
             case "w":              
-              this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetX + 20 * i));
+              this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
               this.player = (new ArcherObj(archerRight, 'r', roomOffsetX + j * 20, roomOffsetY + i * 20));
@@ -39,6 +40,9 @@ class GameObj {
               this.snakes.push(new SnakeObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
               break;
           }
+          if(this.tm.rooms[k].grid[i][j] != "w" && this.tm.rooms[k].grid[i][j] != "d")
+          //square tile floor 
+          this.tiles.push(new p5.Vector(roomOffsetX + j * 20, roomOffsetY + i * 20));
         } 
       }
     }

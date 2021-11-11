@@ -114,7 +114,7 @@ function mouseClicked() {
   // Captures all the pictures 
   function setup() {
     captureAllAnimation();
-    createCanvas(400, 400);
+    createCanvas(3600, 3600);
     //startSong = loadSound('assets/dark-forest.mp3');
   
     //knight animations
@@ -303,14 +303,9 @@ function mouseClicked() {
     else if (game.screen == 2) {
         background(255);
         startSong.stop();
-        stroke(0);
-        fill(0);
-        text("Game Screen", 100, 200);
       
-      for (var i = 0; i < 20; i++) {
-        for (var j = 0; j < 20; j++){
-          image(tileSquare, i * 20, j * 20, 20, 20);
-        }
+      for (var i = 0; i < game.tiles.length; i++) {
+          image(tileSquare, game.tiles[i].x, game.tiles[i].y, 20, 20);
       }
       
       // game.player.draw();
