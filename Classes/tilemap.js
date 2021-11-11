@@ -3,12 +3,6 @@ class Tilemap{
     //construct room grid
     this.width = width;
     this.height = height; 
-    // for(var i = 0; i < this.width; i++){
-    //   this.map.push([]);
-    //   for(var j = 0; j < this.height; j++){
-    //     this.map.push(0);
-    //   }
-    // }
     
     this.map = new Array(this.width);
     for(var i = 0; i < this.width; i++){
@@ -25,17 +19,11 @@ class Tilemap{
     //print("num rooms: " + str(numRooms));
     this.numRooms = numRooms;  
     //generate random map 1s and 0s
-    this.generateMap(int(this.width / 2), int(this.height / 2), this.numRooms);
-    //print("big length: " + str(this.map.length));
-     //print("small length: " + str(this.map[0].length));
-    // for(var x = 0; i < this.map.length; i++){
-    //   for(var y = 0; y < this.map[0].length; y++){
-    //     if(this.map[x][y] != 1){
-    //       this.map[x][y] = 0;
-    //       print("HERE")
-    //     }
-    //   }
-    // }
+    this.startX = int(this.width / 2);
+    this.startY = int(this.height / 2);
+
+    this.generateMap(this.startX, this.startY, this.numRooms);
+
     //find neighbors of 1s and 0s
     
     //neighbors = rooms x neighbors array
@@ -43,14 +31,6 @@ class Tilemap{
     for(var i = 0; i < this.neighbors.length; i++){
       this.neighbors[i] = [0,0,0,0,0,0];
     }
-    
-    // for(var i = 0; i < this.neighbors.length; i++){
-    //   for(var j = 0; j < this.neighbors[0].length; j++)
-    //     {
-    //       //print(this.neighbors[i][j]);
-    //     }
-    // }
-    
 
     //initialize neighbors list
     this.getNeighbors();
@@ -202,12 +182,17 @@ class Tilemap{
       this.rooms[i] = new RoomObj(this.neighbors[i][4], this.neighbors[i][5], [this.neighbors[i][0], this.neighbors[i][1], this.neighbors[i][2], this.neighbors[i][3]]);
     }
   }
-
-
-  intializeTileMap(){
+  
+  //return array of locations of all end rooms
+  findEndRooms(){
+    var endRoomsList = [];
     for(var i = 0; i < this.rooms.length; i++){
-      i++; 
+      if(this.rooms[i].isEndRoom){
+        endRoomsList.push(i);
+      }
     }
+    return endRoomsList; 
   }
+
 
 }

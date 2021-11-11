@@ -8,9 +8,9 @@ class RoomObj{
       "w                  w",
       "w                  w",
       "w                  w",
+      "w       h          w",
       "w                  w",
-      "w                  w",
-      "w                  w",
+      "w     s            w",
       "w                  w",
       "w                  w",
       "                    ",
@@ -60,5 +60,20 @@ class RoomObj{
       this.grid[10] = "w                  w";
     }
     
-  }  
+  }
+
+  isEndRoom(){
+    var counter = 0; 
+    for(var i = 0; i < this.neighbors.length; i++){
+      if(this.neighbors[i] == 1){
+        counter++; 
+      }
+    }
+    var isEnd = false;
+    if(counter <= 1){
+      isEnd = true;
+    }
+    return isEnd; 
+  }
+
 }

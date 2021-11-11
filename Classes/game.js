@@ -2,30 +2,6 @@
 class GameObj {
     //Game object class
     constructor() {
-      this.tileMap = [
-        "wwwwwwwwwwwwwwwwwwww",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w                  w",
-        "w        s         w",
-        "w                  w",
-        "w         h        w",
-        "w                  w",
-        "w        p         w",
-        "wwwwwwwwwwwwwwwwwwww",
-      ];
-      //Tilemap class instance. Contains a large map full of Room objects
-      this.map = new Tilemap(6,6, int(random(4,7)));
       //private members of game
       this.screen = 0;
       this.player = 0;
@@ -33,34 +9,37 @@ class GameObj {
       this.harpies = [];
       this.doors = [];
       this.snakes = [];
+      
+      //Tilemap class instance. Contains a large map full of Room objects
+      this.tm = new Tilemap(6,6, int(random(4,7)));
+      this.currRoom = 0;
     }
     //initially draw tile map onto canvas
   initializeTileMap() {
-    //background for tile map is brown
-    background(139, 69, 19);
-  
-    //nested loop through the tile map
-    for (var i = 0; i < 20; i++) {
-      for (var j = 0; j < 20; j++) {
-        //determines which character to draw from tilemap
-        switch (this.tileMap[i][j]) {
-          case "w":
-            this.walls.push(new WallObj(20 * j, 20 * i));
-            break;
-          case "p":
-            this.player = (new ArcherObj(archerRight, 'r', j * 20, i * 20));
-            break;
-  
-          case "h":
-            this.harpies.push(new HarpyObj(j * 20, i * 20));
-            break;
-          case "d":
-            this.doors.push(new DoorObj(j * 20, i * 20));
-            break;
-          case "d":
-            this.snakes.push(new SnakeObj(j * 20, i * 20));
-            break;
-        }
+    for(var k = 0; k < this.tm.rooms.length; k++){
+      //offset room location on entire map
+      var roomOffsetX = this.tm.rooms[k].x * 400;
+      var roomOffsetY = this.tm.rooms[k].y * 400;
+      for(var i = 0; i < this.tm.rooms[k].grid.length; i++){
+        for(var j = 0; j < this.tm.rooms[k].grid[0].length; j++){
+          switch (this.tm.rooms[k].grid[i][j]) {
+            case "w":              
+              this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetX + 20 * i));
+              break;
+            case "p":
+              this.player = (new ArcherObj(archerRight, 'r', roomOffsetX + j * 20, roomOffsetY + i * 20));
+              break;
+            case "h":
+              this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20));
+              break;
+            case "d":
+              this.doors.push(new DoorObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
+              break;
+            case "s":
+              this.snakes.push(new SnakeObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
+              break;
+          }
+        } 
       }
     }
   }

@@ -8,9 +8,6 @@
 // DATE:    October 29, 2021
 
 // Link to demo: https://preview.p5js.org/sarang_r/present/UL5m8Ulab
-var harpySprite;
-var flyHarpy = [];
-var harpy;
   
 function createWalls(){
 
@@ -77,6 +74,10 @@ function mouseClicked() {
   var speed = 0.3;
   var knight;
   let archer;
+
+  var harpySprite;
+  var flyHarpy = [];
+  var harpy;
 
   var snakeSheet; 
   var snakeAnimations;
@@ -171,7 +172,6 @@ function mouseClicked() {
   game.initializeTileMap();
   }
   
-
   function draw() {
   
     //   //starting screen for game
@@ -313,8 +313,8 @@ function mouseClicked() {
         }
       }
       
-      game.player.draw();
-      game.player.checkMovement();
+      // game.player.draw();
+      // game.player.checkMovement();
             
       for(var i = 0; i < game.harpies.length; i++){
         game.harpies[i].draw();
@@ -323,9 +323,7 @@ function mouseClicked() {
         game.walls[i].draw();
       }
       for(var i = 0; i < game.doors.length; i++){
-        game.doors[i].draw();
-      }
-      for(var i = 0; i < game.doors.length; i++){
+        //print(game.doors[i].x);
         game.doors[i].draw();
       }
 
