@@ -1,8 +1,8 @@
 // Speed and Frame Rates of the archer in different actions
 let walkSpeed = 0.3;
 let walkFrameRate = 0.3;
-let runSpeed = 1;
-let runFrameRate = 1;
+let runSpeed = 1.5;
+let runFrameRate = 0.3;
 let shootSpeed = 0;
 let shootFrameRate = 0.3;
 
@@ -115,8 +115,8 @@ class Archer{
   run_right(){
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate * 0.45;
-    this.x += this.speed * 3.00;
+    this.index += this.frameRate;
+    this.x += this.speed;
     // Edge case
     // if(this.x > width){
     //   this.x = -this.w;
@@ -127,8 +127,8 @@ class Archer{
   run_left(){
     this.action = 'r';
     this.animationChoice = 'rl';
-    this.index += this.frameRate * 0.45;
-    this.x -= this.speed * 3.00;
+    this.index += this.frameRate;
+    this.x -= this.speed;
     // Edge case
     // if(this.x < -this.w){
     //   this.x = this.w;
@@ -138,8 +138,8 @@ class Archer{
   run_up(){
     this.action = 'r';
     this.animationChoice = 'ru';
-    this.index += this.frameRate * 0.75;
-    this.y -= this.speed * 2.00;
+    this.index += this.frameRate;
+    this.y -= this.speed;
     // Edge case
     // if(this.y < -this.h){
     //   this.y = height + this.h/2
@@ -149,9 +149,9 @@ class Archer{
   run_down(){
     this.action = 'r';
     this.animationChoice = 'rd';
-    this.index += this.frameRate * 0.75;
+    this.index += this.frameRate;
     
-    this.y += this.speed * 2.00;
+    this.y += this.speed;
     // Edge case
     // if(this.y > height){
     //   this.y = -this.h;
@@ -159,8 +159,8 @@ class Archer{
   }  
   
   move_down(){
-    this.index += this.frameRate * 0.75;
-    this.y += this.speed * 2.00;
+    this.index += this.frameRate;
+    this.y += this.speed;
     if(this.y > height){
       this.y = -this.h
     }
