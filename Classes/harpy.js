@@ -5,28 +5,25 @@ class HarpyObj {
         this.index = 0;
         this.x = x;
         this.y = y;
-        this.curIndex = 0;
     }
     
     draw(){
-        image(flyHarpy[this.curIndex], this.x, this.y);
+        // print("HERE: " + str(flyHarpy.length));
+        image(flyHarpy[int(this.index)], this.x, this.y);
     }
-
     fly() {
-        var curIndex = floor(this.index % flyHarpy.length);
-        push();
-        // scale(-1, 1);
-        // translate(-200, 200);
-        // rotate(PI/2);
-
-        image(flyHarpy[curIndex], this.x, this.y);
-        pop();
+        this.x += this.speed; 
     }
     flyAnimate() {
-        this.index += this.speed;
-        this.x += this.speed * 9;
+        this.index += 0.12;
+        if(this.index >= 3){
+            this.index = 0;
+        }
+        this.x += this.speed;
         if (this.x > width) {
             this.x = -10;
         }
     }
 }
+
+

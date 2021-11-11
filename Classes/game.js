@@ -21,7 +21,7 @@ class GameObj {
         "w                  w",
         "w         h        w",
         "w                  w",
-        "w                  w",
+        "w        p         w",
         "wwwwwwwwwwwwwwwwwwww",
       ];
       //Tilemap class instance. Contains a large map full of Room objects

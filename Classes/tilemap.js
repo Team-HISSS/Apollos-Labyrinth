@@ -22,7 +22,7 @@ class Tilemap{
           //print(this.map[i][j]);
         }
     }
-    print("num rooms: " + str(numRooms));
+    //print("num rooms: " + str(numRooms));
     this.numRooms = numRooms;  
     //generate random map 1s and 0s
     this.generateMap(int(this.width / 2), int(this.height / 2), this.numRooms);
@@ -160,9 +160,9 @@ class Tilemap{
         
         if (this.map[x][y] == 1) {
           //x y coordinates stored in neighbors array
-          print("X " + str(x));
-          print("K " + str(k));
-          print("Length: " + str(this.neighbors.length));
+          // print("X " + str(x));
+          // print("K " + str(k));
+          // print("Length: " + str(this.neighbors.length));
 
           this.neighbors[k][4] = x; 
           this.neighbors[k][5] = y;
