@@ -114,7 +114,7 @@ function mouseClicked() {
   // Captures all the pictures 
   function setup() {
     captureAllAnimation();
-    createCanvas(3600, 3600);
+    createCanvas(400, 400);
     //startSong = loadSound('assets/dark-forest.mp3');
   
     //knight animations
@@ -302,10 +302,13 @@ function mouseClicked() {
     }
     //game screen
     else if (game.screen == 2) {
-      // push()
-      // var roomOffsetX = game.player.rx * 400 + 200;
-      // var roomOffsetY = game.player.ry *400 + 200;
-      // translate(roomOffsetX, roomOffsetY)
+      push()
+      var roomOffsetX = game.player.rx * 400;
+      var roomOffsetY = game.player.ry * 400;
+      // print(roomOffsetX, roomOffsetY);
+      // fill(255, 0 ,0);
+      // ellipse(roomOffsetX, roomOffsetY, 20, 20)
+      translate(-roomOffsetX, -roomOffsetY)
         background(255);
         startSong.stop();
       
@@ -313,8 +316,7 @@ function mouseClicked() {
           image(tileSquare, game.tiles[i].x, game.tiles[i].y, 20, 20);
       }
       
-      game.player.draw();
-      game.player.checkMovement();
+     
             
       for(var i = 0; i < game.harpies.length; i++){
         game.harpies[i].draw();
@@ -326,9 +328,10 @@ function mouseClicked() {
         //print(game.doors[i].x);
         game.doors[i].draw();
       }
-
-      game.map.printMap();
-      // pop();
+      game.player.draw();
+      game.player.checkMovement();
+      // game.map.printMap();
+      pop();
     }
     //game over screen
     else if (game.screen == 3) {

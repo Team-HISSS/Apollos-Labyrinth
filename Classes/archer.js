@@ -27,6 +27,8 @@ class ArcherObj{
     this.index = 0;
     this.size = 100;
     this.flip = 1;
+    this.width = this.rx*400 +400;
+    this.height = this.ry*400 + 400;
   }
   
   // Chooses the action of the archer
@@ -77,9 +79,9 @@ class ArcherObj{
   draw(){
     this.chooseAction();
     push();
-    var roomOffsetX = game.player.rx * 400;
-    var roomOffsetY = game.player.ry *400;
-    translate(roomOffsetX, roomOffsetY)
+    // var roomOffsetX = game.player.rx * 400;
+    // var roomOffsetY = game.player.ry *400;
+    // translate(roomOffsetX, roomOffsetY)
     // Run
     if(this.action == ' '){
       image(up[0], this.x, this.y, this.size, this.size)
@@ -112,6 +114,14 @@ class ArcherObj{
     this.index += this.frameRate * 0.45;
     this.x += this.speed * 3.00;
     // Edge case
+    if(this.x > this.width){
+      this.rx += 1;
+      this.width = this.rx*400 + 400;
+    }
+    else if (this.x < this.rx*400){
+      this.rx -= 1;
+      this.width = this.rx*400 + 400;
+    }
     // if(this.x > width){
     //   this.x = -this.w;
     // }
@@ -127,6 +137,14 @@ class ArcherObj{
     // if(this.x < -this.w){
     //   this.x = this.w;
     // }
+    if(this.x > this.width){
+      this.rx += 1;
+      this.width = this.rx*400 + 400;
+    }
+    else if (this.x < this.rx*400){
+      this.rx -= 1;
+      this.width = this.rx*400 + 400;
+    }
   }
 
   run_up(){
@@ -138,6 +156,14 @@ class ArcherObj{
     // if(this.y < -this.h){
     //   this.y = height + this.h/2
     // }
+    if(this.y > this.height){
+      this.ry += 1;
+      this.height = this.ry*400 + 400;
+    }
+    else if (this.y < this.ry*400){
+      this.ry -= 1;
+      this.height = this.ry*400 + 400;
+    }
   }
 
   run_down(){
@@ -149,6 +175,14 @@ class ArcherObj{
     // if(this.y > height){
     //   this.y = -this.h;
     // }
+    if(this.y > this.height){
+      this.ry += 1;
+      this.height = this.ry*400 + 400;
+    }
+    else if (this.y < this.ry*400){
+      this.ry -= 1;
+      this.height = this.ry*400 + 400;
+    }
   }
   
   // Moves the archer relative to the canvas

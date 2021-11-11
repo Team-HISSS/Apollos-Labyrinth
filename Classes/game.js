@@ -25,16 +25,16 @@ class GameObj {
         for(var j = 0; j < this.tm.rooms[k].grid[0].length; j++){
           switch (this.tm.rooms[k].grid[i][j]) {
             case "w":              
-              this.walls.push(new WallObj(20 * j, 20 * i, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
-              this.player = (new ArcherObj(archerRight, 'r', j * 20, i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.player = (new ArcherObj(archerRight, 'r', roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
               break;
             case "h":
-              this.harpies.push(new HarpyObj(j * 20, i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20));
               break;
             case "d":
-              this.doors.push(new DoorObj(j * 20, i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20));
               break;
             case "s":
               this.snakes.push(new SnakeObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
