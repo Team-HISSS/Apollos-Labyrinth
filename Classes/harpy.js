@@ -7,6 +7,9 @@ class HarpyObj {
         this.index = 0;
         this.x = x;
         this.y = y;
+
+        //this.state = [new WanderState(), new ChaseState()];
+        this.currState = 0;
         this.dead = false;
         this.currState = 0;
         this.xMove = int(random(-1, 1));
@@ -78,6 +81,10 @@ class HarpyObj {
         }
         this.x += this.xMove;
         this.y += this.yMove;
+    }
+
+    update(){
+        
     }
 }
 
