@@ -283,8 +283,10 @@ function mouseClicked() {
       
      
             
-      for(var i = 0; i < game.harpies.length; i++){
-        game.harpies[i].draw();
+      for(let harpy of game.harpies){
+        if(!harpy.dead){
+          harpy.draw();
+        }
       }
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
@@ -312,8 +314,8 @@ function mouseClicked() {
         }
       }
       // each room now also has a unique ID for itself, the player can get the unique ID from the room.
-      print(game.player.roomNumber);
-      print(game.tm.rooms[game.player.roomNumber].numEnemies);
+      // print('Sketch.js: ' + game.player.roomNumber);
+      // print('Sketch.js: ' + game.tm.rooms[game.player.roomNumber].numEnemies);
       if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
         // if(!game.player.transiion){
          game.player.inRoom = true;

@@ -7,10 +7,13 @@ class HarpyObj {
         this.index = 0;
         this.x = x;
         this.y = y;
+        this.dead = false;
     }
     
     draw(){
         // print("HERE: " + str(flyHarpy.length));
+        // Temporary
+        rect(this.x, this.y, )
         image(flyHarpy[int(this.index)], this.x, this.y);
     }
     fly() {
