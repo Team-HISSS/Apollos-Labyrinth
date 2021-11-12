@@ -21,10 +21,12 @@ let KEY_SPACE = 32;
 
 // Class for the archer
 class ArcherObj{
-  constructor(x, y, rx, ry){ // Possibility for error -> rx, ry not passed
+  constructor(x, y, rx, ry, k, rooms){ // Possibility for error -> rx, ry not passed
+    this.roomNumber = k;
     this.rx = rx;
     this.ry = ry;
     this.action = ' ';
+    this.rooms = rooms; // getting the room list
     // this.chooseAction();
     // this.animation = animation;
     this.animationChoice = ' ';
@@ -70,28 +72,28 @@ class ArcherObj{
     let theta = [0,0];
     
     if(keyIsDown(KEY_W)){
-      print('w');
+      // print('w');
       theta = this.run_up();
     }
     else if(keyIsDown(KEY_A)){
-      print('a');
+      // print('a');
       theta = this.run_left();
     }
     else if(keyIsDown(KEY_S)){
-      print('s');
+      // print('s');
       theta = this.run_down();
     }
     else if(keyIsDown(KEY_D)){
-      print('d');
+      // print('d');
       theta = this.run_right();
     }
     else if(keyIsDown(KEY_SPACE)){
-      print('space');
+      // print('space');
       this.shoot();
     }
 
     // If player collides with the walls
-    if(theta != [0, 0] && !this.check_collision_with_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])){
+    if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
       theta = [0,0];
     }
 
@@ -113,7 +115,7 @@ class ArcherObj{
     
     // Run
     if(this.action == ' '){
-      print(this.x);
+      // print(this.x);
       image(up[0], this.x, this.y, this.size, this.size)
     }
     // If the action is run
@@ -178,8 +180,8 @@ class ArcherObj{
     for(let wall of game.walls){
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall.size/2));
-      
       if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
+        print(verticalDistance, horizontalDistance);
         print('Player: Collision with wall');
         return true;
       }
@@ -192,10 +194,11 @@ class ArcherObj{
     for(let door of game.doors){
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (door.x + door.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (door.y + door.size/2));
-      
-      if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-        print('Player: Collision with door');
-        return true;
+      if (!door.open){ // checking if the door is open or not: True if open, False is closed
+        if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
+          print('Player: Collision with door');
+          return true;
+        }
       }
     }
 
@@ -212,13 +215,23 @@ class ArcherObj{
     delta += this.speed * 3.00;
 
     // Edge case
-    if(this.x > this.width){
+    if(this.x > this.width+20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
-    else if (this.x < this.rx*400){
+    else if (this.x < this.rx*400 - 20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
 
     return [delta, 0];
@@ -234,13 +247,23 @@ class ArcherObj{
     delta -= this.speed * 3.00;
 
     //Edge case
-    if(this.x > this.width){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
-    else if (this.x < this.rx*400){
+    else if (this.x < this.rx*400 -20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
 
     return [delta, 0];
@@ -255,13 +278,23 @@ class ArcherObj{
     delta -= this.speed * 2.00;
     
     // Edge case
-    if(this.y > this.height){
+    if(this.y > this.height-10){
       this.ry += 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
-    else if (this.y < this.ry*400){
+    else if (this.y < this.ry*400 +10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
 
     return [0, delta];
@@ -276,13 +309,23 @@ class ArcherObj{
     delta += this.speed * 2.00;
     
     // Edge case
-    if(this.y > this.height){
+    if(this.y > this.height-10){
       this.ry += 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
-    else if (this.y < this.ry*400){
+    else if (this.y < this.ry*400+10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber =k;
+        } 
+      }
     }
 
     return [0, delta];
@@ -300,7 +343,7 @@ class ArcherObj{
     this.action = 'r';
     this.animationChoice = 'rr';
     this.index += this.frameRate * 0.17;
-    print('Capture.js: this.x ' + this.x)
+    // print('Capture.js: this.x ' + this.x)
     this.x += this.speed * 1.50;
     if(this.x > width){
       this.x = -this.w;

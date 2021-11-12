@@ -15,6 +15,7 @@ class DoorObj{
     this.x = x;
     this.y = y; 
     this.size = 20;
+    this.open = false;
   }
   draw(){
 

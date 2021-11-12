@@ -1,6 +1,8 @@
 // Creates Harpy Object class which is used to create and move the harpy
 class HarpyObj {
-    constructor(x, y) {
+    constructor(x, y, rx, ry) {
+        this.rx = rx;
+        this.ry = ry;
         this.speed = 1;
         this.index = 0;
         this.x = x;

@@ -1,7 +1,9 @@
 class RoomObj{
-  constructor(x,y, neighbors){
+  constructor(x,y, neighbors, num){
+    this.roomNumber = num;
     this.x = x; 
-    this.y = y; 
+    this.y = y;
+    this.numEnemies = 0;
     this.neighbors = neighbors; 
     this.grid = [
       "wwwwwwwww  wwwwwwwww",
@@ -61,7 +63,9 @@ class RoomObj{
     }
     
   }
-
+  setNumEnemies(num){
+    this.numEnemies = num;
+  }
   isEndRoom(){
     var counter = 0; 
     for(var i = 0; i < this.neighbors.length; i++){

@@ -21,6 +21,7 @@ class GameObj {
       //offset room location on entire map
       var roomOffsetX = this.tm.rooms[k].x * 400;
       var roomOffsetY = this.tm.rooms[k].y * 400;
+      var numEnemies = 0;
       for(var i = 0; i < this.tm.rooms[k].grid.length; i++){
         for(var j = 0; j < this.tm.rooms[k].grid[0].length; j++){
           switch (this.tm.rooms[k].grid[i][j]) {
@@ -28,10 +29,11 @@ class GameObj {
               this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
-              this.player = (new ArcherObj(roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.player = (new ArcherObj(roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k, this.tm.rooms));
               break;
             case "h":
-              this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20));
+              this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
+              numEnemies += 1;
               break;
             case "d":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20));
@@ -45,6 +47,7 @@ class GameObj {
           this.tiles.push(new p5.Vector(roomOffsetX + j * 20, roomOffsetY + i * 20));
         } 
       }
+      this.tm.rooms[k].setNumEnemies(numEnemies);
     }
   }
 }

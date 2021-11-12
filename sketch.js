@@ -269,6 +269,8 @@ function mouseClicked() {
       // print(roomOffsetX, roomOffsetY);
       // fill(255, 0 ,0);
       // ellipse(roomOffsetX, roomOffsetY, 20, 20)
+      // print(game.player.roomNumber);
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
       translate(-roomOffsetX, -roomOffsetY)
         background(255);
         startSong.stop();
@@ -287,11 +289,23 @@ function mouseClicked() {
       }
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
-        game.doors[i].draw();
+        if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
+          game.doors[i].open = true;
+        }
+        if (!game.doors[i].open){ // checking if the door is open or not: True if open, False is closed
+          game.doors[i].draw();
+        }
       }
       game.player.draw();
       game.player.checkMovement();
+      var randNum = int(random(0, 100))
+      if (randNum == 50){ // randomly killing the enemies present in the room
+        game.tm.rooms[game.player.roomNumber].numEnemies -= 1; // each room stores the number of enemies in the room
+      }
+      // each room now also has a unique ID for itself, the player can get the unique ID from the room.
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
       // game.map.printMap();
+      
       pop();
     }
     //game over screen
