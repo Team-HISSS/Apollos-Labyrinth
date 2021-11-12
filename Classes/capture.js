@@ -61,6 +61,16 @@ function captureSnake(){
   pop();
 }
 
+// Captures the arrow
+function captureArrow(){
+  
+  push();
+    background(220, 220, 220, 0);
+    image(arrowImg, 0, 0);
+    arrowCapture = get(0, 0, 700, 200);
+  pop();
+}
+
 // Captures the frames of right moving archer
 function captureUp(){
 
@@ -129,16 +139,18 @@ function captureShoot(){
 // Function has to be called before creating canvas
 function captureAllAnimation(){
   createCanvas(400, 400);
-  captureHarpy();
+    captureHarpy();
   createCanvas(400, 400);
-  captureKnight();
-  captureEnvironment();
-  captureSnake();
+    captureKnight();
+    captureEnvironment();
+    captureSnake();
+  createCanvas(700, 200);
+    captureArrow();
   createCanvas(4032, 976);
-  captureUp();
-  captureRight();
-  captureLeft();
-  captureDown();
-  captureShoot();
-  createCanvas(4032, 976);
+    captureUp();
+    captureRight();
+    captureLeft();
+    captureDown();
+    captureShoot();
+  // createCanvas(4032, 976);
 }

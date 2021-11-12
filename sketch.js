@@ -67,6 +67,8 @@ function mouseClicked() {
   let shootUp = [];
   let shootRight = [];
   let shootDown = [];
+  let arrowCapture;
+  let arrowIndex = 0;
   
   var tileSquare = 0;
   var tileUneven = 0;
@@ -298,6 +300,9 @@ function mouseClicked() {
       }
       game.player.draw();
       game.player.checkMovement();
+      for(let arrow of game.arrows){
+        arrow.draw();
+      }
       var randNum = int(random(0, 100))
       if (randNum == 50){ // randomly killing the enemies present in the room
         game.tm.rooms[game.player.roomNumber].numEnemies -= 1; // each room stores the number of enemies in the room
