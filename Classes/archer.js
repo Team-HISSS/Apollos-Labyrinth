@@ -9,8 +9,11 @@ let archerShootFrameRate = 0.17;
 let shootingFrameCount = 4;
 let runningFrameCount = 8;
 
-let wall_constraint_x = (100/3 + 20/2);
-let wall_constraint_y = (100/3 + 20/2);
+let wall_constraint_x = (100/3.5 + 20/2);
+let wall_constraint_y = (100/3.5 + 20/2);
+
+let harpy_constraint_x = (100/6 + harpy_center_radius/2);
+let harpy_constraint_y = (100/6 + harpy_center_radius/2);
 
 let currFrameCount = 0;
 
@@ -36,6 +39,7 @@ class ArcherObj{
     this.h = 100;
     this.x = x;
     this.y = y;
+    this.dead = false;
     this.index = 0;
     this.shootIndex = 0;
     this.size = 100;
@@ -107,6 +111,8 @@ class ArcherObj{
         }
       }
     }
+
+    this.check_collision_with_harpy();
 
     // If player wants to move
     // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
@@ -198,8 +204,8 @@ class ArcherObj{
 
   check_collision_with_walls(thetaX, thetaY){
     for(let wall of game.walls){
-      let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall.size/2));
-      let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall.size/2));
+      let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall_center_radius));
+      let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall_center_radius));
       if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
         // print(verticalDistance, horizontalDistance);
         // print('Player: Collision with wall');
@@ -220,6 +226,24 @@ class ArcherObj{
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
           print('Player: Collision with door');
+          // return true;
+        }
+      }
+    }
+
+    // return false;
+  }
+
+  check_collision_with_harpy(){
+    for(let harpy of game.harpies){
+      let horizontalDistance = abs((this.x + this.w/2) - (harpy.x + harpy_center_radius));
+      let verticalDistance = abs((this.y + this.h/2) - (harpy.y + harpy_center_radius));
+
+      // If harpy is not dead
+      if (!harpy.dead){ 
+        if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
+          print('Player: Collision with harpy');
+          this.dead = true;
           return true;
         }
       }
@@ -305,26 +329,26 @@ class ArcherObj{
     delta -= this.speed * 2.00;
     
     // Edge case
-    if(this.y > this.height-10){
-      this.ry += 1;
-      this.height = this.ry*400 + 400;
-      for(var k = 0; k < this.rooms.length; k++){
-        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber = this.rooms[k].roomNumber;
-        } 
-      }
-      this.transition = true;
-    }
-    else if (this.y < this.ry*400 +10){
-      this.ry -= 1;
-      this.height = this.ry*400 + 400;
-      for(var k = 0; k < this.rooms.length; k++){
-        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber = this.rooms[k].roomNumber;
-        } 
-      }
-      this.transition = true;
-    }
+    // if(this.y > this.height - 10){
+    //   this.ry += 1;
+    //   this.height = this.ry * 400 + 400;
+    //   for(var k = 0; k < this.rooms.length; k++){
+    //     if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+    //       this.roomNumber = this.rooms[k].roomNumber;
+    //     } 
+    //   }
+    //   this.transition = true;
+    // }
+    // else if (this.y < this.ry*400 +10){
+    //   this.ry -= 1;
+    //   this.height = this.ry*400 + 400;
+    //   for(var k = 0; k < this.rooms.length; k++){
+    //     if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+    //       this.roomNumber = this.rooms[k].roomNumber;
+    //     } 
+    //   }
+    //   this.transition = true;
+    // }
 
     return [0, delta];
   }

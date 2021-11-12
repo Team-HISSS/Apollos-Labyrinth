@@ -70,6 +70,10 @@ function mouseClicked() {
   let shootDown = [];
   let arrowCapture;
   let arrowIndex = 0;
+
+  let harpySize = 64;
+  let wall_center_radius = 10;
+  let harpy_center_radius = harpySize/2;
   
   var tileSquare = 0;
   var tileUneven = 0;
@@ -337,6 +341,11 @@ function mouseClicked() {
         }
         game.player.inRoom =false;
         game.player.transition = false;
+      }
+
+      // Death of the player
+      if(game.player.dead){
+        game.screen = 3;
       }
       pop();
     }

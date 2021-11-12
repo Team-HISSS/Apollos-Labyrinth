@@ -17,12 +17,23 @@ function captureEnvironment(){
 // Captures the frames of the harpy
 function captureHarpy(){
 
+  // push();
+  //   background(0, 220, 0, 0);
+  //   image(harpySprite, 0, 200);
+  //   flyHarpy.push(get(5, 340, 65, 45));
+  //   flyHarpy.push(get(70, 340, 70, 45));
+  //   flyHarpy.push(get(140, 340, 50, 45));
+  // pop();
+
   push();
-    background(0, 220, 0, 0);
-    image(harpySprite, 0, 200);
-    flyHarpy.push(get(5, 340, 65, 45));
-    flyHarpy.push(get(70, 340, 70, 45));
-    flyHarpy.push(get(140, 340, 50, 45));
+    background(220, 220, 220, 0);
+    image(harpySprite, 0, 0);
+    let j = 2;
+    let startFrame = 0;
+    let numOfFrames = 4;
+    for(let i = startFrame; i < numOfFrames; i++){
+      flyHarpy.push(get((i * harpySize) - 4, (j * harpySize) + 8, harpySize, harpySize)); // Vertical offset by 8 pixels and horizontal by 4 pixels
+    }
   pop();
 }
 

@@ -3,7 +3,6 @@ let arrowWidth = 50;
 let arrowHeight = 14.29;
 let half_arrowWidth = arrowWidth/2;
 let half_arrowHeight = arrowHeight/2;
-let wall_center_radius = 10;
 
 class ArrowObj {
 // constructor(x, y, angle) {
@@ -61,13 +60,14 @@ class ArrowObj {
                     if(!harpy.dead && this.check_collision_with_enemy(harpy)){
                         blocked = true;
                         this.fired = false;
+                        harpy.dead = true;
                         break;
                     }
                 }
                 
                 if(!blocked){
                     translate(this.x, this.y);
-                    this.step.setMag(2);
+                    this.step.setMag(3);
                     this.step.setHeading(this.angle);
                     // Updates after image is drawn
                     this.x += this.step.x;
@@ -145,11 +145,12 @@ class ArrowObj {
         return false;
     }
 
+    // Check collision with the harpy
     check_collision_with_enemy(enemy){
-            let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x + wall_center_radius));
-            let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + wall_center_radius));
-            print('Enemy.x ' + enemy.x)
-            if(verticalDistance < this.enemy_constraint_y && horizontalDistance < this.enemy_constraint_x){
+            let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x + harpy_center_radius));
+            let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + harpy_center_radius));
+            // print('Enemy.x ' + enemy.x)
+            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2){
               
               print('Arrow: Collision with enemy');
               return true;

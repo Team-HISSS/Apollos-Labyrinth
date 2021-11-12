@@ -22,22 +22,22 @@ class HarpyObj {
         }
     }
     drawTitleScreen(){
-        image(flyHarpy[int(this.index)], this.x, this.y);
+        image(flyHarpy[int(this.index)], this.x, this.y, harpySize, harpySize);
     }
     draw(){
         // print(this.xMove);
         if (this.xMove > 0){
             push();
             scale(1,1);
-            print("Here1");
-            image(flyHarpy[int(this.index)], this.x, this.y);
+            // print("Harpy.js: Here1");
+            image(flyHarpy[int(this.index)], this.x, this.y, harpySize, harpySize);
             pop();
         }
         else{
             push();
             scale(-1, 1);
-            print("here2");
-            image(flyHarpy[int(this.index)], -this.x, this.y);
+            // print("Harpy.js: here2");
+            image(flyHarpy[int(this.index)], -this.x, this.y, harpySize, harpySize);
             pop();
         }
     }
@@ -50,7 +50,7 @@ class HarpyObj {
             this.index = 0;
         }
         this.x += this.speed;
-        if (this.x < width) {
+        if (this.x > width) {
             this.x = 10;
         }
     }
