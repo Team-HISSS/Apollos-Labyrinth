@@ -12,6 +12,8 @@ let runningFrameCount = 8;
 let wall_constraint_x = (100/3 + 20/2);
 let wall_constraint_y = (100/3 + 20/2);
 
+let currFrameCount = 0;
+
 // Keys codes
 let KEY_W = 87;
 let KEY_A = 65;
@@ -91,7 +93,19 @@ class ArcherObj{
     }
     else if(keyIsDown(KEY_SPACE)){
       // print('space');
-      this.shoot();
+      // this.shoot();
+      if (currFrameCount < frameCount - 10) {
+        currFrameCount = frameCount;
+        this.shoot();
+        print('Arrow : ' + arrowIndex)
+        game.arrows[arrowIndex].fired = true;
+        game.arrows[arrowIndex].setDirection(this.x + 50, this.y + 50, this.animationChoice);
+        arrowIndex++;
+        if(arrowIndex >= game.arrows.length - 1){
+
+          arrowIndex = 0;
+        }
+      }
     }
 
     // If player wants to move
