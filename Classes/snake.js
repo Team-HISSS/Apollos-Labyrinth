@@ -5,6 +5,8 @@ class SnakeObj {
         this.index = 0;
         this.x = x;
         this.y = y;
+        this.state = [new WanderState(), new ChaseState()];
+        this.currState = 0;
     }
     
     draw(){
@@ -15,6 +17,11 @@ class SnakeObj {
     move(){
         this.x += this.speed; 
     }
+
+    update(){
+        
+    }
+    
 }
 
 

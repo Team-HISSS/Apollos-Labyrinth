@@ -36,6 +36,7 @@ function mouseClicked() {
     if (game.screen == 0) {
         if (x >= 20 && x <= 170 && y >= 345 && y <= 380) {
             game.screen = 2;
+            mapSong.play();
         }
         //rules are pressed to go to rules screen
         if (x >= 200 && x <= 380 && y >= 345 && y <= 380) {
@@ -96,6 +97,9 @@ function mouseClicked() {
   // Preloads the images and mp3 file for the game
   function preload() {
     startSong = loadSound("./resources/dark-forest.mp3", loaded);
+    mapSong = loadSound("./resources/Labyrinth.mp3");
+    bossSong = loadSound("./resources/chase.mp3");
+
     parthenon = loadImage('/resources/temple.png');
     sunImage = loadImage('/resources/sun.png');
     sunBeam1 = loadImage('/resources/sunbeam1.png');
@@ -107,6 +111,8 @@ function mouseClicked() {
     harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
+
+
 
   }
   

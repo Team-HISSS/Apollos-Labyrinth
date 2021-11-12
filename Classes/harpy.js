@@ -5,6 +5,9 @@ class HarpyObj {
         this.index = 0;
         this.x = x;
         this.y = y;
+
+        this.state = [new WanderState(), new ChaseState()];
+        this.currState = 0;
     }
     
     draw(){
@@ -23,6 +26,10 @@ class HarpyObj {
         if (this.x > width) {
             this.x = -10;
         }
+    }
+
+    update(){
+        
     }
 }
 
