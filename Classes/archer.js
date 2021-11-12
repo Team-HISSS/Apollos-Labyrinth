@@ -41,6 +41,8 @@ class ArcherObj{
     this.width = this.rx*400 +400;
     this.height = this.ry*400 + 400;
     this.shootTrigger = false;
+    this.inRoom = false;
+    this.transition = false;
   }
   
   // Chooses the action of the archer
@@ -185,8 +187,8 @@ class ArcherObj{
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall.size/2));
       if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-        print(verticalDistance, horizontalDistance);
-        print('Player: Collision with wall');
+        // print(verticalDistance, horizontalDistance);
+        // print('Player: Collision with wall');
         return true;
       }
     }
@@ -227,18 +229,20 @@ class ArcherObj{
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
     else if (this.x < this.rx*400 - 20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
 
     return [delta, 0];
@@ -259,18 +263,20 @@ class ArcherObj{
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
     else if (this.x < this.rx*400 -20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
 
     return [delta, 0];
@@ -290,18 +296,20 @@ class ArcherObj{
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
     else if (this.y < this.ry*400 +10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
 
     return [0, delta];
@@ -321,18 +329,20 @@ class ArcherObj{
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
     else if (this.y < this.ry*400+10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber =k;
+          this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
+      this.transition = true;
     }
 
     return [0, delta];
