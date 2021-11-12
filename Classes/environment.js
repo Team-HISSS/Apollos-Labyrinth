@@ -2,7 +2,7 @@ class WallObj{
     constructor(x,y){
       this.x = x;
       this.y = y; 
-      this.size = 10;
+      this.size = 20;
     }
     draw(){
       image(wall1, this.x, this.y, 20, 20);
@@ -14,6 +14,7 @@ class DoorObj{
 
     this.x = x;
     this.y = y; 
+    this.size = 20;
   }
   draw(){
 

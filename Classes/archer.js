@@ -91,7 +91,7 @@ class ArcherObj{
     }
 
     // If player collides with the walls
-    if(theta != [0, 0] && this.check_collision_with_walls(theta[0], theta[1])){
+    if(theta != [0, 0] && !this.check_collision_with_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])){
       theta = [0,0];
     }
 
@@ -108,8 +108,8 @@ class ArcherObj{
     // var roomOffsetY = game.player.ry *400;
     // translate(roomOffsetX, roomOffsetY)
     
-    // Boundary
-    rect(this.x, this.y, this.w, this.h);
+    // Temporary: Boundary
+    // rect(this.x, this.y, this.w, this.h);
     
     // Run
     if(this.action == ' '){
@@ -180,6 +180,20 @@ class ArcherObj{
       
       if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
         print('Player: Collision with wall');
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  check_collision_with_door(thetaX, thetaY){
+    for(let door of game.doors){
+      let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (door.x + door.size/2));
+      let verticalDistance = abs((this.y + this.h/2 + thetaY) - (door.y + door.size/2));
+      
+      if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
+        print('Player: Collision with door');
         return true;
       }
     }
