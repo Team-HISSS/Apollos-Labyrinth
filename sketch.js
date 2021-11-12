@@ -118,62 +118,19 @@ function mouseClicked() {
   // Captures all the pictures 
   function setup() {
     captureAllAnimation();
-    createCanvas(400, 400);
-    //startSong = loadSound('assets/dark-forest.mp3');
-  
-    //knight animations
-    background(0, 220, 0, 0);
-    image(harpySprite, 0, 200);
-    flyHarpy.push(get(5, 340, 65, 45));
-    flyHarpy.push(get(70, 340, 70, 45));
-    flyHarpy.push(get(140, 340, 50, 45));
+    createCanvas(400, 400);   
+    
+    // Creates the harpy and knight
     harpy = new HarpyObj(200, 50);
-  
-    image(spriteSheet, 0, 200, 400, 50);
-    runAnimation.push(get(0, 206, 40, 44));
-    runAnimation.push(get(40, 206, 40, 44));
-    runAnimation.push(get(80, 206, 40, 44));
-    runAnimation.push(get(120, 206, 40, 44));
-    runAnimation.push(get(160, 206, 40, 44));
-    runAnimation.push(get(200, 206, 40, 44));
-    runAnimation.push(get(240, 206, 40, 44));
-    runAnimation.push(get(280, 206, 40, 44));
-    runAnimation.push(get(320, 206, 35, 43));
-    runAnimation.push(get(355, 206, 40, 44));
-    //imageMode(CENTER);
     knight = new knightObj(-100, 300, 0.3);
-  
-
-    //draw tiles
-    //draw doors and walls
-    image(architSheet, 0, 0, 400, 400);
-    tileSquare = get(120, 180, 60, 60);
-    tileUneven = get(180, 180, 60, 60);
-    tileFancy = get(240, 220, 60, 60);
-    doorway = get(360, 180, 40, 40);
-    door = get(369, 367, 22, 30);
-    wall1 = get(20, 300, 60, 60);
-    roof = get(320, 45, 60, 55);
-    wall2 = get(200, 120, 40, 40);
-
-    //draw snakes
-    image(snakeSheet, 0, 0, 400, 400);
-    //3 horizontal animations
-    snake_1 = get(10, 130, 20, 35);
-    snake_2 = get(47.5, 130, 20, 35);
-    snake_3 = get(87.5, 130, 20, 35);
-    //2 vertical animations
-    snake_5 = get(50, 360, 20, 40);
-    snake_6 = get(90, 360 , 20 ,40);
-    snakeAnimations = [snake_1, snake_2, snake_3, snake_5, snake_6];
 
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
     game = new GameObj();
   
-  //initialize tilemap
-  game.initializeTileMap();
+    //initialize tilemap
+    game.initializeTileMap();
   }
   
   function draw() {

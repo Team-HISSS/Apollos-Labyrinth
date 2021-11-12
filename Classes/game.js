@@ -28,7 +28,7 @@ class GameObj {
               this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
-              this.player = (new ArcherObj(archerRight, 'r', roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              this.player = (new ArcherObj(roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
               break;
             case "h":
               this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20));

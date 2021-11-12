@@ -21,7 +21,7 @@ let KEY_SPACE = 32;
 
 // Class for the archer
 class ArcherObj{
-  constructor(animation, action, x, y, rx, ry){
+  constructor(x, y, rx, ry){ // Possibility for error -> rx, ry not passed
     this.rx = rx;
     this.ry = ry;
     this.action = ' ';
@@ -113,6 +113,7 @@ class ArcherObj{
     
     // Run
     if(this.action == ' '){
+      print(this.x);
       image(up[0], this.x, this.y, this.size, this.size)
     }
     // If the action is run
@@ -298,7 +299,8 @@ class ArcherObj{
   move(){
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate * 0.3;
+    this.index += this.frameRate * 0.17;
+    print('Capture.js: this.x ' + this.x)
     this.x += this.speed * 1.50;
     if(this.x > width){
       this.x = -this.w;
