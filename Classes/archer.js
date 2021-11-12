@@ -4,12 +4,20 @@ let archerWalkFrameRate = 0.3;
 let archerRunSpeed = 1;
 let archerRunFrameRate = 1;
 let archerShootSpeed = 0;
-let archerShootFrameRate = 0.3;
+let archerShootFrameRate = 0.17;
 
+let shootingFrameCount = 4;
+let runningFrameCount = 8;
+
+let wall_constraint_x = (100/3 + 20/2);
+let wall_constraint_y = (100/3 + 20/2);
+
+// Keys codes
 let KEY_W = 87;
 let KEY_A = 65;
 let KEY_D = 68;
 let KEY_S = 83;
+let KEY_SPACE = 32;
 
 // Class for the archer
 class ArcherObj{
@@ -25,10 +33,12 @@ class ArcherObj{
     this.x = x;
     this.y = y;
     this.index = 0;
+    this.shootIndex = 0;
     this.size = 100;
     this.flip = 1;
     this.width = this.rx*400 +400;
     this.height = this.ry*400 + 400;
+    this.shootTrigger = false;
   }
   
   // Chooses the action of the archer
@@ -57,22 +67,37 @@ class ArcherObj{
   }
   
   checkMovement(){
+    let theta = [0,0];
+    
     if(keyIsDown(KEY_W)){
       print('w');
-      this.run_up();
+      theta = this.run_up();
     }
     else if(keyIsDown(KEY_A)){
       print('a');
-      this.run_left();
+      theta = this.run_left();
     }
     else if(keyIsDown(KEY_S)){
       print('s');
-      this.run_down();
+      theta = this.run_down();
     }
     else if(keyIsDown(KEY_D)){
       print('d');
-      this.run_right();
+      theta = this.run_right();
     }
+    else if(keyIsDown(KEY_SPACE)){
+      print('space');
+      this.shoot();
+    }
+
+    // If player collides with the walls
+    if(theta != [0, 0] && this.check_collision_with_walls(theta[0], theta[1])){
+      theta = [0,0];
+    }
+
+    // Position update according to movement
+    this.x += theta[0];
+    this.y += theta[1];
   }
 
   // Draws the frame
@@ -82,37 +107,95 @@ class ArcherObj{
     // var roomOffsetX = game.player.rx * 400;
     // var roomOffsetY = game.player.ry *400;
     // translate(roomOffsetX, roomOffsetY)
+    
+    // Boundary
+    rect(this.x, this.y, this.w, this.h);
+    
     // Run
     if(this.action == ' '){
       image(up[0], this.x, this.y, this.size, this.size)
     }
+    // If the action is run
     else if(this.action == 'r'){
-      if(this.animationChoice == 'rr'){
-        let index = floor(this.index) % right.length;
-        image(right[index], this.x, this.y, this.size, this.size);  
+      let index = floor(this.index) % runningFrameCount;
+      // Animation choice based on direction
+      switch(this.animationChoice){
+        case 'rr':
+          image(right[index], this.x, this.y, this.size, this.size);  
+          break;
+        
+        case 'ru':
+          image(up[index], this.x, this.y, this.size, this.size); 
+          break;
+        
+        case 'rl':
+          image(left[index], this.x, this.y, this.size, this.size);  
+          break;
+        
+        case 'rd':
+          image(down[index], this.x, this.y, this.size, this.size); 
+          break;
       }
-      else if(this.animationChoice == 'ru'){
-        let index = floor(this.index) % up.length;
-        image(up[index], this.x, this.y, this.size, this.size);  
+    }
+    // If action is shoot
+    else if((this.action == 's')){
+      // If the shoot is triggered and the frames are not over
+      if(this.shootTrigger == true && this.shootIndex < shootingFrameCount){
+        let index = floor(this.shootIndex) % shootingFrameCount;
+        
+        switch(this.animationChoice){
+          case 'rr':
+            image(shootRight[index], this.x, this.y, 126, 122);  
+            break;
+          
+          case 'ru':
+            image(shootUp[index], this.x, this.y, 126, 122);  
+            break;
+          
+          case 'rl':
+            image(shootLeft[index], this.x, this.y, 126, 122);  
+            break;
+          
+          case 'rd':
+            image(shootDown[index], this.x, this.y, 126, 122);  
+            break;
+        }
+
+        this.shootIndex += this.frameRate;
       }
-      else if(this.animationChoice == 'rd'){
-        let index = floor(this.index) % down.length;
-        image(down[index], this.x, this.y, this.size, this.size);  
-      }
-      else if(this.animationChoice == 'rl'){
-        let index = floor(this.index) % left.length;
-        image(left[index], this.x, this.y, this.size, this.size);  
+      // If the shoot is triggered but frames are finished
+      else if(this.shootTrigger == true){
+        this.shootTrigger = false;
+        this.shootIndex = 0;
+        this.action = 'r';
       }
     }
     pop();
   }
 
+  check_collision_with_walls(thetaX, thetaY){
+    for(let wall of game.walls){
+      let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall.size/2));
+      let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall.size/2));
+      
+      if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
+        print('Player: Collision with wall');
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   // Moves the archer relative to the canvas
   run_right(){
+    let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rr';
     this.index += this.frameRate * 0.45;
-    this.x += this.speed * 3.00;
+    // this.x += this.speed * 3.00;
+    delta += this.speed * 3.00;
+
     // Edge case
     if(this.x > this.width){
       this.rx += 1;
@@ -122,21 +205,20 @@ class ArcherObj{
       this.rx -= 1;
       this.width = this.rx*400 + 400;
     }
-    // if(this.x > width){
-    //   this.x = -this.w;
-    // }
+
+    return [delta, 0];
   }
 
   
   run_left(){
+    let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rl';
     this.index += this.frameRate * 0.45;
-    this.x -= this.speed * 3.00;
-    // Edge case
-    // if(this.x < -this.w){
-    //   this.x = this.w;
-    // }
+    // this.x -= this.speed * 3.00;
+    delta -= this.speed * 3.00;
+
+    //Edge case
     if(this.x > this.width){
       this.rx += 1;
       this.width = this.rx*400 + 400;
@@ -145,17 +227,19 @@ class ArcherObj{
       this.rx -= 1;
       this.width = this.rx*400 + 400;
     }
+
+    return [delta, 0];
   }
 
   run_up(){
+    let delta = 0;
     this.action = 'r';
     this.animationChoice = 'ru';
     this.index += this.frameRate * 0.75;
-    this.y -= this.speed * 2.00;
+    // this.y -= this.speed * 2.00;
+    delta -= this.speed * 2.00;
+    
     // Edge case
-    // if(this.y < -this.h){
-    //   this.y = height + this.h/2
-    // }
     if(this.y > this.height){
       this.ry += 1;
       this.height = this.ry*400 + 400;
@@ -164,17 +248,19 @@ class ArcherObj{
       this.ry -= 1;
       this.height = this.ry*400 + 400;
     }
+
+    return [0, delta];
   }
 
   run_down(){
+    let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rd';
     this.index += this.frameRate * 0.75;
-    this.y += this.speed * 2.00;
+    // this.y += this.speed * 2.00;
+    delta += this.speed * 2.00;
+    
     // Edge case
-    // if(this.y > height){
-    //   this.y = -this.h;
-    // }
     if(this.y > this.height){
       this.ry += 1;
       this.height = this.ry*400 + 400;
@@ -183,9 +269,18 @@ class ArcherObj{
       this.ry -= 1;
       this.height = this.ry*400 + 400;
     }
+
+    return [0, delta];
+  }
+
+  // Triggers shooting animation
+  shoot(){
+    this.action = 's';
+    this.shootTrigger = true;
   }
   
   // Moves the archer relative to the canvas
+  // For starting screen
   move(){
     this.action = 'r';
     this.animationChoice = 'rr';

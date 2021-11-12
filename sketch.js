@@ -63,6 +63,10 @@ function mouseClicked() {
   let right = [];
   let left = [];
   let down = [];
+  let shootLeft = [];
+  let shootUp = [];
+  let shootRight = [];
+  let shootDown = [];
   
   var tileSquare = 0;
   var tileUneven = 0;
