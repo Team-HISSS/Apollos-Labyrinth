@@ -5,8 +5,10 @@ class WallObj{
       this.size = 20;
     }
     draw(){
+    
       image(wall1, this.x, this.y, 20, 20);
     }
+    
 }
 
 class DoorObj{

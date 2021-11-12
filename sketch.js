@@ -183,7 +183,7 @@ function mouseClicked() {
         knight.runAnimate();
         
         harpy.flyAnimate();
-        harpy.draw();
+        harpy.drawTitleScreen();
 
         archer.draw();
         archer.move();
@@ -286,8 +286,10 @@ function mouseClicked() {
       for(let harpy of game.harpies){
         if(!harpy.dead){
           harpy.draw();
+          harpy.wanderAnimate();
         }
       }
+      
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
       }
