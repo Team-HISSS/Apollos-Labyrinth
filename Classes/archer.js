@@ -92,9 +92,13 @@ class ArcherObj{
       this.shoot();
     }
 
-    // If player collides with the walls
-    if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
-      theta = [0,0];
+    // If player wants to move
+    // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
+    if(theta != [0, 0]){
+      // If player is not colliding with an open door and colliding with walls
+      if(!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])){
+        theta = [0,0];
+      }
     }
 
     // Position update according to movement
@@ -190,11 +194,14 @@ class ArcherObj{
     return false;
   }
 
-  check_collision_with_door(thetaX, thetaY){
+  // Checks if there is an open door and if there is a collision with open door
+  check_collision_with_open_door(thetaX, thetaY){
     for(let door of game.doors){
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (door.x + door.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (door.y + door.size/2));
-      if (!door.open){ // checking if the door is open or not: True if open, False is closed
+
+      // If door is open, i.e. true
+      if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
           print('Player: Collision with door');
           return true;
