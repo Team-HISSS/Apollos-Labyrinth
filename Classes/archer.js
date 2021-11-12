@@ -12,6 +12,8 @@ let runningFrameCount = 8;
 let wall_constraint_x = (100/3 + 20/2);
 let wall_constraint_y = (100/3 + 20/2);
 
+let currFrameCount = 0;
+
 // Keys codes
 let KEY_W = 87;
 let KEY_A = 65;
@@ -21,10 +23,12 @@ let KEY_SPACE = 32;
 
 // Class for the archer
 class ArcherObj{
-  constructor(x, y, rx, ry){ // Possibility for error -> rx, ry not passed
+  constructor(x, y, rx, ry, k, rooms){ // Possibility for error -> rx, ry not passed
+    this.roomNumber = k;
     this.rx = rx;
     this.ry = ry;
     this.action = ' ';
+    this.rooms = rooms; // getting the room list
     // this.chooseAction();
     // this.animation = animation;
     this.animationChoice = ' ';
@@ -39,6 +43,8 @@ class ArcherObj{
     this.width = this.rx*400 +400;
     this.height = this.ry*400 + 400;
     this.shootTrigger = false;
+    this.inRoom = false;
+    this.transition = false;
   }
   
   // Chooses the action of the archer
@@ -70,29 +76,45 @@ class ArcherObj{
     let theta = [0,0];
     
     if(keyIsDown(KEY_W)){
-      print('w');
+      // print('w');
       theta = this.run_up();
     }
     else if(keyIsDown(KEY_A)){
-      print('a');
+      // print('a');
       theta = this.run_left();
     }
     else if(keyIsDown(KEY_S)){
-      print('s');
+      // print('s');
       theta = this.run_down();
     }
     else if(keyIsDown(KEY_D)){
-      print('d');
+      // print('d');
       theta = this.run_right();
     }
     else if(keyIsDown(KEY_SPACE)){
-      print('space');
-      this.shoot();
+      // print('space');
+      // this.shoot();
+      if (currFrameCount < frameCount - 10) {
+        currFrameCount = frameCount;
+        this.shoot();
+        print('Arrow : ' + arrowIndex)
+        game.arrows[arrowIndex].fired = true;
+        game.arrows[arrowIndex].setDirection(this.x + 50, this.y + 50, this.animationChoice);
+        arrowIndex++;
+        if(arrowIndex >= game.arrows.length - 1){
+
+          arrowIndex = 0;
+        }
+      }
     }
 
-    // If player collides with the walls
-    if(theta != [0, 0] && !this.check_collision_with_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])){
-      theta = [0,0];
+    // If player wants to move
+    // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
+    if(theta != [0, 0]){
+      // If player is not colliding with an open door and colliding with walls
+      if(!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])){
+        theta = [0,0];
+      }
     }
 
     // Position update according to movement
@@ -113,7 +135,7 @@ class ArcherObj{
     
     // Run
     if(this.action == ' '){
-      print(this.x);
+      // print(this.x);
       image(up[0], this.x, this.y, this.size, this.size)
     }
     // If the action is run
@@ -178,9 +200,9 @@ class ArcherObj{
     for(let wall of game.walls){
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (wall.x + wall.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (wall.y + wall.size/2));
-      
       if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-        print('Player: Collision with wall');
+        // print(verticalDistance, horizontalDistance);
+        // print('Player: Collision with wall');
         return true;
       }
     }
@@ -188,14 +210,18 @@ class ArcherObj{
     return false;
   }
 
-  check_collision_with_door(thetaX, thetaY){
+  // Checks if there is an open door and if there is a collision with open door
+  check_collision_with_open_door(thetaX, thetaY){
     for(let door of game.doors){
       let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (door.x + door.size/2));
       let verticalDistance = abs((this.y + this.h/2 + thetaY) - (door.y + door.size/2));
-      
-      if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-        print('Player: Collision with door');
-        return true;
+
+      // If door is open, i.e. true
+      if (door.open){ 
+        if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
+          print('Player: Collision with door');
+          return true;
+        }
       }
     }
 
@@ -212,13 +238,25 @@ class ArcherObj{
     delta += this.speed * 3.00;
 
     // Edge case
-    if(this.x > this.width){
+    if(this.x > this.width+20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
-    else if (this.x < this.rx*400){
+    else if (this.x < this.rx*400 - 20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
 
     return [delta, 0];
@@ -234,13 +272,25 @@ class ArcherObj{
     delta -= this.speed * 3.00;
 
     //Edge case
-    if(this.x > this.width){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
-    else if (this.x < this.rx*400){
+    else if (this.x < this.rx*400 -20){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
 
     return [delta, 0];
@@ -255,13 +305,25 @@ class ArcherObj{
     delta -= this.speed * 2.00;
     
     // Edge case
-    if(this.y > this.height){
+    if(this.y > this.height-10){
       this.ry += 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
-    else if (this.y < this.ry*400){
+    else if (this.y < this.ry*400 +10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
 
     return [0, delta];
@@ -276,13 +338,25 @@ class ArcherObj{
     delta += this.speed * 2.00;
     
     // Edge case
-    if(this.y > this.height){
+    if(this.y > this.height-10){
       this.ry += 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
-    else if (this.y < this.ry*400){
+    else if (this.y < this.ry*400+10){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
+      for(var k = 0; k < this.rooms.length; k++){
+        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+          this.roomNumber = this.rooms[k].roomNumber;
+        } 
+      }
+      this.transition = true;
     }
 
     return [0, delta];
@@ -300,7 +374,7 @@ class ArcherObj{
     this.action = 'r';
     this.animationChoice = 'rr';
     this.index += this.frameRate * 0.17;
-    print('Capture.js: this.x ' + this.x)
+    // print('Capture.js: this.x ' + this.x)
     this.x += this.speed * 1.50;
     if(this.x > width){
       this.x = -this.w;

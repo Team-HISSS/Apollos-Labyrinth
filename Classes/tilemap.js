@@ -41,7 +41,9 @@ class Tilemap{
     this.generateRooms();
     
     //hardcode starting players location
-    this.rooms[0].grid[7] = "w        p         w"
+    this.rooms[0].grid[7] = "w        p         w";
+    this.rooms[0].grid[3] = "w h              h w";
+    this.rooms[0].grid[17]= "w h       h      h w";
     
   }
 
@@ -182,7 +184,7 @@ class Tilemap{
 
   generateRooms(){
     for(var i = 0; i < this.neighbors.length; i++){
-      this.rooms[i] = new RoomObj(this.neighbors[i][4], this.neighbors[i][5], [this.neighbors[i][0], this.neighbors[i][1], this.neighbors[i][2], this.neighbors[i][3]]);
+      this.rooms[i] = new RoomObj(this.neighbors[i][4], this.neighbors[i][5], [this.neighbors[i][0], this.neighbors[i][1], this.neighbors[i][2], this.neighbors[i][3]], i);
     }
   }
 

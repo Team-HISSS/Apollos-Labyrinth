@@ -10,11 +10,15 @@ class WallObj{
 }
 
 class DoorObj{
-  constructor(x,y){
+  constructor(x,y, id, location){
 
+    this.roomNumber = id;
+    this.location = location;
     this.x = x;
     this.y = y; 
     this.size = 20;
+    this.open = false;
+    this.cameFrom = false;
   }
   draw(){
 

@@ -68,6 +68,8 @@ function mouseClicked() {
   let shootUp = [];
   let shootRight = [];
   let shootDown = [];
+  let arrowCapture;
+  let arrowIndex = 0;
   
   var tileSquare = 0;
   var tileUneven = 0;
@@ -275,6 +277,8 @@ function mouseClicked() {
       // print(roomOffsetX, roomOffsetY);
       // fill(255, 0 ,0);
       // ellipse(roomOffsetX, roomOffsetY, 20, 20)
+      // print(game.player.roomNumber);
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
       translate(-roomOffsetX, -roomOffsetY)
         background(255);
         startSong.stop();
@@ -285,19 +289,53 @@ function mouseClicked() {
       
      
             
-      for(var i = 0; i < game.harpies.length; i++){
-        game.harpies[i].draw();
+      for(let harpy of game.harpies){
+        if(!harpy.dead){
+          harpy.draw();
+        }
       }
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
       }
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
-        game.doors[i].draw();
+        if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
+          // if(!game.player.transiion){
+            game.doors[i].open = true;
+          // }
+        }
+        if (!game.doors[i].open){ // checking if the door is open or not: True if open, False is closed
+          game.doors[i].draw();
+        }
       }
       game.player.draw();
       game.player.checkMovement();
+      for(let arrow of game.arrows){
+        arrow.draw();
+      }
+      var randNum = int(random(0, 100))
+      if (randNum == 50){ // randomly killing the enemies present in the room
+        if(game.tm.rooms[game.player.roomNumber].numEnemies > 0){
+          game.tm.rooms[game.player.roomNumber].numEnemies -= 1; // each room stores the number of enemies in the room
+        }
+      }
+      // each room now also has a unique ID for itself, the player can get the unique ID from the room.
+      // print('Sketch.js: ' + game.player.roomNumber);
+      // print('Sketch.js: ' + game.tm.rooms[game.player.roomNumber].numEnemies);
+      if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
+        // if(!game.player.transiion){
+         game.player.inRoom = true;
+        // }
+      }
       // game.map.printMap();
+      // game.updateNeighborDoor();
+      if (game.player.inRoom && game.player.transition){
+        for (var i = 0; i < game.doors.length; i++){
+          game.doors[i].open = false;
+        }
+        game.player.inRoom =false;
+        game.player.transition = false;
+      }
       pop();
     }
     //game over screen
