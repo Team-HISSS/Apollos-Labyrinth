@@ -87,7 +87,8 @@ function mouseClicked() {
   let archer;
 
   var harpySprite;
-  var flyHarpy = [];
+  var flyHarpyLeft = [];
+  var flyHarpyRight = [];
   var harpy;
 
   var snakeSheet; 

@@ -28,13 +28,16 @@ function captureHarpy(){
   push();
     background(220, 220, 220, 0);
     image(harpySprite, 0, 0);
-    let j = 2;
+    let j = 1;
     let startFrame = 0;
     let numOfFrames = 4;
     for(let i = startFrame; i < numOfFrames; i++){
-      flyHarpy.push(get((i * harpySize) - 4, (j * harpySize) + 8, harpySize, harpySize)); // Vertical offset by 8 pixels and horizontal by 4 pixels
+      flyHarpyLeft.push(get((i * harpySize) - 4, (j * harpySize) + 8, harpySize, harpySize)); // Vertical offset by 8 pixels and horizontal by 4 pixels
+      flyHarpyRight.push(get((i * harpySize) - 4, ((j + 1) * harpySize) + 8, harpySize, harpySize)); 
     }
   pop();
+
+  push()
 }
 
 // Captures the frames of the knight

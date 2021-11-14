@@ -12,6 +12,9 @@ let runningFrameCount = 8;
 let wall_constraint_x = (100/3.5 + 20/2);
 let wall_constraint_y = (100/3.5 + 20/2);
 
+let door_constraint_x = (100/3 + 20/2);
+let door_constraint_y = (100/3 + 20/2);
+
 let harpy_constraint_x = (100/6 + harpy_center_radius/2);
 let harpy_constraint_y = (100/6 + harpy_center_radius/2);
 
@@ -244,12 +247,13 @@ class ArcherObj{
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           print('Player: Collision with harpy');
           this.dead = true;
-          return true;
+          // return true;
         }
       }
     }
 
-    return false;
+    // return false;
+    
   }
 
   // Moves the archer relative to the canvas
