@@ -229,12 +229,12 @@ class ArcherObj{
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
           print('Player: Collision with door');
-          // return true;
+          return true;
         }
       }
     }
 
-    // return false;
+    return false;
   }
 
   check_collision_with_harpy(){
