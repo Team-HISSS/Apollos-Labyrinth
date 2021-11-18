@@ -20,7 +20,7 @@ class knightObj {
         this.index += this.speed;
         this.x -= this.speed * 5;
         if (this.x < -width) {
-            this.x = 100;
+            this.x = 126;
         }
     }
   }

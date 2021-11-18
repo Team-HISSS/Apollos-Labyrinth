@@ -1,22 +1,26 @@
 // Speed and Frame Rates of the archer in different actions
 let archerWalkSpeed = 0.3;
 let archerWalkFrameRate = 0.3;
-let archerRunSpeed = 1;
-let archerRunFrameRate = 1;
+let archerRunSpeed = 3.10;
+let archerRunFrameRate = 0.34;
 let archerShootSpeed = 0;
 let archerShootFrameRate = 0.17;
 
 let shootingFrameCount = 4;
 let runningFrameCount = 8;
 
-let wall_constraint_x = (100/3.5 + 20/2);
-let wall_constraint_y = (100/3.5 + 20/2);
+let wall_constraint_x = (126/3 + 20/2);
+let wall_constraint_y = (122/3 + 20/2);
 
-let door_constraint_x = (100/3 + 20/2);
-let door_constraint_y = (100/3 + 20/2);
+let door_constraint_x = (126/3 + 20/2);
+let door_constraint_y = (122/3 + 20/2);
 
-let harpy_constraint_x = (100/6 + harpy_center_radius/2);
-let harpy_constraint_y = (100/6 + harpy_center_radius/2);
+let harpy_constraint_x = (126/6 + harpy_center_radius/2);
+let harpy_constraint_y = (122/6 + harpy_center_radius/2);
+
+let easterEgg_center_radius = 10;
+let easterEgg_constraint_x = easterEgg_center_radius + 126/3;
+let easterEgg_constraint_y = easterEgg_center_radius + 122/3;
 
 let currFrameCount = 0;
 
@@ -38,8 +42,8 @@ class ArcherObj{
     // this.chooseAction();
     // this.animation = animation;
     this.animationChoice = ' ';
-    this.w = 100;
-    this.h = 100;
+    this.w = 126;
+    this.h = 122;
     this.x = x;
     this.y = y;
     this.dead = false;
@@ -114,7 +118,7 @@ class ArcherObj{
         }
       }
     }
-
+    this.check_collision_with_easterEgg();
     this.check_collision_with_harpy();
 
     // If player wants to move
@@ -129,6 +133,7 @@ class ArcherObj{
     // Position update according to movement
     this.x += theta[0];
     this.y += theta[1];
+
   }
 
   // Draws the frame
@@ -145,7 +150,7 @@ class ArcherObj{
     // Run
     if(this.action == ' '){
       // print(this.x);
-      image(up[0], this.x, this.y, this.size, this.size)
+      image(up[0], this.x, this.y, this.w, this.h)
     }
     // If the action is run
     else if(this.action == 'r'){
@@ -153,19 +158,19 @@ class ArcherObj{
       // Animation choice based on direction
       switch(this.animationChoice){
         case 'rr':
-          image(right[index], this.x, this.y, this.size, this.size);  
+          image(right[index], this.x, this.y, this.w, this.h);  
           break;
         
         case 'ru':
-          image(up[index], this.x, this.y, this.size, this.size); 
+          image(up[index], this.x, this.y, this.w, this.h); 
           break;
         
         case 'rl':
-          image(left[index], this.x, this.y, this.size, this.size);  
+          image(left[index], this.x, this.y, this.w, this.h);  
           break;
         
         case 'rd':
-          image(down[index], this.x, this.y, this.size, this.size); 
+          image(down[index], this.x, this.y, this.w, this.h); 
           break;
       }
     }
@@ -246,14 +251,31 @@ class ArcherObj{
       if (!harpy.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           print('Player: Collision with harpy');
-          this.dead = true;
-          // return true;
+          // If the easter egg is taken, the archer can kill the harpies on contact
+          // !!! Only for developers !!!
+          if(game.easterEgg.taken){
+            harpy.dead = true;  
+          }
+          else{
+            this.dead = true;
+          }
         }
       }
-    }
+    }    
+  }
 
-    // return false;
+  check_collision_with_easterEgg(){
+    let horizontalDistance = abs((this.x + this.w/2) - (game.easterEgg.x + easterEgg_center_radius));
+    let verticalDistance = abs((this.y + this.h/2) - (game.easterEgg.y + easterEgg_center_radius));
+
+    // If harpy is not dead
+    if (!game.easterEgg.taken){ 
+      if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
+        print('Player: Collision with easter egg');
+        game.easterEgg.taken = true;
     
+      }
+    }
   }
 
   // Moves the archer relative to the canvas
@@ -261,9 +283,9 @@ class ArcherObj{
     let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate * 0.45;
+    this.index += this.frameRate;
     // this.x += this.speed * 3.00;
-    delta += this.speed * 3.00;
+    delta += this.speed;
 
     // Edge case
     if(this.x > this.width+20){
@@ -295,9 +317,9 @@ class ArcherObj{
     let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rl';
-    this.index += this.frameRate * 0.45;
+    this.index += this.frameRate;
     // this.x -= this.speed * 3.00;
-    delta -= this.speed * 3.00;
+    delta -= this.speed;
 
     //Edge case
     if(this.x > this.width + 20){
@@ -328,12 +350,12 @@ class ArcherObj{
     let delta = 0;
     this.action = 'r';
     this.animationChoice = 'ru';
-    this.index += this.frameRate * 0.75;
+    this.index += this.frameRate;
     // this.y -= this.speed * 2.00;
-    delta -= this.speed * 2.00;
+    delta -= this.speed;
     
     // Edge case
-    if(this.y > this.height - 10){
+    if(this.y > this.height - 0){
       this.ry += 1;
       this.height = this.ry * 400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -343,7 +365,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.y < this.ry*400 +10){
+    else if (this.y< this.ry*400 +0){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -361,12 +383,12 @@ class ArcherObj{
     let delta = 0;
     this.action = 'r';
     this.animationChoice = 'rd';
-    this.index += this.frameRate * 0.75;
+    this.index += this.frameRate;
     // this.y += this.speed * 2.00;
-    delta += this.speed * 2.00;
+    delta += this.speed;
     
     // Edge case
-    if(this.y > this.height-10){
+    if(this.y > this.height-0){
       this.ry += 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -376,7 +398,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.y < this.ry*400+10){
+    else if (this.y < this.ry*400+0){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -401,9 +423,9 @@ class ArcherObj{
   move(){
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate * 0.17;
+    this.index += this.frameRate/2; // * 0.17
     // print('Capture.js: this.x ' + this.x)
-    this.x += this.speed * 1.50;
+    this.x += this.speed - 1.60; ///* 1.50;
     if(this.x > width){
       this.x = -this.w;
     }

@@ -38,4 +38,16 @@ class FloorObj{
     image(tileSquare, this.x, this.y, 20, 20);
   }
 }
+
+class EasterEgg{
+  constructor(x, y){
+    this.x = x;
+    this.y = y;
+    this.size = 20;
+    this.taken = false;
+  }
+  draw(){
+    image(easterEggCapture, this.x, this.y, 20, 20);
+  }
+}
     
