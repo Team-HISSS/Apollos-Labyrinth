@@ -10,7 +10,7 @@ class GameObj {
       this.doors = [];
       this.snakes = [];
       this.tiles = [];
-      this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj()];
+      this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj()];
       
       //Tilemap class instance. Contains a large map full of Room objects
       this.tm = new Tilemap(6,6, int(random(10,20)));

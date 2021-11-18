@@ -98,13 +98,13 @@ class ArcherObj{
       // print('d');
       theta = this.run_right();
     }
-    else if(keyIsDown(KEY_SPACE)){
+    if(keyIsDown(KEY_SPACE)){
       // print('space');
       // this.shoot();
-      if (currFrameCount < frameCount - 10) {
+      if (currFrameCount < frameCount - 30) {
         currFrameCount = frameCount;
         this.shoot();
-        print('Arrow : ' + arrowIndex)
+        // print('Arrow : ' + arrowIndex)
         game.arrows[arrowIndex].fired = true;
         game.arrows[arrowIndex].setDirection(this.x + 50, this.y + 50, this.animationChoice);
         arrowIndex++;
