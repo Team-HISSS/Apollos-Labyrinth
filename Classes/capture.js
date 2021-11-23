@@ -86,44 +86,45 @@ function captureArrow(){
 }
 
 // Captures the frames of right moving archer
-function captureUp(){
+function captureMovement(){
+
+  let startFrame = 4;
+  let numOfFrames = 8;
 
   push();
   image(archerSprite, 0, 0);
-  let j = 2;
-  for(let i = 0; i < 8; i++){
-    up.push(get(540 + (i * 127) - 50, 122 * j, 100, 100));
+  
+  for(let i = startFrame, j = 2; i < startFrame + numOfFrames; i++){
+    if(i < startFrame + 4){
+      up.push(get((i * 126) - 26, 122 * j, 126, 122));
+    }else{
+      up.push(get((i * 126) - 22, 122 * j, 126, 122));
+    }
+    
   }
-  pop();
-}
-
-function captureRight(){
-
-  push();
-  image(archerSprite, 0, 0);
-  let j = 4;
-  for(let i = 0; i < 8; i++){
-    right.push(get(540 + (i * 127) - 50, 122 * j, 100, 100));
+  
+  for(let i = startFrame, j = 4; i < startFrame + numOfFrames; i++){
+    if(i < startFrame + 4){
+      right.push(get((i * 126) - 26, (122 * j) + 16, 126, 122));
+    }else{
+      right.push(get((i * 126) - 22, (122 * j) + 16, 126, 122));
+    }
   }
-  pop();
-}
 
-function captureDown(){
-  push();
-  image(archerSprite, 0, 0);
-  let j = 6;
-  for(let i = 0; i < 8; i++){
-    down.push(get(540 + (i * 127) - 50, 122 * j, 100, 100));
+  for(let i = startFrame, j = 6; i < startFrame + numOfFrames; i++){
+    if(i < startFrame + 4){
+      down.push(get((i * 126) - 26, 122 * j, 126, 122));
+    }else{
+      down.push(get((i * 126) - 22, 122 * j, 126, 122));
+    }
   }
-  pop();
-}
-
-function captureLeft(){
-  push();
-  image(archerSprite, 0, 0);
-  let j = 0;
-  for(let i = 0; i < 8; i++){
-    left.push(get(540 + (i * 127) - 50, 122 * j, 100, 100));
+  
+  for(let i = startFrame, j = 0; i < startFrame + numOfFrames; i++){
+    if(i < startFrame + 4){
+      left.push(get((i * 126) - 26, 122 * j, 126, 122));
+    }else{
+      left.push(get((i * 126) - 22, 122 * j, 126, 122));
+    }
   }
   pop();
 }
@@ -149,9 +150,19 @@ function captureShoot(){
   pop();
 }
 
+function captureEasterEgg(){
+  push();
+  image(architSheet, 0, 0);
+
+    easterEggCapture = get(36, 260, 25, 25);
+  pop();
+}
+
 // Captures all the animation of the archer
 // Function has to be called before creating canvas
 function captureAllAnimation(){
+  createCanvas(640, 640);
+    captureEasterEgg();
   createCanvas(400, 400);
     captureHarpy();
   createCanvas(400, 400);
@@ -161,10 +172,7 @@ function captureAllAnimation(){
   createCanvas(700, 200);
     captureArrow();
   createCanvas(4032, 976);
-    captureUp();
-    captureRight();
-    captureLeft();
-    captureDown();
+    captureMovement();
     captureShoot();
   // createCanvas(4032, 976);
 }

@@ -70,6 +70,7 @@ function mouseClicked() {
   let shootDown = [];
   let arrowCapture;
   let arrowIndex = 0;
+  let easterEggCapture;
 
   let harpySize = 64;
   let wall_center_radius = 10;
@@ -85,6 +86,7 @@ function mouseClicked() {
   var speed = 0.3;
   var knight;
   let archer;
+  let architSheet;
 
   var harpySprite;
   var flyHarpyLeft = [];
@@ -314,6 +316,9 @@ function mouseClicked() {
         if (!game.doors[i].open){ // checking if the door is open or not: True if open, False is closed
           game.doors[i].draw();
         }
+      }
+      if(!game.easterEgg.taken){
+        game.easterEgg.draw();
       }
       game.player.draw();
       game.player.checkMovement();

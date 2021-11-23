@@ -11,6 +11,7 @@ class GameObj {
       this.snakes = [];
       this.tiles = [];
       this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj()];
+      this.easterEgg = 0;
       
       //Tilemap class instance. Contains a large map full of Room objects
       this.tm = new Tilemap(6,6, int(random(10,20)));
@@ -47,6 +48,10 @@ class GameObj {
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 3));
             case "s":
               this.snakes.push(new SnakeObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
+              break;
+            case "e":
+              print('Easter drawn')
+              this.easterEgg = new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20);
               break;
           }
           if(this.tm.rooms[k].grid[i][j] != "w" && this.tm.rooms[k].grid[i][j] != "d")

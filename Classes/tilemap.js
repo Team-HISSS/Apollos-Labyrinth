@@ -25,13 +25,9 @@ class Tilemap{
     this.startX = int(this.width / 2);
     this.startY = int(this.height / 2);
 
-    while(this.getEndRooms.length != 4){
-      this.resetMap();
-      this.generateMap(this.startX, this.startY, this.numRooms);
-    }
+    this.resetMap();
+    this.generateMap(this.startX, this.startY, this.numRooms);
 
-    //find neighbors of 1s and 0s
-    
     //neighbors = rooms x neighbors array
     this.neighbors = new Array(this.numRooms + 1);
     for(var i = 0; i < this.neighbors.length; i++){
@@ -40,6 +36,13 @@ class Tilemap{
     //initialize neighbors list
     this.getNeighbors();
 
+    while(this.getEndRooms.length != 4){
+      this.resetMap();
+      this.generateMap(this.startX, this.startY, this.numRooms);
+      //initialize neighbors list
+      this.getNeighbors();
+
+    }
     //rooms array
     this.rooms = new Array(this.numRooms);
 
@@ -196,7 +199,9 @@ class Tilemap{
   //return array of locations of all end rooms
   getEndRooms(){
     var endRoomsList = [];
-    
+    for(var i = 0; i < 4; i++){
+      
+    }
     return endRoomsList = [];
 
   }
@@ -216,6 +221,5 @@ class Tilemap{
         this.neighbors[i] = [0,0,0,0,0,0];
       }
   }
-
 
 }
