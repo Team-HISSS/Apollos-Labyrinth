@@ -12,7 +12,7 @@ class ArrowObj {
         // this.angle = angle;
         this.vec = new p5.Vector(0, -1);
         this.vec.set(cos(this.angle), sin(this.angle));
-        
+        this.direction = 0;
         this.x = 0;
         this.y = 0;
         this.fired = false;
@@ -61,6 +61,8 @@ class ArrowObj {
                         blocked = true;
                         this.fired = false;
                         harpy.dead = true;
+                        game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        // switch the enemy to its death state
                         break;
                     }
                 }
@@ -78,11 +80,28 @@ class ArrowObj {
             pop();
             }
     }
-
+    los(x, y, ind) { //checking if a arrow is in an enemy's line of sight
+        var projectiony = 0; // projected y position of the arrow
+    
+        var projectionx = 0; // projected x position of the arrow 
+        if (this.fired) { // Check for los only if the arrow is fired
+          // Need to change the angle depending on the direction in which the arrow is shot, 4 if conditions
+          projectiony = tan(this.angle + HALF_PI) * (x - this.x) + this.y; // get the projected y location using y = mx +c
+          projectionx = (y - this.y) / tan(this.angle + HALF_PI) + this.x; // get the projected x location using x = (y-c)/m
+          if (dist(x, y, projectionx, projectiony) < 90) { // if the distance between the projected coordinates and the actual coordinates is less than 90, then the arrow is in sight
+            return true;
+          } else {
+            return false;
+          }
+        } else {
+          return false;
+        }
+      }
     // Sets the direction for the arrow based on the stance of the archer
     setDirection(x, y, direction){
         this.x = x;
         this.y = y;
+        this.direction = direction;
         switch(direction){
                 
             case 'rl':
