@@ -14,7 +14,7 @@ class GameObj {
       this.easterEgg = 0;
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(6,6, int(random(10,20)));
+      this.tm = new Tilemap(8,8, int(random(10,20)));
       this.currRoom = 0;
     }
     //initially draw tile map onto canvas

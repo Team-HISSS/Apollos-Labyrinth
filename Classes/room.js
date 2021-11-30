@@ -3,7 +3,6 @@ class RoomObj{
     this.roomNumber = num;
     this.x = x; 
     this.y = y;
-    this.numEnemies = 0;
     this.doorsOpen = [];
     this.neighbors = neighbors; 
     this.grid = [
@@ -29,8 +28,16 @@ class RoomObj{
       "wwwwwwwww  wwwwwwwww",
     ]; 
 
-    //adding door locations based on neighbors so character can traverse between rooms. 
-    
+    //room properties
+    this.numEnemies = 0;
+    this.isStartRoom = false; 
+    this.isEndRoom = false; 
+    //room level depends on how close the room is from the start room. 
+    //Room lvls 0,1,2,3,4.  
+    //0 no enemies, 1 easy next to start room, 2 medium kind of close to start room, 
+    //3 hard far away from start room, 4 boss rooms end rooms
+    this.roomLvl = 0; 
+    //adding door locations based on neighbors so character can traverse between rooms.
     //move top room 
     if(this.neighbors[0] == 1){
       this.grid[0] = "wwwwwwwwwttwwwwwwwww";

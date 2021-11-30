@@ -317,9 +317,9 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      if(!game.easterEgg.taken){
-        game.easterEgg.draw();
-      }
+      // if(!game.easterEgg.taken){
+      //   game.easterEgg.draw();
+      // }
       game.player.draw();
       game.player.checkMovement();
       for(let arrow of game.arrows){
