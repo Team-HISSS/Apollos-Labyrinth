@@ -1,16 +1,14 @@
 class Tilemap{
   constructor(width, height, numRooms){
-    //construct room grid. Width and height of entire grid
+    //construct room grid
     this.width = width;
     this.height = height; 
     
-    //map is a member that is 1 when a room is present and 0 if it is not
     this.map = new Array(this.width);
     for(var i = 0; i < this.width; i++){
       this.map[i] = new Array(this.height);
     }
     
-    //setting map to all 0s
     for(var i = 0; i < this.width; i++){
       for(var j = 0; j < this.height; j++)
         {
@@ -18,21 +16,22 @@ class Tilemap{
           //print(this.map[i][j]);
         }
     }
-    
     //print("num rooms: " + str(numRooms));
     this.numRooms = numRooms;  
     //generate random map 1s and 0s
     this.startX = int(this.width / 2);
     this.startY = int(this.height / 2);
 
-    this.resetMap();
     this.generateMap(this.startX, this.startY, this.numRooms);
 
+    //find neighbors of 1s and 0s
+    
     //neighbors = rooms x neighbors array
     this.neighbors = new Array(this.numRooms + 1);
     for(var i = 0; i < this.neighbors.length; i++){
       this.neighbors[i] = [0,0,0,0,0,0];
     }
+
     //initialize neighbors list
     this.getNeighbors();
 
@@ -41,7 +40,7 @@ class Tilemap{
       this.generateMap(this.startX, this.startY, this.numRooms);
       //initialize neighbors list
       this.getNeighbors();
-      print("end rooms: " + this.getEndRooms());
+      //print("end rooms: " + this.getEndRooms());
     //}
     //rooms array
     this.rooms = new Array(this.numRooms);
@@ -49,9 +48,9 @@ class Tilemap{
     this.generateRooms();
     
     //hardcode starting players location
-    this.rooms[0].grid[7] = "w        p         w";
-    this.rooms[0].grid[3] = "w                  w";
-    this.rooms[0].grid[17]= "w                  w";
+    this.rooms[0].grid[7] = "w        p       e w";
+    this.rooms[0].grid[3] = "w h              h w";
+    this.rooms[0].grid[17]= "w h       h      h w";
     
   }
 
@@ -189,7 +188,7 @@ class Tilemap{
       }
     }
   }
-  //updates rooms array to contain room object with correct tilemap location
+
   generateRooms(){
     for(var i = 0; i < this.neighbors.length; i++){
       //x,y, 0-4 is all neighbors
@@ -198,29 +197,30 @@ class Tilemap{
   }
 
   //return array of locations of all end rooms
-  getEndRooms(){
+  findEndRooms(){
     var endRoomsList = [];
-    for(var i = 0; i < this.neighbors.length; i++){
-      //this.rooms[i]
+    for(var i = 0; i < this.rooms.length; i++){
+      if(this.rooms[i].isEndRoom){
+        endRoomsList.push(i);
+      }
     }
-    return endRoomsList = [];
-
+    return endRoomsList; 
   }
 
-  //sets map to all 0s and neighbors to all 0s
   resetMap(){
-    for(var i = 0; i < this.width; i++){
-      for(var j = 0; j < this.height; j++)
-        {
-          this.map[i][j] = 0;
-        }
+    for(var x = 0; x < this.width; x++){
+      for(var y = 0; y < this.height; y++){
+        this.map[x][y] = 0; 
+      }
     }
 
-    //neighbors = rooms x neighbors array
-    this.neighbors = new Array(this.numRooms + 1);
     for(var i = 0; i < this.neighbors.length; i++){
-        this.neighbors[i] = [0,0,0,0,0,0];
-      }
+      this.neighbors[i] = [0,0,0,0,0,0];
+    }
+    // getEndRooms(){
+      
+    // }
+
   }
 
 }
