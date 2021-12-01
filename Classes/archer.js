@@ -57,6 +57,7 @@ class ArcherObj{
     this.shootTrigger = false;
     this.inRoom = false;
     this.transition = false;
+    this.futureHeight = 0;
   }
   
   // Chooses the action of the archer
@@ -394,7 +395,7 @@ class ArcherObj{
     delta += this.speed;
 
     // Edge case
-    if(this.x > this.width+40){
+    if(this.x > this.width + 40){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -404,7 +405,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.x < this.rx*400 - 40){
+    else if (this.x < this.rx*400 - 125){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -438,7 +439,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.x < this.rx*400 -40){
+    else if (this.x < this.rx*400 -125){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -469,22 +470,32 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      if (this.y > this.height -30){
+      if (this.y < this.height -30){
         this.transition = true;
       }
     }
-    else if (this.y< this.ry*400){
-      this.ry -= 1;
-      this.height = this.ry*400 + 400;
-      for(var k = 0; k < this.rooms.length; k++){
-        if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
-          this.roomNumber = this.rooms[k].roomNumber;
-        } 
-      }
-      if (this.y > this.height +30){
-        this.transition = true;
-      }
+    if (this.y < this.futureHeight - 120){
+      this.transition = true;
+      this.futureHeight = 0;
     }
+    if (this.y< this.ry*400){
+      // print(this.y, this.ry*400+50);
+      // if (this.y < this.ry*400 + 50){
+      //   this.transition = true;
+      // }
+      this.futureHeight = (this.ry -1)*400 + 400;
+      if(this.transition){
+        this.ry -= 1;
+        this.height = this.ry*400 + 400;
+        for(var k = 0; k < this.rooms.length; k++){
+          if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
+            this.roomNumber = this.rooms[k].roomNumber;
+          } 
+        }
+      }
+      
+    }
+    
 
     return [0, delta];
   }
@@ -506,11 +517,14 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      if (this.y > this.height -30){
+      if (this.y < this.height -30){
         this.transition = true;
       }
     }
-    else if (this.y< this.ry*400 +0){
+    else if (this.y< this.ry*400){
+      if (this.y < this.ry*400 +50){
+        this.transition = true;
+      }
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -518,9 +532,10 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      if (this.y > this.height +30){
-        this.transition = true;
-      }
+      // print(this.y, this.height+ 30);
+      // if (this.y > this.height +30){
+      //   this.transition = true;
+      // }
     }
 
     return [0, delta];
