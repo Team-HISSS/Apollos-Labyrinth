@@ -14,7 +14,7 @@ class SnakeObj {
         this.scalex = 0; 
         this.scaley = 0; 
         //this.state = [new MoveState(), new SnakeWanderState(), new SnakeChaseState()];
-        this.state = [new SnakeWanderState(), new SnakeChaseState()];
+        this.state = [new SnakeWanderState()]//, new SnakeChaseState()];
         this.randDir = 0; 
         this.randDist = 0; 
         this.currState = 0;
@@ -148,7 +148,7 @@ class SnakeWanderState{ // To make any enemy wander around in the room
                 me.direction = 3;
             }
 
-            me.currState = 1;
+            //me.currState = 1;
         }
         if(abs(me.y - game.player.y) < 2){
             //print("Change state");
@@ -160,7 +160,7 @@ class SnakeWanderState{ // To make any enemy wander around in the room
                 me.direction = 0;
             }
 
-            me.currState = 1;
+          //  me.currState = 1;
         }
 
     }       

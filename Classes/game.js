@@ -51,7 +51,7 @@ class GameObj {
               break;
             case "s":
               this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
-              numEnemies++; 
+              // numEnemies++; 
               break;
             case "a":
               // Health easter egg

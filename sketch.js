@@ -367,6 +367,9 @@ function mouseClicked() {
          game.player.inRoom = true;
         // }
       }
+      if(game.tm.rooms[game.player.roomNumber].endRoom){
+        print("End Rooms");
+      }
       // game.map.printMap();
       // game.updateNeighborDoor();
       if (game.player.inRoom && game.player.transition){
@@ -390,6 +393,7 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
+    // game.tm.printMap();
   
   }
 
