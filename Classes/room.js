@@ -9,7 +9,7 @@ class RoomObj{
       "wwwwwwwww  wwwwwwwww",
       "w                  w",
       "w                  w",
-      "w  s               w",
+      "w                  w",
       "w                  w",
       "w                  w",
       "w                  w",

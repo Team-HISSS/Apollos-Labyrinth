@@ -57,10 +57,21 @@ class ArrowObj {
                 }
 
                 for (let harpy of game.harpies){
-                    if(!harpy.dead && this.check_collision_with_enemy(harpy)){
+                    if(!harpy.dead && this.check_collision_with_harpy(harpy)){
                         blocked = true;
                         this.fired = false;
                         harpy.dead = true;
+                        game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        // switch the enemy to its death state
+                        break;
+                    }
+                }
+
+                for(let snake of game.snakes){
+                    if(!snake.isAlive && this.check_collision_with_snake(snake)){
+                        blocked = true;
+                        this.fired = false;
+                        snake.isAlive = false;
                         game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
                         // switch the enemy to its death state
                         break;
@@ -165,17 +176,28 @@ class ArrowObj {
     }
 
     // Check collision with the harpy
-    check_collision_with_enemy(enemy){
+    check_collision_with_harpy(enemy){
             let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x + harpy_center_radius));
             let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + harpy_center_radius));
             // print('Enemy.x ' + enemy.x)
             if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2){
-              
-              print('Arrow: Collision with enemy');
+              print('Arrow: Collision with harpy');
               return true;
         }
         return false;
     }
+
+    // Check collision with the harpy
+    check_collision_with_snake(enemy){
+        let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x + 15));
+        let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + 15));
+        // print('Enemy.x ' + enemy.x)
+        if(verticalDistance < this.enemy_constraint_y + 15/2 && horizontalDistance < this.enemy_constraint_x + 15/2){
+          print('Arrow: Collision with snake');
+          return true;
+    }
+    return false;
+}
 
     
     fall(range) {

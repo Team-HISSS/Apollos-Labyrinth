@@ -121,8 +121,6 @@ function mouseClicked() {
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
 
-
-
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -135,10 +133,21 @@ function mouseClicked() {
     captureAllAnimation();
     createCanvas(400, 400);   
     
-    // Creates the harpy and knight
+    //create snake picture
+    image(snakeSheet, 0, 0, 400, 400);
+    //3 horizontal animations
+    var snake_1 = get(10, 130, 20, 35);
+    var snake_2 = get(47.5, 130, 20, 35);
+    var snake_3 = get(87.5, 130, 20, 35);
+    //2 vertical animations
+    var snake_5 = get(50, 360, 20, 40);
+    var snake_6 = get(90, 360 , 20 ,40);
+    snakeAnimations = [snake_1, snake_2, snake_3, snake_5, snake_6];
+    
+    // Creates the harpy, snake, and knight
     harpy = new HarpyObj(200, 50);
     knight = new knightObj(-100, 300, 0.3);
-
+    
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
@@ -295,12 +304,17 @@ function mouseClicked() {
       }
       
      
-            
+      //draw snakes 
       for(let harpy of game.harpies){
         if(!harpy.dead){
           harpy.draw();
           harpy.wanderAnimate();
         }
+      }
+
+      for(var i = 0; i < game.snakes.length; i++){
+        game.snakes[i].draw();
+        game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
       }
       
       for(var i = 0; i < game.walls.length; i++){
