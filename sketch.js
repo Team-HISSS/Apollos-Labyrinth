@@ -70,7 +70,7 @@ function mouseClicked() {
   let shootDown = [];
   let arrowCapture;
   let arrowIndex = 0;
-  let easterEggCapture;
+  let easterEggCapture = [];
 
   let harpySize = 64;
   let wall_center_radius = 10;
@@ -317,9 +317,12 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      // if(!game.easterEgg.taken){
-      //   game.easterEgg.draw();
-      // }
+
+      for(let egg of game.easterEggs){
+        if(!egg.taken){
+          egg.draw();
+        }
+      }
       game.player.draw();
       game.player.checkMovement();
       for(let arrow of game.arrows){

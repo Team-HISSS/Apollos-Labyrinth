@@ -153,8 +153,8 @@ function captureShoot(){
 function captureEasterEgg(){
   push();
   image(architSheet, 0, 0);
-
-    easterEggCapture = get(36, 260, 25, 25);
+    easterEggCapture.push(get(36, 260, 25, 25)); // For developers only
+    easterEggCapture.push(get(548, 611, 25, 25)); // For health increase
   pop();
 }
 

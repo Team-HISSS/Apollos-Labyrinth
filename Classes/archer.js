@@ -251,13 +251,21 @@ class ArcherObj{
       if (!harpy.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           print('Player: Collision with harpy');
-          // If the easter egg is taken, the archer can kill the harpies on contact
-          // !!! Only for developers !!!
-          if(game.easterEgg.taken){
-            harpy.dead = true;
-            game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+          
+          // If the easter egg for ultimate kill power is found
+          let flag = false;
+          
+          for(let egg of game.easterEggs){
+            // If the easter egg is taken, the archer can kill the harpies on contact
+            // !!! Only for developers !!!
+            if(egg.taken && egg.index == 0){
+              harpy.dead = true;
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+              flag = true;
+              break;
+            }
           }
-          else{
+          if(!flag){
             this.dead = true;
           }
         }
@@ -272,28 +280,36 @@ class ArcherObj{
       if (!harp.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           print('Player: Collision with harpy');
-          // If the easter egg is taken, the archer can kill the harpies on contact
-          // !!! Only for developers !!!
-          if(game.easterEgg.taken){
-            harp.dead = true;
-            game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+          // If the easter egg for ultimate kill power is found
+          let flag = false;
+          
+          for(let egg of game.easterEggs){
+            // If the easter egg is taken, the archer can kill the harpies on contact
+            // !!! Only for developers !!!
+            if(egg.taken && egg.index == 0){
+              harpy.dead = true;
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+              flag = true;
+              break;
+            }
           }
-          else{
+          if(!flag){
             this.dead = true;
           }
         }
       }   
   }
   check_collision_with_easterEgg(){
-    let horizontalDistance = abs((this.x + this.w/2) - (game.easterEgg.x + easterEgg_center_radius));
-    let verticalDistance = abs((this.y + this.h/2) - (game.easterEgg.y + easterEgg_center_radius));
-
     // If harpy is not dead
-    if (!game.easterEgg.taken){ 
-      if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
-        print('Player: Collision with easter egg');
-        game.easterEgg.taken = true;
-    
+    for( let egg of game.easterEggs){
+      let horizontalDistance = abs((this.x + this.w/2) - (egg.x + easterEgg_center_radius));
+      let verticalDistance = abs((this.y + this.h/2) - (egg.y + easterEgg_center_radius));
+      if (!egg.taken){ 
+        if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
+          print('Player: Collision with easter egg');
+          egg.taken = true;
+      
+        }
       }
     }
   }
