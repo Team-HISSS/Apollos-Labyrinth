@@ -251,7 +251,7 @@ class ArcherObj{
 
       // If harpy is not dead
       if (!harpy.dead){ 
-        if(verticalDistance <  40 && horizontalDistance < 30){
+        if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           //print('Player: Collision with harpy');
           
           // If the easter egg for ultimate kill power is found
@@ -262,13 +262,23 @@ class ArcherObj{
             // !!! Only for developers !!!
             if(egg.taken && egg.index == 0){
               harpy.isAlive = false;
+              harpy.dead = true;
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
               flag = true;
               break;
             }
           }
           if(!flag){
-            this.dead = true;
+            if (currFrameCount < frameCount - 100) {
+              currFrameCount = frameCount;
+              this.health -= 1;
+            }
+            if(this.health <= 0)
+            {
+              this.dead = true;
+              print('number of times in contact with the harpy')
+
+            }
           }
         }
       }
@@ -363,7 +373,7 @@ class ArcherObj{
           egg.taken = true;
           
           // Health boost
-          if(egg.index == 1 && this.health <= 3){
+          if(egg.index == 1 && this.health < 3){
             this.health += 1;
           }
         }
