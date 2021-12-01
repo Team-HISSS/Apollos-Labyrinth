@@ -368,7 +368,7 @@ function mouseClicked() {
         // }
       }
       if(game.tm.rooms[game.player.roomNumber].endRoom){
-        print("End Rooms");
+        print("End Rooms -- sketch");
       }
       // game.map.printMap();
       // game.updateNeighborDoor();

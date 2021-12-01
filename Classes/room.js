@@ -18,7 +18,7 @@ class RoomObj{
       "w                  w",
       "w                  w",
       "w                  w",
-      "w                  w",
+      "w          h       w",
       "w                  w",
       "w                  w",
       "w                  w",
