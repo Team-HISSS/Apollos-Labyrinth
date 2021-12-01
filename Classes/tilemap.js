@@ -1,3 +1,91 @@
+var harpyGrid = [
+  "wwwwwwwww  wwwwwwwww",
+  "w                  w",
+  "w                  w",
+  "w  h             h w",
+  "w                  w",
+  "w                  w",
+  "w        h         w",
+  "w                  w",
+  "w                  w",
+  "                    ",
+  "                    ",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w         h        w",
+  "w                  w",
+  "w                  w",
+  "w  h             h w",
+  "w                  w",
+  "wwwwwwwww  wwwwwwwww",
+];
+var balistaGrid = [
+  "wwwwwwwww  wwwwwwwww",
+  "w                  w",
+  "w                  w",
+  "w  h             h w",
+  "w                  w",
+  "w                  w",
+  "w        h         w",
+  "w                  w",
+  "w                  w",
+  "                    ",
+  "                    ",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w         h        w",
+  "w                  w",
+  "w                  w",
+  "w  h             h w",
+  "w                  w",
+  "wwwwwwwww  wwwwwwwww",
+];
+var playerGrid = [
+  "wwwwwwwww  wwwwwwwww",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w        p         w",
+  "w                  w",
+  "w                  w",
+  "                    ",
+  "                    ",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w            h     w",
+  "w                  w",
+  "wwwwwwwww  wwwwwwwww",
+];
+var bossGrid = [
+  "wwwwwwwww  wwwwwwwww",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w        B         w",
+  "w                  w",
+  "w                  w",
+  "                    ",
+  "                    ",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w            h     w",
+  "w                  w",
+  "wwwwwwwww  wwwwwwwww",
+];
 class Tilemap{
   constructor(width, height, numRooms){
     //construct room grid
@@ -48,9 +136,9 @@ class Tilemap{
     this.generateRooms();
     
     //hardcode starting players location
-    this.rooms[0].grid[7] = "w        p       e w";
-    this.rooms[0].grid[3] = "w     s          s w";
-    this.rooms[0].grid[17]= "w     a            w";
+    // this.rooms[0].grid[7] = "w        p       e w";
+    // this.rooms[0].grid[3] = "w     s          s w";
+    // this.rooms[0].grid[17]= "w     a            w";
     
   }
 

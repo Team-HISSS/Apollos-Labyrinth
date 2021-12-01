@@ -324,6 +324,7 @@ function mouseClicked() {
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
       }
+      print(game.player.roomNumber);
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
         if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
@@ -404,7 +405,7 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
-    // game.tm.printMap();
+    game.tm.printMap();
   
   }
 
