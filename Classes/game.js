@@ -42,12 +42,16 @@ class GameObj {
               break;
             case "b":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 1));
+              break;
             case "l":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 2));
+              break;
             case "r":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 3));
+              break;
             case "s":
-              this.snakes.push(new SnakeObj(roomOffsetX + j * 20,roomOffsetY + i * 20));
+              this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              // numEnemies++; 
               break;
             case "a":
               // Health easter egg

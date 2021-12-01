@@ -3,15 +3,22 @@ class RoomObj{
     this.roomNumber = num;
     this.x = x; 
     this.y = y;
+    this.endRoom = false;
     this.doorsOpen = [];
-    this.neighbors = neighbors; 
+    this.neighbors = neighbors;
+    this.numNeighbors = 0;
+    for (var i = 0; i < this.neighbors.length; i++){
+      if (this.neighbors[i] == 1){
+        this.numNeighbors += 1;
+      }
+    }
     this.grid = [
       "wwwwwwwww  wwwwwwwww",
       "w                  w",
       "w                  w",
-      "w  s               w",
       "w                  w",
       "w                  w",
+      "w          h       w",
       "w                  w",
       "w                  w",
       "w                  w",
@@ -22,7 +29,7 @@ class RoomObj{
       "w                  w",
       "w                  w",
       "w                  w",
-      "w              h   w",
+      "w                  w",
       "w                  w",
       "w                  w",
       "wwwwwwwww  wwwwwwwww",

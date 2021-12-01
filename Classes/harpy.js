@@ -83,9 +83,6 @@ class HarpyObj {
         this.y += this.yMove;
     }
 
-    update(){
-        
-    }
 }
 
 

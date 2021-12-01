@@ -1,4 +1,4 @@
-class wanderState{ // To make any enemy wander around in the room
+class WanderState{ // To make any enemy wander around in the room
     constructor(threshhold){
         this.threshhold = threshhold;
     }
@@ -32,7 +32,7 @@ class wanderState{ // To make any enemy wander around in the room
 }
 
 // Enemy chases the player if the player is withing 15 pixels
-class chaseState{
+class ChaseState{
     constructor(threshhold){
         this.threshhold = threshhold;
         this.move = 0.5;
@@ -69,7 +69,9 @@ class chaseState{
         // if ()
     }
 }
-class avoidState{
+
+
+class AvoidState{
     constructor(){
 
     }
@@ -77,7 +79,7 @@ class avoidState{
 
     }
 }
-class shootState{
+class ShootState{
     constructor(){
 
     }
@@ -86,7 +88,7 @@ class shootState{
     }
 }
 
-class deathState{
+class DeathState{
     constructor(){
 
     }

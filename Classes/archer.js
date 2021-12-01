@@ -234,7 +234,7 @@ class ArcherObj{
       // If door is open, i.e. true
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-          print('Player: Collision with door');
+          //print('Player: Collision with door');
           return true;
         }
       }
@@ -243,6 +243,7 @@ class ArcherObj{
     return false;
   }
 
+
   check_collision_with_harpy(){
     for(let harpy of game.harpies){
       let horizontalDistance = abs((this.x + this.w/2) - (harpy.x + harpy_center_radius));
@@ -250,8 +251,40 @@ class ArcherObj{
 
       // If harpy is not dead
       if (!harpy.dead){ 
+        if(verticalDistance <  40 && horizontalDistance < 30){
+          //print('Player: Collision with harpy');
+          
+          // If the easter egg for ultimate kill power is found
+          let flag = false;
+          
+          for(let egg of game.easterEggs){
+            // If the easter egg is taken, the archer can kill the harpies on contact
+            // !!! Only for developers !!!
+            if(egg.taken && egg.index == 0){
+              harpy.isAlive = false;
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+              flag = true;
+              break;
+            }
+          }
+          if(!flag){
+            this.dead = true;
+          }
+        }
+      }
+    }    
+  }
+
+  check_collision_with_snake(){
+    for(let snake of game.snakes){
+      let horizontalDistance = abs((this.x + this.w/2) - (snake.x + 15));
+      let verticalDistance = abs((this.y + this.h/2) - (harpy.y + 15));
+
+      // If harpy is not dead
+      if (snake.isAlive){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           // print('Player: Collision with harpy');
+          //print('Player: Collision with harpy');
           
           // If the easter egg for ultimate kill power is found
           let flag = false;
@@ -281,6 +314,7 @@ class ArcherObj{
       }
     }    
   }
+
   check_collision_with_specific_harpy(harp){
       let horizontalDistance = abs((this.x + this.w/2) - (harp.x + harpy_center_radius));
       let verticalDistance = abs((this.y + this.h/2) - (harp.y + harpy_center_radius));
@@ -289,6 +323,7 @@ class ArcherObj{
       if (!harp.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           // print('Player: Collision with harpy');
+          //print('Player: Collision with harpy');
           // If the easter egg for ultimate kill power is found
           let flag = false;
           
@@ -324,7 +359,7 @@ class ArcherObj{
       let verticalDistance = abs((this.y + this.h/2) - (egg.y + easterEgg_center_radius));
       if (!egg.taken){ 
         if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
-          print('Player: Collision with easter egg');
+          //print('Player: Collision with easter egg');
           egg.taken = true;
           
           // Health boost
@@ -346,7 +381,7 @@ class ArcherObj{
     delta += this.speed;
 
     // Edge case
-    if(this.x > this.width+20){
+    if(this.x > this.width+40){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -356,7 +391,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.x < this.rx*400 - 20){
+    else if (this.x < this.rx*400 - 40){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -380,7 +415,7 @@ class ArcherObj{
     delta -= this.speed;
 
     //Edge case
-    if(this.x > this.width + 20){
+    if(this.x > this.width + 40){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -390,7 +425,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.x < this.rx*400 -20){
+    else if (this.x < this.rx*400 -40){
       this.rx -= 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -421,7 +456,9 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      this.transition = true;
+      if (this.y > this.height -30){
+        this.transition = true;
+      }
     }
     else if (this.y< this.ry*400){
       this.ry -= 1;
@@ -431,7 +468,9 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      this.transition = true;
+      if (this.y > this.height +30){
+        this.transition = true;
+      }
     }
 
     return [0, delta];
@@ -446,17 +485,19 @@ class ArcherObj{
     delta += this.speed;
     
     // Edge case
-    if(this.y > this.height-0){
+    if(this.y > this.height - 0){
       this.ry += 1;
-      this.height = this.ry*400 + 400;
+      this.height = this.ry * 400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
         if (this.rooms[k].x == this.rx && this.rooms[k].y == this.ry){
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      this.transition = true;
+      if (this.y > this.height -30){
+        this.transition = true;
+      }
     }
-    else if (this.y < this.ry*400+0){
+    else if (this.y< this.ry*400 +0){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -464,7 +505,9 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      this.transition = true;
+      if (this.y > this.height +30){
+        this.transition = true;
+      }
     }
 
     return [0, delta];
@@ -484,6 +527,7 @@ class ArcherObj{
     this.index += this.frameRate/2; // * 0.17
     // print('Capture.js: this.x ' + this.x)
     this.x += this.speed - 1.60; ///* 1.50;
+    this.x += int(this.x) ///* 1.50;
     if(this.x > width){
       this.x = -this.w;
     }

@@ -3,7 +3,7 @@ class Tilemap{
     //construct room grid
     this.width = width;
     this.height = height; 
-    
+    this.endRooms = [];
     this.map = new Array(this.width);
     for(var i = 0; i < this.width; i++){
       this.map[i] = new Array(this.height);
@@ -49,8 +49,8 @@ class Tilemap{
     
     //hardcode starting players location
     this.rooms[0].grid[7] = "w        p       e w";
-    this.rooms[0].grid[3] = "w h              h w";
-    this.rooms[0].grid[17]= "w h   a   h      h w";
+    this.rooms[0].grid[3] = "w     s          s w";
+    this.rooms[0].grid[17]= "w     a            w";
     
   }
 
@@ -190,10 +190,37 @@ class Tilemap{
   }
 
   generateRooms(){
+    this.endRooms = [];
     for(var i = 0; i < this.neighbors.length; i++){
       //x,y, 0-4 is all neighbors
       this.rooms[i] = new RoomObj(this.neighbors[i][4], this.neighbors[i][5], [this.neighbors[i][0], this.neighbors[i][1], this.neighbors[i][2], this.neighbors[i][3]], i);
     }
+    for(var i = 0; i < this.rooms.length; i++){
+      
+      if (this.rooms[i].numNeighbors == 1){
+        // print("Here");
+        this.endRooms.push(this.rooms[i])
+      }
+    }
+    // print(endRooms.length);
+    if (this.endRooms.length != 3){
+      for (var i = 0; i < this.neighbors.length; i++){
+        this.rooms[i] = 0;
+      }
+
+      this.resetMap();
+      
+      this.startX = int(this.width / 2);
+      this.startY = int(this.height / 2);
+      this.generateMap(this.startX, this.startY, this.numRooms);
+      this.getNeighbors();
+      this.generateRooms();
+    }
+    for (var i = 0; i < this.endRooms.length; i++){
+      this.endRooms[i].endRoom = true
+    }
+
+
   }
 
   //return array of locations of all end rooms
