@@ -44,6 +44,7 @@ class ArcherObj{
     this.animationChoice = ' ';
     this.w = 126;
     this.h = 122;
+    this.health = 3;
     this.x = x;
     this.y = y;
     this.dead = false;
@@ -250,7 +251,7 @@ class ArcherObj{
       // If harpy is not dead
       if (!harpy.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
-          print('Player: Collision with harpy');
+          // print('Player: Collision with harpy');
           
           // If the easter egg for ultimate kill power is found
           let flag = false;
@@ -266,7 +267,15 @@ class ArcherObj{
             }
           }
           if(!flag){
-            this.dead = true;
+            if (currFrameCount < frameCount - 30) {
+              currFrameCount = frameCount;
+              this.health -= 1;
+              print('number of times in contact with the harpy')
+            }
+            if(this.health <= 0)
+            {
+              this.dead = true;
+            }
           }
         }
       }
@@ -279,7 +288,7 @@ class ArcherObj{
       // If harpy is not dead
       if (!harp.dead){ 
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
-          print('Player: Collision with harpy');
+          // print('Player: Collision with harpy');
           // If the easter egg for ultimate kill power is found
           let flag = false;
           
@@ -294,7 +303,16 @@ class ArcherObj{
             }
           }
           if(!flag){
-            this.dead = true;
+            if (currFrameCount < frameCount - 100) {
+              currFrameCount = frameCount;
+              this.health -= 1;
+            }
+            if(this.health <= 0)
+            {
+              this.dead = true;
+              print('number of times in contact with the harpy')
+
+            }
           }
         }
       }   
@@ -308,7 +326,11 @@ class ArcherObj{
         if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
           print('Player: Collision with easter egg');
           egg.taken = true;
-      
+          
+          // Health boost
+          if(egg.index == 1 && this.health <= 3){
+            this.health += 1;
+          }
         }
       }
     }
@@ -401,7 +423,7 @@ class ArcherObj{
       }
       this.transition = true;
     }
-    else if (this.y< this.ry*400 +0){
+    else if (this.y< this.ry*400){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){

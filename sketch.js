@@ -93,6 +93,9 @@ function mouseClicked() {
   var flyHarpyRight = [];
   var harpy;
 
+  var heartSheet;
+  var heartCapture = [];
+
   var snakeSheet; 
   var snakeAnimations;
 
@@ -120,7 +123,7 @@ function mouseClicked() {
     harpySprite = loadImage('/resources/sprites/harpy_sprite.png');
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
-
+    heartSheet = loadImage('/resources/health_bars2.png');
 
 
   }
@@ -187,7 +190,6 @@ function mouseClicked() {
         rect(20, 345, 150, 35);
         //rect around start
         rect(230, 345, 150, 35);
-  
   
         // knight and archer running
         // harpy flying
@@ -325,6 +327,12 @@ function mouseClicked() {
       }
       game.player.draw();
       game.player.checkMovement();
+      
+      let ind = 3 - game.player.health;
+      // Display health bar
+      if(ind < 3) {
+        image(heartCapture[ind], roomOffsetX + 332, roomOffsetY + 0, 66.1, 20)
+      }
       for(let arrow of game.arrows){
         arrow.draw();
         // if (arrow.fired){

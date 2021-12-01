@@ -150,9 +150,19 @@ function captureShoot(){
   pop();
 }
 
+function captureHealthBar(){
+  push();
+    image(heartSheet, 0, 0);
+    background(220, 220, 220, 0);
+    heartCapture.push(get(22, 240, 347, 105));
+    heartCapture.push(get(22, 240 + 105, 347, 105));
+    heartCapture.push(get(22, 240 + 105 * 2, 347, 105));
+  pop();
+}
+
 function captureEasterEgg(){
   push();
-  image(architSheet, 0, 0);
+    image(architSheet, 0, 0);
     easterEggCapture.push(get(36, 260, 25, 25)); // For developers only
     easterEggCapture.push(get(548, 611, 25, 25)); // For health increase
   pop();
@@ -161,6 +171,8 @@ function captureEasterEgg(){
 // Captures all the animation of the archer
 // Function has to be called before creating canvas
 function captureAllAnimation(){
+  createCanvas(626, 583);
+    captureHealthBar();
   createCanvas(640, 640);
     captureEasterEgg();
   createCanvas(400, 400);
