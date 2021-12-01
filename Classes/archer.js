@@ -391,7 +391,7 @@ class ArcherObj{
     delta += this.speed;
 
     // Edge case
-    if(this.x > this.width+40){
+    if(this.x > this.width + 40){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -466,7 +466,7 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      if (this.y > this.height -30){
+      if (this.y < this.height -30){
         this.transition = true;
       }
     }
@@ -503,11 +503,11 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      if (this.y > this.height -30){
+      if (this.y < this.height -30){
         this.transition = true;
       }
     }
-    else if (this.y< this.ry*400 +0){
+    else if (this.y< this.ry*400){
       this.ry -= 1;
       this.height = this.ry*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){

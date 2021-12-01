@@ -335,6 +335,7 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
 
       for(let egg of game.easterEggs){
         if(!egg.taken){
