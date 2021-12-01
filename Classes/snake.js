@@ -54,7 +54,7 @@ class SnakeObj {
             push();
             translate(this.x + 15 , this.y + 15);
             scale(this.scalex, this.scaley);
-            image(snakeAnimations[this.index], 0, 0, 30, 30);
+            image(snakeAnimations[this.index], -15, -15, 30, 30);
             scale(-this.scalex, -this.scaley);
             translate(-this.x - 15, -this.y - 15); 
             pop();
@@ -68,7 +68,9 @@ class MoveState{
 
     execute(me){
         me.y += me.speed; 
-        me.direction = 3; 
+        me.direction = 3;
+
+
     }
 }
 
@@ -139,24 +141,24 @@ class SnakeWanderState{ // To make any enemy wander around in the room
 
                 //change to chase state
         //print("PLayer " + game.player.x + " snake " + me.x);
-        if (abs(me.x - game.player.x) < 2){
+        if (abs(me.x - (game.player.x + game.player.w)) < 2){
             //print("Change state");
-            if(me.y >= game.player.y){
+            if(me.y >= (game.player.y + game.player.h)){
                 me.direction = 2; 
             }
-            else if(me.y < game.player.y){
+            else if(me.y < (game.player.y + game.player.h)){
                 me.direction = 3;
             }
 
             //me.currState = 1;
         }
-        if(abs(me.y - game.player.y) < 2){
+        if(abs(me.y - (game.player.y + game.player.h)) < 2){
             //print("Change state");
-            if(me.x >= game.player.x){
+            if(me.x >= (game.player.x + game.player.w)){
                 me.direction = 1; 
             }
 
-            else if (me.x < game.player.x){
+            else if (me.x < (game.player.x + game.player.w)){
                 me.direction = 0;
             }
 
@@ -187,8 +189,8 @@ class SnakeChaseState{ // To make any enemy wander around in the room
         //print("dir " + me.direction + " x " + me.x + " y " + me.y + " state " + me.currState);
 
         //once it hits the walls, it goes back to wander
-        // print("rx" + this.rx);
-        // print("ry " + this.ry);
+        print("rx" + this.rx);
+        print("ry " + this.ry);
 
         if (me.x + 2 >= me.rx*400 + 340){
             me.currState = 0;
