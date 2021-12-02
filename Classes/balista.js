@@ -1,7 +1,7 @@
 //balista enemy class and functionality
 class BalistaObj{
-    constructor(x, y, rx, ry, ind) {
-      print("HEREEEE");
+    constructor(x, y, rx, ry, ind, roomNum) {
+      // print("HEREEEE");
         this.index = ind;
         this.x = x;
         this.y = y;
@@ -18,6 +18,7 @@ class BalistaObj{
         this.dead = false;
         this.scored = false;
         this.particle =[];
+        this.roomNum = roomNum;
       }
 
       draw() {
@@ -290,6 +291,7 @@ class bulletObj {
 class BalistaShootState {
   constructor(x, y) {
     this.move = 1;
+    this.velocity = createVector(1, 1);
   }
   execute(me) {
     var rand = int(random(0, 50)); // generating a random int between 0 and 50 for shooting

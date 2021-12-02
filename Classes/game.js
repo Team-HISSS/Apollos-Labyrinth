@@ -127,9 +127,9 @@ class GameObj {
               break;
             case "q":
               print("HERE b object detected");
-              this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex));
+              this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex, k));
               enemyIndex++;
-              //numEnemies += 1;
+              // numEnemies += 1;
               break;
             case "o":
               // Power boost - easter egg

@@ -343,12 +343,14 @@ function mouseClicked() {
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
         game.balistas[i].draw();
-        game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
-        if (game.balistas[i].bullet[0].fired) {
-          game.balistas[i].bullet[0].draw();
-        }
-        if (game.balistas[i].state != 3) { // if the enemy is not dead then draw its orginal shape and structure 
-          game.balistas[i].draw();
+        if(game.player.roomNumber == game.balistas[i].roomNum){
+          game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
+          if (game.balistas[i].bullet[0].fired) {
+            game.balistas[i].bullet[0].draw();
+          }
+          if (game.balistas[i].state != 3) { // if the enemy is not dead then draw its orginal shape and structure 
+            game.balistas[i].draw();
+          }
         }
       }
       
