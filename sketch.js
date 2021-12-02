@@ -345,8 +345,10 @@ function mouseClicked() {
         }
       }
 
-      game.hydra.draw();
-      game.hydra.wanderAnimate();
+      for(let hydra of game.hydras){
+        hydra.draw();
+        hydra.wanderAnimate();
+      }
 
       // print("balista size: " + game.balistas.length);
       //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
