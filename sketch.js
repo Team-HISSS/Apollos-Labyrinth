@@ -412,10 +412,15 @@ function mouseClicked() {
       fill(255,255,255);
       text("Keys:" , roomOffsetX + 10 , roomOffsetY + 15);
       pop();
-
       for(var i = 0; i < keyCount; i++){
         image(keyImage, roomOffsetX + 60 + i * 20, roomOffsetY, 20, 20); 
         keyList[i] = true; 
+      }
+      //if(keyList)
+      
+      //winning condition
+      if(keyCount >= 3){
+        game.screen = 4;
       }
 
       // If the game.player.health is 0, the player is dead
@@ -486,6 +491,14 @@ function mouseClicked() {
         fill('#EB3C3C');
         text("Game Over", 100, 200);
     }
+
+    else if (game.screen == 4) {
+      background(220);
+      stroke('#7E570E');
+      fill('#EB3C3C');
+      text("Winner!", 100, 200);
+  }
+
     // game.tm.printMap();
     //game.tm.printMap();
 
