@@ -168,6 +168,15 @@ function captureEasterEgg(){
   pop();
 }
 
+function captureBalista(){
+  image(balSheet, 0,0,400,400);  
+  balista1 = get(0, 0, 75, 80);
+  balista2 = get(0,87, 75, 80);
+  balista3 = get(0,175, 75, 80);
+  balista4 = get(0,265, 75, 80);
+  balArrow = get(33,0,12.5, 57.5);
+  balList = [balista1, balista2, balista3, balista4];
+}
 function captureDiamonds(){
   push();
     image(objectSheet, 0, 0);
@@ -211,5 +220,7 @@ function captureAllAnimation(){
   createCanvas(4032, 976);
     captureMovement();
     captureShoot();
+    captureBalista();
   // createCanvas(4032, 976);
 }
+

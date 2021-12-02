@@ -24,10 +24,10 @@ var balistaGrid = [
   "wwwwwwwww  wwwwwwwww",
   "w                  w",
   "w                  w",
-  "w  h             h w",
   "w                  w",
   "w                  w",
-  "w        h         w",
+  "w                  w",
+  "w        b         w",
   "w                  w",
   "w                  w",
   "                    ",
@@ -35,10 +35,10 @@ var balistaGrid = [
   "w                  w",
   "w                  w",
   "w                  w",
-  "w         h        w",
+  "w         b        w",
   "w                  w",
   "w                  w",
-  "w  h             h w",
+  "w                  w",
   "w                  w",
   "wwwwwwwww  wwwwwwwww",
 ];
@@ -138,7 +138,7 @@ class Tilemap{
     //hardcode starting players location
     this.rooms[0].grid[7] = "w        p       e w";
     this.rooms[0].grid[3] = "w     s          s w";
-    this.rooms[0].grid[17]= "wo    a            w";
+    this.rooms[0].grid[17]= "wo    a      b     w";
     
   }
 
