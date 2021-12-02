@@ -1,4 +1,29 @@
 // Creates the Game Object class containing the tilemap
+var enemyDict = ["h", "s"];
+var genGrid = [
+  "wwwwwwwww  wwwwwwwww",
+  "w                 Pw",
+  "w                  w",
+  "w  e             e w",
+  "w                  w",
+  "w                  w",
+  "w        e         w",
+  "w                  w",
+  "w                  w",
+  "                    ",
+  "                    ",
+  "w                  w",
+  "w                  w",
+  "w                  w",
+  "w         e        w",
+  "w                  w",
+  "w                  w",
+  "w  e             e w",
+  "wH                 w",
+  "wwwwwwwww  wwwwwwwww",
+];
+//3 6 14 17
+
 class GameObj {
     //Game object class
     constructor() {
@@ -14,11 +39,46 @@ class GameObj {
       this.easterEggs = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(8,8, int(random(10,20)));
+      this.tm = new Tilemap(8,8, 6);
       this.currRoom = 0;
+    }
+    setRooms(){
+      var setplayer = false;
+      var setHarpy = false;
+      var setBalista = false;
+      for (var i = 0; i < this.tm.rooms.length; i++){
+        if (!this.tm.rooms[i].endRoom && !setplayer){
+          print("Here2");
+          this.tm.rooms[i].grid[8] = "w    e   p         w";
+          setplayer = true;
+        }
+        else if (!this.tm.rooms[i].endRoom && !setHarpy){
+          this.tm.rooms[i].grid[3] = "w  h             h w";
+          this.tm.rooms[i].grid[6] = "w        h         w";
+          this.tm.rooms[i].grid[14] = "w        h         w";
+          this.tm.rooms[i].grid[17] = "w  h             h w";
+          setHarpy = true;
+        }
+        else if(!this.tm.rooms[i].endRoom && !setBalista){
+          this.tm.rooms[i].grid[3] = "w  h             h w";
+          this.tm.rooms[i].grid[6] = "w        h         w";
+          this.tm.rooms[i].grid[14] = "w        h         w";
+          this.tm.rooms[i].grid[17] = "w  h             h w";
+          setBalista = true;
+        }
+        else if(!this.tm.rooms[i].endRoom){
+          this.tm.rooms[i].grid[3] = "w  h             h w";
+          this.tm.rooms[i].grid[6] = "w        h         w";
+          this.tm.rooms[i].grid[14] = "w        h         w";
+          this.tm.rooms[i].grid[17] = "w  h             h w";
+        }
+
+
+      }
     }
     //initially draw tile map onto canvas
   initializeTileMap() {
+    this.setRooms();
     for(var k = 0; k < this.tm.rooms.length; k++){
       //offset room location on entire map
       var roomOffsetX = this.tm.rooms[k].x * 400;
@@ -31,6 +91,7 @@ class GameObj {
               this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
+              print("here");
               this.player = (new ArcherObj(roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k, this.tm.rooms));
               break;
             case "h":
