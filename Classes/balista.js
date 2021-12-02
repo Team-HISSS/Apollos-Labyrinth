@@ -591,6 +591,9 @@ class BalistaDeathState {
         me.state = 3;
       }
     }
+    if (!me.dead){
+      game.tm.rooms[me.roomNum].numEnemies -= 1;
+    }
     me.dead = true; // kill  the tank 
     me.killed(); // draw its destroyed state
     me.fire(); // draw the fire originating from the tank
