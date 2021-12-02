@@ -510,6 +510,7 @@ function mouseClicked() {
     // Displays the map when the key "M" is held down
     if(keyIsDown(KEY_M) && !game_paused){
       background(220, 220, 220, 75);
+      print("Here");
       game.tm.printMap(game.player.rx, game.player.ry);
     }
   
