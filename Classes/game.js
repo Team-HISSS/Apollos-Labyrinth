@@ -39,6 +39,7 @@ class GameObj {
       this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj()];
       this.easterEggs = [];
       this.hydras = [];
+      this.keys = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
       this.tm = new Tilemap(8,8, 6);
@@ -133,6 +134,11 @@ class GameObj {
               // Health boost - easter egg
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 1));
               break;
+            case "k":
+                // Keys - easter egg
+                print("HERE - KEYS detected"); 
+                this.keys.push(new KeyObj(roomOffsetX + j*20, roomOffsetY + i*20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
+                break;
             case "e":
               // Cataclyst - easter egg for developers only!
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));

@@ -80,3 +80,25 @@ class EasterEgg{
   }
 }
     
+
+
+class KeyObj{
+  constructor(x,y, rx, ry, roomNum){
+    this.x = x; 
+    this.y = y; 
+    this.rx = rx; 
+    this.ry = ry; 
+    this.roomNum = roomNum;
+    this.collected = false; 
+  }
+  draw(){
+    if(dist(game.player.x + game.player.w/2 , game.player.y + game.player.h/2, this.x, this.y) < 40){
+      this.collected = true; 
+    }
+    push();
+    if(!this.collected){
+      image(keyImage, this.x - 25, this.y - 25, 50, 50);
+    }
+    pop();
+  }
+}

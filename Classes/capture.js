@@ -85,6 +85,15 @@ function captureArrow(){
   pop();
 }
 
+// Captures the arrow
+function captureKeys(){
+  clear();
+  push();
+  image(keySheet, 200, 200, 50,50);
+  keyImage = get(200,200,50,50);
+  pop();
+}
+
 // Captures the frames of right moving archer
 function captureMovement(){
 
@@ -239,6 +248,8 @@ function captureAllAnimation(){
     captureMovement();
     captureShoot();
     captureBalista();
+    captureKeys();
+
   // createCanvas(4032, 976);
 }
 
