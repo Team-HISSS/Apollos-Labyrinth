@@ -7,18 +7,19 @@ class BalistaObj{
         this.y = y;
         this.rx = rx; 
         this.ry = ry; 
+        this.roomNum = roomNum;
+
         this.initAngle = random(0, 2 * PI);
         this.angle = this.initAngle;
         this.vec = createVector(0, 0);
         this.angleDir = 0;
-        this.bullet = [new bulletObj(this.x, this.y, this.angle)];
+        this.bullet = [new bulletObj(this.x, this.y, this.angle, roomNum)];
         this.states = [new BalistaShootState(), new BalistaChaseState(), new BalistaAvoidState(), new BalistaDeathState()]; // different state objects of the tank
         this.state = 0;
-        this.blast = new fireworkObj(2);
+        //this.blast = new fireworkObj(2);
         this.dead = false;
         this.scored = false;
         this.particle =[];
-        this.roomNum = roomNum;
       }
 
       draw() {
@@ -171,35 +172,35 @@ class explosionObj {
 }
 
 
-class fireworkObj {
-  constructor(a) {
-    this.position = new p5.Vector(200, 380);
-    this.direction = new p5.Vector(0, 0);
-    this.target = new p5.Vector(mouseX, mouseY);
-    this.step = 0;
-    this.explosions = [];
-    for (var i = 0; i < 100; i++) { //cheanged the number of particles to 100
-      this.explosions.push(new explosionObj(a));
-    }
-  }
-  draw() {
-    fill(255, 255, 255);
-    ellipse(this.position.x, this.position.y, 2, 2);
+// class fireworkObj {
+//   constructor(a) {
+//     this.position = new p5.Vector(200, 380);
+//     this.direction = new p5.Vector(0, 0);
+//     this.target = new p5.Vector(mouseX, mouseY);
+//     this.step = 0;
+//     this.explosions = [];
+//     for (var i = 0; i < 100; i++) { //cheanged the number of particles to 100
+//       this.explosions.push(new explosionObj(a));
+//     }
+//   }
+//   draw() {
+//     fill(255, 255, 255);
+//     ellipse(this.position.x, this.position.y, 2, 2);
 
-    this.position.add(this.direction);
-    if (
-      dist(this.position.x, this.position.y, this.target.x, this.target.y) < 4
-    ) {
-      this.step = 2;
-      for (var i = 0; i < this.explosions.length; i++) {
-        this.explosions[i].position.set(this.target.x, this.target.y);
+//     this.position.add(this.direction);
+//     if (
+//       dist(this.position.x, this.position.y, this.target.x, this.target.y) < 4
+//     ) {
+//       this.step = 2;
+//       for (var i = 0; i < this.explosions.length; i++) {
+//         this.explosions[i].position.set(this.target.x, this.target.y);
 
-        this.explosions[i].direction.set(random(0, 2 * PI), random(-0.3, 0.3));
-        this.explosions[i].timer = 100; // explosion timer is now set to 100
-      }
-    }
-  }
-} 
+//         this.explosions[i].direction.set(random(0, 2 * PI), random(-0.3, 0.3));
+//         this.explosions[i].timer = 100; // explosion timer is now set to 100
+//       }
+//     }
+//   }
+// } 
 
 // function checkFire() {
 //   if (keyIsDown(32)) {
@@ -221,13 +222,14 @@ class fireworkObj {
 
 
 class bulletObj {
-  constructor(x, y, angle) {
+  constructor(x, y, angle, roomNum) {
     this.x = x;
     this.y = y;
     this.fired = false;
     this.vec = createVector(1, 1); // creating a vector to shoot the bullet in a  given direction
     this.angle = angle;
     this.blocked = false;
+    this.roomNum = roomNum; 
   }
   draw() {
     var wallCollision = false; // variable checks for wall collision
@@ -251,13 +253,20 @@ class bulletObj {
         wallCollision = true;
       }
     }
-    // for (var i = 0; i < game.doors.length; i++) {
-    //   // checking for collision with the walls
-    //   if (game.doors[i].checkCollisionB(this.x, this.y)) {
-    //     this.blocked = true; // checks if the bullet has been blocked or not
-    //     wallCollision = true;
-    //   }
+    for (var i = 0; i < game.doors.length; i++) {
+      // checking for collision with the walls
+      if (game.doors[i].checkCollisionB(this.x, this.y)) {
+        this.blocked = true; // checks if the bullet has been blocked or not
+        wallCollision = true;
+      }
+    }
+
+    // if(game.player.roomNum == this.roomNum){
+    //   print("BULLET HERE");
+    //   this.blocked = true; // checks if the bullet has been blocked or not
+    //   wallCollision = true;
     // }
+    
     if (this.blocked) {
       this.fired = false;
       if (wallCollision) {
@@ -328,7 +337,7 @@ class BalistaShootState {
     //checking collision with the player
       if (dist(me.x, me.y, game.player.x + game.player.w/2, game.player.y + game.player.h/2) < 20){
         this.velocity.setHeading(me.angle);
-        this.velocity.setMag(-0.5);
+        this.velocity.setMag(-0.1);
         me.x += this.velocity.x;
         me.y += this.velocity.y;
       }
@@ -539,27 +548,27 @@ class BalistaDeathState {
     this.move = 1;
   }
   execute(me) {
-    // draw the fireworks once when the tank dies (Code taken from the class examples)
-    if (me.blast.step == 0) {
-      me.blast.position.set(me.x, me.y);
-      me.blast.target.set(me.x, me.y - 50);
-      me.blast.direction.set(
-        me.blast.target.x - me.blast.position.x,
-        me.blast.target.y - me.blast.position.y
-      );
-      var s = random(1, 2) / 100;
-      me.blast.direction.mult(s);
-      me.blast.step++;
-    } else if (me.blast.step == 1) {
-      me.blast.draw();
-    } else if (me.blast.step == 2) {
-      for (var i = 0; i < me.blast.explosions.length; i++) {
-        me.blast.explosions[i].draw();
-      }
-      if (me.blast.explosions[0].timer <= 0) {
-        me.blast.step++;
-      }
-    }
+    // // draw the fireworks once when the tank dies (Code taken from the class examples)
+    // if (me.blast.step == 0) {
+    //   me.blast.position.set(me.x, me.y);
+    //   me.blast.target.set(me.x, me.y - 50);
+    //   me.blast.direction.set(
+    //     me.blast.target.x - me.blast.position.x,
+    //     me.blast.target.y - me.blast.position.y
+    //   );
+    //   var s = random(1, 2) / 100;
+    //   me.blast.direction.mult(s);
+    //   me.blast.step++;
+    // } else if (me.blast.step == 1) {
+    //   me.blast.draw();
+    // } else if (me.blast.step == 2) {
+    //   for (var i = 0; i < me.blast.explosions.length; i++) {
+    //     me.blast.explosions[i].draw();
+    //   }
+    //   if (me.blast.explosions[0].timer <= 0) {
+    //     me.blast.step++;
+    //   }
+    // }
     if (me.bullet[0].fired) {
       if (dist(game.player.x + game.player.w / 2, game.player.y + game.player.h / 2, me.bullet[0].x, me.bullet[0].y) < 20) {
         //gameOver = true;

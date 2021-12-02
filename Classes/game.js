@@ -49,7 +49,7 @@ class GameObj {
       var setBalista = false;
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
-          print("Here2");
+          //print("Here2");
           this.tm.rooms[i].grid[8] = "w    q   p         w";
           setplayer = true;
         }
@@ -94,7 +94,7 @@ class GameObj {
               this.walls.push(new WallObj(roomOffsetX + 20 * j, roomOffsetY + 20 * i));
               break;
             case "p":
-              print("here archer");
+              //print("here archer");
               this.player = (new ArcherObj(roomOffsetX +j * 20, roomOffsetY +i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k, this.tm.rooms));
               break;
             case "h":
@@ -126,7 +126,7 @@ class GameObj {
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));
               break;
             case "q":
-              print("HERE b object detected");
+              //print("HERE b object detected");
               this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex, k));
               enemyIndex++;
               // numEnemies += 1;

@@ -18,9 +18,9 @@ class WallObj{
         return false;
       }
     }
-    
+
     checkCollisionB(x, y) {
-      if (abs(x - this.cx) < 12 && abs(y - this.cy) < 12) {
+      if (abs(x - this.cx) < 17.5 && abs(y - this.cy) < 17.5) {
         return true;
       } else {
         return false;
@@ -36,15 +36,23 @@ class DoorObj{
     this.location = location;
     this.x = x;
     this.y = y; 
+    this.cx = this.x - 10; 
+    this.cy = this.y - 10; 
     this.size = 20;
     this.open = false;
     this.cameFrom = false;
   }
   draw(){
-
     image(door, this.x, this.y, 20, 20);
-
   }
+  checkCollisionB(x, y) {
+    if (abs(x - this.cx) < 17.5 && abs(y - this.cy) < 17.5) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }
 
 class FloorObj{
