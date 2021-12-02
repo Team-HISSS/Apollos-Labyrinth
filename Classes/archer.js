@@ -337,7 +337,7 @@ class ArcherObj{
             if(this.health <= 0)
             {
               this.dead = true;
-              print('number of times in contact with the balista');
+              //print('number of times in contact with the balista');
             }
           }
         }
@@ -414,7 +414,7 @@ class ArcherObj{
             if(this.health <= 0)
             {
               this.dead = true;
-              print('number of times in contact with the harpy')
+              //print('number of times in contact with the harpy')
 
             }
           }

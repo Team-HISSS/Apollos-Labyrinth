@@ -339,7 +339,7 @@ function mouseClicked() {
         game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
       }
 
-      print("balista size: " + game.balistas.length);
+      //print("balista size: " + game.balistas.length);
       //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
