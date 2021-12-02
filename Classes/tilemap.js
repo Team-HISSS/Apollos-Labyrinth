@@ -71,7 +71,7 @@ var bossGrid = [
   "w                  w",
   "w                  w",
   "w                  w",
-  "w        B         w",
+  "w        w         w",
   "w                  w",
   "w                  w",
   "                    ",
@@ -136,8 +136,8 @@ class Tilemap{
     this.generateRooms();
     
     //hardcode starting players location
-    this.rooms[0].grid[7] = "w        p       e w";
-    this.rooms[0].grid[3] = "w     s          s w";
+    this.rooms[0].grid[7] = "w   k    p  k    e w";
+    this.rooms[0].grid[3] = "w     s   k      s w";
     this.rooms[0].grid[17]= "wo    a      b     w";
     
   }

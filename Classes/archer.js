@@ -325,7 +325,6 @@ class ArcherObj{
             flag = true;
             break;
           }
-<<<<<<< HEAD
           // If there are no blocks on damage by enemy
           if(!flag){
             // Checking if enemy collision is beyond 100 frames
@@ -339,21 +338,6 @@ class ArcherObj{
               this.dead = true;
               //print('number of times in contact with the balista');
             }
-=======
-        }
-        // If there are no blocks on damage by enemy
-        if(!flag){
-          // Checking if enemy collision is beyond 100 frames
-          if (currFrameCount < frameCount - 100) {
-            currFrameCount = frameCount;
-            this.health -= 1;
-          }
-          // If the health is less than 0
-          if(this.health <= 0)
-          {
-            this.dead = true;
-            print('number of times in contact with the balista');
->>>>>>> 41bba5064c02251de60a102db6b067bbfca4426b
           }
         }
         return true;

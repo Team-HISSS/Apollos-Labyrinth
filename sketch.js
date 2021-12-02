@@ -8,7 +8,8 @@
 // DATE:    October 29, 2021
 
 // Link to demo: https://preview.p5js.org/sarang_r/present/UL5m8Ulab
-  
+
+
 function createWalls(){
 
   for (var i = 0; i < 20; i++) {
@@ -25,7 +26,6 @@ function createWalls(){
       image(wall1, 380, i * 20, 20, 20);
   }
 }
-
 
   //if mouse is clicked in main menu
 function mouseClicked() {
@@ -107,6 +107,11 @@ function mouseClicked() {
   var snakeSheet; 
   var snakeAnimations;
 
+  var keySheet; 
+  var keyImage; 
+  var keyList = [false, false, false];
+  var keyCount;  
+
   var balSheet; 
   var balista1, balista2, balista3, balista4;
   var balList = [];
@@ -140,6 +145,7 @@ function mouseClicked() {
     balSheet = loadImage('/resources/sprites/BallistaSprite.png');
     objectSheet = loadImage('/resources/objects2.png');
     hydraSheet = loadImage('/resources/HydraSprite.png');
+    keySheet = loadImage('/resources/Key.png');
     hydraSheetMirror = loadImage('/resources/HydraSprite_mirror.png');
   }
   
@@ -328,6 +334,7 @@ function mouseClicked() {
           egg.draw();
         }
       }      
+
      
       //draw snakes 
       for(let harpy of game.harpies){
@@ -382,6 +389,30 @@ function mouseClicked() {
       
       game.player.draw();
       game.player.checkMovement();
+
+      //draw keys
+      //print("length: " + game.keys.length);
+      keyCount = 0; 
+      for(var i = 0; i < game.keys.length; i++){
+        push();
+        game.keys[i].draw();
+        if(game.keys[i].collected){
+          keyCount++;
+        }
+      }
+
+      //draw keys in top left of screen
+      textSize(20); 
+      stroke(0,0,0);
+      fill(255,255,255);
+      text("Keys:" , roomOffsetX + 10 , roomOffsetY + 15);
+      pop();
+
+      for(var i = 0; i < keyCount; i++){
+        image(keyImage, roomOffsetX + 60 + i * 20, roomOffsetY, 20, 20); 
+        keyList[i] = true; 
+      }
+
       if(game.player.health <= 0){
         game.screen = 3; 
       }
@@ -402,7 +433,7 @@ function mouseClicked() {
       for(let arrow of game.arrows){
         arrow.draw();
       }
-    
+
       if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
         // if(!game.player.transiion){
          game.player.inRoom = true;
