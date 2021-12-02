@@ -100,7 +100,9 @@ function mouseClicked() {
   var objectSheet;
   
   var hydrasheet;
+  var hydrasheetMirror;
   var hydraRight = [];
+  var hydraLeft = [];
 
   var snakeSheet; 
   var snakeAnimations;
@@ -138,6 +140,7 @@ function mouseClicked() {
     balSheet = loadImage('/resources/sprites/BallistaSprite.png');
     objectSheet = loadImage('/resources/objects2.png');
     hydraSheet = loadImage('/resources/HydraSprite.png');
+    hydraSheetMirror = loadImage('/resources/HydraSprite_mirror.png');
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -434,9 +437,9 @@ function mouseClicked() {
     }
     //game over screen
     else if (game.screen == 3) {
-        background(255);
-        stroke(0);
-        fill(0);
+        background(220);
+        stroke('#7E570E');
+        fill('#EB3C3C');
         text("Game Over", 100, 200);
     }
     // game.tm.printMap();

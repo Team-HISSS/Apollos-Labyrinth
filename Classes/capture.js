@@ -196,6 +196,22 @@ function captureHydra(){
     hydraRight.push(get(460, 194, 80, 90));
     hydraRight.push(get(541, 194, 77, 90));
   pop();
+
+}
+
+function captureHydraMirror(){
+  push();
+    image(hydraSheetMirror, 0, 0);
+    hydraLeft.push(get(759, 194, 75, 90));
+    hydraLeft.push(get(683, 194, 75, 90));
+    hydraLeft.push(get(608, 194, 75, 90));
+    hydraLeft.push(get(534, 194, 75, 90));
+    hydraLeft.push(get(462, 194, 75, 90));
+    hydraLeft.push(get(379, 194, 80, 90));
+    hydraLeft.push(get(297, 194, 80, 90));
+    hydraLeft.push(get(219, 194, 77, 90));
+  pop();
+
 }
 
 // Captures all the animation of the archer
@@ -217,6 +233,8 @@ function captureAllAnimation(){
     captureArrow();
   createCanvas(837, 499);
     captureHydra();
+  createCanvas(837, 499);
+    captureHydraMirror();
   createCanvas(4032, 976);
     captureMovement();
     captureShoot();

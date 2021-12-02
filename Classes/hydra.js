@@ -20,21 +20,16 @@ class Hydra{
            this.yMove = 1;
         }
     }
-    
+
     draw(){
-        // print(this.xMove);
         if (this.xMove > 0){
             push();
-            scale(1,1);
-            // print("Harpy.js: Here1");
-            image(flyHarpyRight[int(this.index)], this.x, this.y, harpySize, harpySize);
+                image(hydraRight[int(this.index)], this.x, this.y, harpySize, harpySize);
             pop();
         }
         else{
             push();
-            // scale(-1, 1);
-            // print("Harpy.js: here2");
-            image(flyHarpyLeft[int(this.index)], this.x, this.y, harpySize, harpySize);
+                image(hydraLeft[int(this.index)], this.x, this.y, harpySize, harpySize);
             pop();
         }
     }
@@ -56,13 +51,6 @@ class Hydra{
         if(this.index >= 3){
             this.index = 0;
         }
-        // if this 
-        // if (this.xMove < 0){
-        //     this.x += this.xMove;
-        // }
-        // else{
-        //     this.x -= this.xMove;
-        // }
 
         if (this.x + this.xMove >= this.rx*400 +340){
             this.xMove = -this.xMove
