@@ -38,8 +38,8 @@ class GameObj {
       this.tiles = [];
       this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj()];
       this.easterEggs = [];
+      this.hydras = [];
       this.keys = [];
-      this.hydra = 0;
       
       //Tilemap class instance. Contains a large map full of Room objects
       this.tm = new Tilemap(8,8, 6);
@@ -107,8 +107,20 @@ class GameObj {
               break;
             case "B":
               print("Hydra created");
-              this.hydra = new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k);
+              // this.hydra = new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k);
               numEnemies+=1;
+              this.hydras.push(new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
+              // numEnemies += 1;
+              break;
+            case "q":
+              //print("HERE b object detected");
+              this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex, k));
+              enemyIndex++;
+              numEnemies += 1;
+              break;
+            case "s":
+              this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
+              // numEnemies++; 
               break;
             case "t":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 0));
@@ -122,10 +134,6 @@ class GameObj {
             case "r":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 3));
               break;
-            case "s":
-              this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
-              // numEnemies++; 
-              break;
             case "a":
               // Health boost - easter egg
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 1));
@@ -138,12 +146,6 @@ class GameObj {
             case "e":
               // Cataclyst - easter egg for developers only!
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));
-              break;
-            case "q":
-              //print("HERE b object detected");
-              this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex, k));
-              enemyIndex++;
-              numEnemies += 1;
               break;
             case "o":
               // Power boost - easter egg
