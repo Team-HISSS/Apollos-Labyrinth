@@ -421,7 +421,10 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
-    game.tm.printMap();
+
+    if(keyIsDown(77)){
+      game.tm.printMap();
+    }
   
   }
 
