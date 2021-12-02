@@ -430,6 +430,7 @@ function mouseClicked() {
     //game.tm.printMap();
     
     if(keyIsDown(77)){
+      background(220, 220, 220, 75);
       game.tm.printMap();
     }
   
