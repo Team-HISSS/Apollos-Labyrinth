@@ -313,7 +313,7 @@ class BalistaShootState {
       if (game.arrows[i].los(me.x, me.y, me.index)) { // if the tank is in the players line of sight switch to avoid state
         me.state = 2;
       }
-      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
         game.arrows[i].fired = false;
         me.state = 3;
       }
@@ -378,7 +378,7 @@ class BalistaChaseState {
       if (game.arrows[i].fired){
       if (game.arrows[i].los(me.x, me.y, me.index)) {
         me.state = 2;
-      } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+      } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
         game.arrows[i].fired = false;
         me.state = 3;
       }
@@ -586,7 +586,7 @@ class BalistaDeathState {
       }
     }
     for (var i = 0; i < 4; i++) {
-      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
         game.arrows[i].fired = false;
         me.state = 3;
       }
