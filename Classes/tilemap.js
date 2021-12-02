@@ -213,7 +213,7 @@ class Tilemap{
     }
 
   }
-  printMap(){
+  printMap(rx, ry){
     for(var i = 0; i < this.width; i++){
       for(var j = 0; j < this.height; j++){
         if(this.map[i][j] == 1){
@@ -221,6 +221,12 @@ class Tilemap{
           fill(255,0,0);
           ellipse(i*20 + 200, j*20 + 200, 20,20);
           pop();
+          if(i == rx && j == ry){
+            push();
+              fill(0,255,0);
+              ellipse(i*20 + 200, j*20 + 200, 20,20);
+            pop();
+          }
         }
         else {
           push();

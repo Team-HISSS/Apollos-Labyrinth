@@ -53,6 +53,7 @@ function mouseClicked() {
   
   //public variables
   var game;
+  let game_paused = false;
   var startScreenGreen = 0;
   var firework;
   let startSong, mapSong, bossSong;
@@ -301,7 +302,7 @@ function mouseClicked() {
         rect(160, 350, 80, 42);
     }
     //game screen
-    else if (game.screen == 2) {
+    else if (game.screen == 2 && !game_paused) {
       push()
       var roomOffsetX = game.player.rx * 400;
       var roomOffsetY = game.player.ry * 400;
@@ -311,7 +312,7 @@ function mouseClicked() {
       // print(game.player.roomNumber);
       // print(game.tm.rooms[game.player.roomNumber].numEnemies);
       translate(-roomOffsetX, -roomOffsetY)
-        background(255);
+        // background(255);
         startSong.stop();
       
       for (var i = 0; i < game.tiles.length; i++) {
@@ -397,27 +398,8 @@ function mouseClicked() {
 
       for(let arrow of game.arrows){
         arrow.draw();
-        // if (arrow.fired){
-        //   for (let harpy of game.harpies){
-        //     if(!harpy.dead && arrow.check_collision_with_enemy(harpy)){
-        //       blocked = true;
-        //       this.fired = false;
-        //       harpy.dead = true;
-        //       game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
-        //       break;
-        //     }
-        //   }
-        // }
       }
-      // var randNum = int(random(0, 100))
-      // if (randNum == 50){ // randomly killing the enemies present in the room
-      //   if(game.tm.rooms[game.player.roomNumber].numEnemies > 0){
-      //     game.tm.rooms[game.player.roomNumber].numEnemies -= 1; // each room stores the number of enemies in the room
-      //   }
-      // }
-      // each room now also has a unique ID for itself, the player can get the unique ID from the room.
-      // print('Sketch.js: ' + game.player.roomNumber);
-      // print('Sketch.js: ' + game.tm.rooms[game.player.roomNumber].numEnemies);
+    
       if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
         // if(!game.player.transiion){
          game.player.inRoom = true;
@@ -442,6 +424,18 @@ function mouseClicked() {
       }
       pop();
     }
+    // game during pause
+    else if(game.screen == 2 && game_paused){
+      background(220, 220, 220, 1);
+      stroke('#7E570E');
+      fill('#EB3C3C');
+      text("Game Paused", 90, 100);
+      
+      push();  
+        translate(-70, 0);
+        game.tm.printMap(game.player.rx, game.player.ry);
+      pop();
+    }
     //game over screen
     else if (game.screen == 3) {
         background(255);
@@ -452,11 +446,25 @@ function mouseClicked() {
     // game.tm.printMap();
     //game.tm.printMap();
 
-    if(keyIsDown(77)){
+    // Displays the map when the key "M" is held down
+    if(keyIsDown(KEY_M) && !game_paused){
       background(220, 220, 220, 75);
-      game.tm.printMap();
+      game.tm.printMap(game.player.rx, game.player.ry);
     }
   
+  }
+
+  // Enabling the pause screen
+  function keyReleased() {
+    if(keyCode === KEY_P){
+      if(game_paused){
+        game_paused = false;
+      }
+      else{
+        game_paused = true;
+      }
+    }
+    return false; // prevent any default behavior
   }
 
 
