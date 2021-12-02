@@ -133,16 +133,15 @@ class ArcherObj{
       }
     }
     this.check_collision_with_easterEgg(); 
-
+    this.check_collision_with_hydra(0, 0);
+    this.check_collision_with_snake(0, 0);
     // If player wants to move
     // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
     if(theta != [0, 0]){
       // If player is not colliding with an open door and colliding with walls
       if((!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])) ||
           (this.check_collision_with_balista(theta[0], theta[1])) ||
-          (this.check_collision_with_harpy(0, 0)) ||
-          (this.check_collision_with_snake(theta[0], theta[1])) ||
-          (this.check_collision_with_hydra(theta[0], theta[1]))){
+          (this.check_collision_with_harpy(0, 0))){
         theta = [0,0];
       }
     }
@@ -250,7 +249,7 @@ class ArcherObj{
       // If door is open, i.e. true
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-          //print('Player: Collision with door');
+          print('Player: Collision with door');
           return true;
         }
       }
@@ -308,7 +307,9 @@ class ArcherObj{
           // !!! Cataclyst is only for developers !!!
           if(egg.taken && egg.index == 0){
             enemy.dead = true;
-            game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+            if(game.tm.rooms[this.roomNumber].numEnemies > 0){
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+            }
             flag = true;
             break;
           }
@@ -434,7 +435,7 @@ class ArcherObj{
     delta += this.speed;
 
     // Edge case
-    if(this.x > this.width + 40){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -468,7 +469,7 @@ class ArcherObj{
     delta -= this.speed;
 
     //Edge case
-    if(this.x > this.width + 40){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){

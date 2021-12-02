@@ -396,16 +396,19 @@ function mouseClicked() {
       
       game.player.draw();
       game.player.checkMovement();
-
+      print(game.tm.rooms[game.player.roomNumber].numEnemies);
       //draw keys
       //print("length: " + game.keys.length);
       keyCount = 0; 
+      push();
+
       for(var i = 0; i < game.keys.length; i++){
-        push();
+        
         game.keys[i].draw();
         if(game.keys[i].collected){
           keyCount++;
         }
+        
       }
 
       //draw keys in top left of screen

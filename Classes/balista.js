@@ -8,7 +8,7 @@ class BalistaObj{
         this.rx = rx; 
         this.ry = ry; 
         this.roomNum = roomNum;
-
+        this.numHits = 0;
         this.initAngle = random(0, 2 * PI);
         this.angle = this.initAngle;
         this.vec = createVector(0, 0);
@@ -32,6 +32,9 @@ class BalistaObj{
         rotate(-this.angle - 3 * PI/2);
         translate(-this.x, -this.y);
         pop();
+        if (this.numHits == 1){
+          this.smoke();
+        }
       }
       killed() {
         push();
@@ -92,6 +95,23 @@ class BalistaObj{
         //print(this.particle.length);
         for(var i = this.particle.length -1; i> 0; i--){
           // print(this.particle[i]);
+          this.particle[i].update();
+          this.particle[i].draw();
+          if(this.particle[i].done()){
+            this.particle.splice(i, 1);
+          }
+        }
+      }
+      smoke(){ // to start drawing the fire originating at the center of the enemy tank. 
+        var p = new particleObj(this.x, this.y);
+        p.r = 115;
+        p.g = 130;
+        p.b = 118;
+      // print(p);
+        this.particle.push(p);
+      //print(this.particle.length);
+       for(var i = this.particle.length -1; i> 0; i--){
+        // print(this.particle[i]);
           this.particle[i].update();
           this.particle[i].draw();
           if(this.particle[i].done()){
@@ -315,7 +335,10 @@ class BalistaShootState {
       }
       if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
         game.arrows[i].fired = false;
-        me.state = 3;
+        me.numHits += 1;
+        if (me.numHits == 2){
+          me.state = 3;
+        }
       }
     }
     if (me.bullet[0].fired) { // check if the tanks bullet hits the player or not
@@ -359,6 +382,7 @@ class BalistaShootState {
         }
       }
     }
+    
   }
 }
 }
@@ -373,6 +397,7 @@ class BalistaChaseState {
     this.velocity = createVector(1, 1);
   }
   execute(me) {
+
     this.move = 0.5;
     for (var i = 0; i < 4; i++) {
       if (game.arrows[i].fired){
@@ -380,7 +405,10 @@ class BalistaChaseState {
         me.state = 2;
       } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
         game.arrows[i].fired = false;
-        me.state = 3;
+        me.numHits += 1;
+        if (me.numHits == 2){
+          me.state = 3;
+        }
       }
       }
     }
@@ -433,6 +461,7 @@ class BalistaChaseState {
     }
     me.x += this.velocity.x;
     me.y += this.velocity.y;
+    
   }
 }
 
@@ -535,10 +564,14 @@ class BalistaAvoidState {
         this.bulletAngle = (bullets[i].angle + HALF_PI) * (180 / PI);
         if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
           bullets[i].fired = false;
-          me.state = 3;
+          me.numHits += 1;
+          if (me.numHits == 2){
+            me.state = 3;
+          }
         }
       }
     }
+    
   }
 }
 
@@ -590,6 +623,9 @@ class BalistaDeathState {
         game.arrows[i].fired = false;
         me.state = 3;
       }
+    }
+    if (!me.dead){
+        game.tm.rooms[me.roomNum].numEnemies -= 1;
     }
     me.dead = true; // kill  the tank 
     me.killed(); // draw its destroyed state

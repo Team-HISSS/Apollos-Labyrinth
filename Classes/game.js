@@ -52,7 +52,7 @@ class GameObj {
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           //print("Here2");
-          this.tm.rooms[i].grid[8] = "w    q   p         w";
+          this.tm.rooms[i].grid[8] = "w    e   p         w";
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){
@@ -63,21 +63,23 @@ class GameObj {
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
-          this.tm.rooms[i].grid[3] = "w  q               w";
+          this.tm.rooms[i].grid[3] = "w  q            q  w";
           this.tm.rooms[i].grid[6] = "w                  w";
-          this.tm.rooms[i].grid[14] = "w                  w";
-          this.tm.rooms[i].grid[17] = "w              q   w";
+          this.tm.rooms[i].grid[14] = "w          q       w";
+          this.tm.rooms[i].grid[17] = "w       q      q   w";
           setBalista = true;
         }
         else if(!this.tm.rooms[i].endRoom){
           this.tm.rooms[i].grid[3] = "w  h             h w";
           this.tm.rooms[i].grid[6] = "w        h         w";
-          this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "w  h             h w";
+          this.tm.rooms[i].grid[14] = "w                  w";
+          this.tm.rooms[i].grid[17] = "w  q            q  w";
         }
-
-
+        if (this.tm.rooms[i].endRoom){
+          this.tm.rooms[i].grid[8] = "w        Bk        w";
+        }
       }
+      
     }
     //initially draw tile map onto canvas
   initializeTileMap() {
@@ -105,6 +107,8 @@ class GameObj {
               break;
             case "B":
               print("Hydra created");
+              // this.hydra = new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k);
+              // numEnemies+=1;
               this.hydras.push(new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
               // numEnemies += 1;
               break;
@@ -112,7 +116,7 @@ class GameObj {
               //print("HERE b object detected");
               this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex, k));
               enemyIndex++;
-              // numEnemies += 1;
+              numEnemies += 1;
               break;
             case "s":
               this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
