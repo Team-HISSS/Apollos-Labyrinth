@@ -54,13 +54,16 @@ class GameObj {
               // numEnemies++; 
               break;
             case "a":
-              // Health easter egg
+              // Health boost - easter egg
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 1));
               break;
             case "e":
-              // Easter egg for developers only!
-              // print('Easter drawn')
+              // Cataclyst - easter egg for developers only!
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));
+              break;
+            case "o":
+              // Power boost - easter egg
+              this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 2, 13.33, 25));
               break;
           }
           if(this.tm.rooms[k].grid[i][j] != "w" && this.tm.rooms[k].grid[i][j] != "d")

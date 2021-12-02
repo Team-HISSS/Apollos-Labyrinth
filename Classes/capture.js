@@ -168,6 +168,27 @@ function captureEasterEgg(){
   pop();
 }
 
+function captureDiamonds(){
+  push();
+    image(objectSheet, 0, 0);
+    easterEggCapture.push(get(3, 140, 24, 45));
+  pop();
+}
+
+function captureHydra(){
+  push();
+    image(hydraSheet, 0, 0);
+    hydraRight.push(get(3, 194, 75, 90));
+    hydraRight.push(get(79, 194, 75, 90));
+    hydraRight.push(get(154, 194, 75, 90));
+    hydraRight.push(get(228, 194, 75, 90));
+    hydraRight.push(get(300, 194, 75, 90));
+    hydraRight.push(get(378, 194, 80, 90));
+    hydraRight.push(get(460, 194, 80, 90));
+    hydraRight.push(get(541, 194, 77, 90));
+  pop();
+}
+
 // Captures all the animation of the archer
 // Function has to be called before creating canvas
 function captureAllAnimation(){
@@ -175,6 +196,8 @@ function captureAllAnimation(){
     captureHealthBar();
   createCanvas(640, 640);
     captureEasterEgg();
+  createCanvas(500, 832);
+    captureDiamonds();
   createCanvas(400, 400);
     captureHarpy();
   createCanvas(400, 400);
@@ -183,6 +206,8 @@ function captureAllAnimation(){
     captureSnake();
   createCanvas(700, 200);
     captureArrow();
+  createCanvas(837, 499);
+    captureHydra();
   createCanvas(4032, 976);
     captureMovement();
     captureShoot();

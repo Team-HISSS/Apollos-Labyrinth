@@ -96,6 +96,11 @@ function mouseClicked() {
   var heartSheet;
   var heartCapture = [];
 
+  var objectSheet;
+  
+  var hydrasheet;
+  var hydraRight = [];
+
   var snakeSheet; 
   var snakeAnimations;
 
@@ -124,8 +129,8 @@ function mouseClicked() {
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
     heartSheet = loadImage('/resources/health_bars2.png');
-
-
+    objectSheet = loadImage('/resources/objects2.png');
+    hydraSheet = loadImage('/resources/HydraSprite.png');
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -306,7 +311,13 @@ function mouseClicked() {
       for (var i = 0; i < game.tiles.length; i++) {
           image(tileSquare, game.tiles[i].x, game.tiles[i].y, 20, 20);
       }
-      
+
+      // Draws the easter eggs for the game
+      for(let egg of game.easterEggs){
+        if(!egg.taken){
+          egg.draw();
+        }
+      }      
      
       //draw snakes 
       for(let harpy of game.harpies){
@@ -337,11 +348,7 @@ function mouseClicked() {
       }
       // print(game.tm.rooms[game.player.roomNumber].numEnemies);
 
-      for(let egg of game.easterEggs){
-        if(!egg.taken){
-          egg.draw();
-        }
-      }
+      
       game.player.draw();
       game.player.checkMovement();
       
@@ -350,6 +357,15 @@ function mouseClicked() {
       if(ind < 3) {
         image(heartCapture[ind], roomOffsetX + 332, roomOffsetY + 0, 66.1, 20)
       }
+      
+      if(powerBoost){
+        image(easterEggCapture[2], roomOffsetX + 312, roomOffsetY + 0, 10.67, 20);
+        if (pbCurrFrameCount < frameCount - 600){
+          powerBoost = false;
+          pbCurrFrameCount = 0;
+        }
+      }
+
       for(let arrow of game.arrows){
         arrow.draw();
         // if (arrow.fired){
