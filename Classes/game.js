@@ -39,6 +39,7 @@ class GameObj {
       this.arrows = [new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj(), new ArrowObj()];
       this.easterEggs = [];
       this.keys = [];
+      this.hydra = 0;
       
       //Tilemap class instance. Contains a large map full of Room objects
       this.tm = new Tilemap(8,8, 6);
@@ -101,6 +102,10 @@ class GameObj {
             case "h":
               this.harpies.push(new HarpyObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
               numEnemies += 1;
+              break;
+            case "B":
+              print("Hydra created");
+              this.hydra = new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k);
               break;
             case "t":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 0));

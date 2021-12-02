@@ -5,7 +5,7 @@ class SnakeObj {
         this.y = y;
         this.rx = rx; 
         this.ry = ry; 
-        this.isAlive = true; 
+        this.dead = false; // Changed from isAlive = true 
         this.speed = 1;
         //direction can be 0, 1, 2, 3. 
         //1,2,3,4 = facing right, left, up, down
@@ -50,13 +50,13 @@ class SnakeObj {
         }
 
         //draw at correct angle
-        if(this.isAlive){
+        if(!this.dead){ // this.isAlive
             push();
-            translate(this.x + 15 , this.y + 15);
-            scale(this.scalex, this.scaley);
-            image(snakeAnimations[this.index], -15, -15, 30, 30);
-            scale(-this.scalex, -this.scaley);
-            translate(-this.x - 15, -this.y - 15); 
+                translate(this.x + 15 , this.y + 15);
+                scale(this.scalex, this.scaley);
+                image(snakeAnimations[this.index], -15, -15, 30, 30);
+                scale(-this.scalex, -this.scaley);
+                translate(-this.x - 15, -this.y - 15); 
             pop();
         }
     }

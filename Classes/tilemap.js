@@ -137,7 +137,7 @@ class Tilemap{
     
     //hardcode starting players location
     this.rooms[0].grid[7] = "w   k    p  k    e w";
-    this.rooms[0].grid[3] = "w     s   k      s w";
+    this.rooms[0].grid[3] = "w     s   k   B  s w";
     this.rooms[0].grid[17]= "wo    a      b     w";
     
   }

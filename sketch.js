@@ -336,20 +336,26 @@ function mouseClicked() {
       }      
 
      
-      //draw snakes 
+      // draw harpies 
       for(let harpy of game.harpies){
         if(!harpy.dead){
           harpy.draw();
           harpy.wanderAnimate();
         }
       }
-
+      
+      // draw snakes
       for(var i = 0; i < game.snakes.length; i++){
-        game.snakes[i].draw();
-        game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
+        if(!game.snakes[i].dead){
+          game.snakes[i].draw();
+          game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
+        }
       }
 
-      //print("balista size: " + game.balistas.length);
+      game.hydra.draw();
+      game.hydra.wanderAnimate();
+
+      // print("balista size: " + game.balistas.length);
       //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
@@ -384,8 +390,7 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
-
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
       game.player.checkMovement();
@@ -413,15 +418,19 @@ function mouseClicked() {
         keyList[i] = true; 
       }
 
+      // If the game.player.health is 0, the player is dead
       if(game.player.health <= 0){
         game.screen = 3; 
       }
+
       let ind = 3 - game.player.health;
-      // Display health bar
+      
+      // Display health bar on HUD
       if(ind < 3) {
         image(heartCapture[ind], roomOffsetX + 332, roomOffsetY + 0, 66.1, 20)
       }
       
+      // Displaying power boost on HUD
       if(powerBoost){
         image(easterEggCapture[2], roomOffsetX + 312, roomOffsetY + 0, 10.67, 20);
         if (pbCurrFrameCount < frameCount - 600){
