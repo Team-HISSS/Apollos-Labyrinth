@@ -22,7 +22,9 @@ let easterEgg_center_radius = 10;
 let easterEgg_constraint_x = easterEgg_center_radius + 126/3;
 let easterEgg_constraint_y = easterEgg_center_radius + 122/3;
 
-let currFrameCount = 0;
+let currFrameCount = 0; // Arrow 
+let pbCurrFrameCount = 0; // PowerBoost
+let powerBoost = false;
 
 // Keys codes
 let KEY_W = 87;
@@ -184,19 +186,19 @@ class ArcherObj{
         
         switch(this.animationChoice){
           case 'rr':
-            image(shootRight[index], this.x, this.y, 126, 122);  
+            image(shootRight[index], this.x - 25, this.y - 15, 126, 122);  
             break;
           
           case 'ru':
-            image(shootUp[index], this.x, this.y, 126, 122);  
+            image(shootUp[index], this.x - 20, this.y, 126, 122);  
             break;
           
           case 'rl':
-            image(shootLeft[index], this.x, this.y, 126, 122);  
+            image(shootLeft[index], this.x - 20, this.y, 126, 122);  
             break;
           
           case 'rd':
-            image(shootDown[index], this.x, this.y, 126, 122);  
+            image(shootDown[index], this.x - 20, this.y, 126, 122);  
             break;
         }
 
@@ -210,8 +212,11 @@ class ArcherObj{
       }
     }
 
+
+    
     //fill(100,0,0);
-    //ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
+    fill(255,255,0);
+    ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
     pop();
   }
 
@@ -258,13 +263,13 @@ class ArcherObj{
         if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
           //print('Player: Collision with harpy');
           
-          // If the easter egg for ultimate kill power is found
+          // If the easter egg for Ultimate Kill Power (Cataclyst) is found
           let flag = false;
           
           for(let egg of game.easterEggs){
-            // If the easter egg is taken, the archer can kill the harpies on contact
-            // !!! Only for developers !!!
-            if(egg.taken && egg.index == 0){
+            // If the Cataclyst or Power boost egg is taken, the archer can kill the harpies on contact
+            // !!! Cataclyst is only for developers !!!
+            if(egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
               harpy.isAlive = false;
               harpy.dead = true;
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
@@ -272,11 +277,14 @@ class ArcherObj{
               break;
             }
           }
+          // If there are no blocks on damage by enemy
           if(!flag){
+            // Checking if enemy collision is beyond 100 frames
             if (currFrameCount < frameCount - 100) {
               currFrameCount = frameCount;
               this.health -= 1;
             }
+            // If the health is less than 0
             if(this.health <= 0)
             {
               this.dead = true;
@@ -379,6 +387,11 @@ class ArcherObj{
           // Health boost
           if(egg.index == 1 && this.health < 3){
             this.health += 1;
+          }
+          // Power boost
+          else if(egg.index == 2){
+            powerBoost = true;
+            pbCurrFrameCount = frameCount;
           }
         }
       }

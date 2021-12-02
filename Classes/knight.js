@@ -1,3 +1,4 @@
+
 // Creates Knight Object class which is used to create and move the knight
 class knightObj {
     constructor(x, y, speed) {

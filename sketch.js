@@ -96,8 +96,18 @@ function mouseClicked() {
   var heartSheet;
   var heartCapture = [];
 
+  var objectSheet;
+  
+  var hydrasheet;
+  var hydraRight = [];
+
   var snakeSheet; 
   var snakeAnimations;
+
+  var balSheet; 
+  var balista1, balista2, balista3, balista4;
+  var balList = [];
+  var balArrow
 
   var doorway = 0;
   var door = 0;
@@ -124,8 +134,9 @@ function mouseClicked() {
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
     heartSheet = loadImage('/resources/health_bars2.png');
-
-
+    balSheet = loadImage('/resources/sprites/BallistaSprite.png');
+    objectSheet = loadImage('/resources/objects2.png');
+    hydraSheet = loadImage('/resources/HydraSprite.png');
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -265,7 +276,7 @@ function mouseClicked() {
         text("Rules", 150, 50);
         textSize(20);
         text("-Move with WASD.", 50, 80);
-        text("-Shoot with the arrow keys.", 50, 100);
+        text("-Shoot with the spacebar.", 50, 100);
         text("-Avoid enemies and their projectiles.", 50, 120);
         text("-Kill all enemies in a room to move on.", 50, 140);
         text("-Conquer each of the rooms.", 50, 160);
@@ -306,7 +317,13 @@ function mouseClicked() {
       for (var i = 0; i < game.tiles.length; i++) {
           image(tileSquare, game.tiles[i].x, game.tiles[i].y, 20, 20);
       }
-      
+
+      // Draws the easter eggs for the game
+      for(let egg of game.easterEggs){
+        if(!egg.taken){
+          egg.draw();
+        }
+      }      
      
       //draw snakes 
       for(let harpy of game.harpies){
@@ -320,11 +337,27 @@ function mouseClicked() {
         game.snakes[i].draw();
         game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
       }
+
+      print("balista size: " + game.balistas.length);
+      //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
+      //b1.draw();
+      for(var i = 0; i < game.balistas.length; i++){
+        game.balistas[i].draw();
+        if(game.player.roomNumber == game.balistas[i].roomNum){
+          game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
+          if (game.balistas[i].bullet[0].fired) {
+            game.balistas[i].bullet[0].draw();
+          }
+          if (game.balistas[i].state != 3) { // if the enemy is not dead then draw its orginal shape and structure 
+            game.balistas[i].draw();
+          }
+        }
+      }
       
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
       }
-      print(game.player.roomNumber);
+      //print(game.player.roomNumber);
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
         if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
@@ -338,19 +371,26 @@ function mouseClicked() {
       }
       // print(game.tm.rooms[game.player.roomNumber].numEnemies);
 
-      for(let egg of game.easterEggs){
-        if(!egg.taken){
-          egg.draw();
-        }
-      }
+      
       game.player.draw();
       game.player.checkMovement();
-      
+      if(game.player.health <= 0){
+        game.screen = 3; 
+      }
       let ind = 3 - game.player.health;
       // Display health bar
       if(ind < 3) {
         image(heartCapture[ind], roomOffsetX + 332, roomOffsetY + 0, 66.1, 20)
       }
+      
+      if(powerBoost){
+        image(easterEggCapture[2], roomOffsetX + 312, roomOffsetY + 0, 10.67, 20);
+        if (pbCurrFrameCount < frameCount - 600){
+          powerBoost = false;
+          pbCurrFrameCount = 0;
+        }
+      }
+
       for(let arrow of game.arrows){
         arrow.draw();
         // if (arrow.fired){
@@ -380,7 +420,7 @@ function mouseClicked() {
         // }
       }
       if(game.tm.rooms[game.player.roomNumber].endRoom){
-        print("End Rooms -- sketch");
+        //print("End Rooms -- sketch");
       }
       // game.map.printMap();
       // game.updateNeighborDoor();
@@ -405,7 +445,16 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
+<<<<<<< HEAD
     // game.tm.printMap();
+=======
+    //game.tm.printMap();
+
+    if(keyIsDown(77)){
+      background(220, 220, 220, 75);
+      game.tm.printMap();
+    }
+>>>>>>> 38dbf0d9ec86ce38bbc5ce4a2e9df1e620070f4d
   
   }
 
