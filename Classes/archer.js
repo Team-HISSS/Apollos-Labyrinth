@@ -31,6 +31,8 @@ let KEY_W = 87;
 let KEY_A = 65;
 let KEY_D = 68;
 let KEY_S = 83;
+let KEY_M = 77;
+let KEY_P = 80;
 let KEY_SPACE = 32;
 
 // Class for the archer
