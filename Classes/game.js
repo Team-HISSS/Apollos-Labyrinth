@@ -48,7 +48,7 @@ class GameObj {
       var setBalista = false;
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
-          print("Here2");
+          // print("Here2");
           this.tm.rooms[i].grid[8] = "w    e   p         w";
           setplayer = true;
         }
