@@ -349,7 +349,7 @@ class ArcherObj{
   check_collision_with_snake(){
     for(let snake of game.snakes){
       let horizontalDistance = abs((this.x + this.w/2) - (snake.x + 15));
-      let verticalDistance = abs((this.y + this.h/2) - (harpy.y + 15));
+      let verticalDistance = abs((this.y + this.h/2) - (snake.y + 15));
 
       // If harpy is not dead
       if (snake.isAlive){ 
