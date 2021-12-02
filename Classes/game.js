@@ -49,13 +49,8 @@ class GameObj {
       var setBalista = false;
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
-<<<<<<< HEAD
-          // print("Here2");
-          this.tm.rooms[i].grid[8] = "w    e   p         w";
-=======
           print("Here2");
           this.tm.rooms[i].grid[8] = "w    q   p         w";
->>>>>>> 38dbf0d9ec86ce38bbc5ce4a2e9df1e620070f4d
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){

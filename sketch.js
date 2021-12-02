@@ -445,16 +445,13 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
-<<<<<<< HEAD
     // game.tm.printMap();
-=======
     //game.tm.printMap();
 
     if(keyIsDown(77)){
       background(220, 220, 220, 75);
       game.tm.printMap();
     }
->>>>>>> 38dbf0d9ec86ce38bbc5ce4a2e9df1e620070f4d
   
   }
 
