@@ -99,6 +99,11 @@ function mouseClicked() {
   var snakeSheet; 
   var snakeAnimations;
 
+  var balSheet; 
+  var balista1, balista2, balista3, balista4;
+  var balList = [];
+  var balArrow
+
   var doorway = 0;
   var door = 0;
   var wall1 = 0;
@@ -124,7 +129,7 @@ function mouseClicked() {
     archerSprite = loadImage('/resources/sprites/archer_spriteSheet.png');
     snakeSheet = loadImage('/resources/snakeSheet.png');
     heartSheet = loadImage('/resources/health_bars2.png');
-
+    balSheet = loadImage('/resources/sprites/BallistaSprite.png');
 
   }
   
@@ -405,7 +410,7 @@ function mouseClicked() {
         fill(0);
         text("Game Over", 100, 200);
     }
-    game.tm.printMap();
+    //game.tm.printMap();
   
   }
 

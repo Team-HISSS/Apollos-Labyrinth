@@ -32,6 +32,7 @@ class GameObj {
       this.player = 0;
       this.walls = [];
       this.harpies = [];
+      this.balistas = [];
       this.doors = [];
       this.snakes = [];
       this.tiles = [];
@@ -123,6 +124,8 @@ class GameObj {
               // print('Easter drawn')
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));
               break;
+            case "b":
+              this.
           }
           if(this.tm.rooms[k].grid[i][j] != "w" && this.tm.rooms[k].grid[i][j] != "d")
           //square tile floor 

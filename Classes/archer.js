@@ -210,6 +210,8 @@ class ArcherObj{
       }
     }
 
+
+    
     //fill(100,0,0);
     //ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
     pop();
