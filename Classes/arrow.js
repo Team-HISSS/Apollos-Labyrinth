@@ -86,7 +86,8 @@ class ArrowObj {
                     this.x += this.step.x;
                     this.y += this.step.y;
                     rotate(this.angle);
-                    image(arrowCapture, 0, 0, arrowWidth, arrowHeight);
+
+                    image(arrowCapture, -25, -7.5, arrowWidth, arrowHeight);
                 }
 
                 fill (255,255,0);

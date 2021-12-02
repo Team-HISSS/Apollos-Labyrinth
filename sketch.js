@@ -352,6 +352,10 @@ function mouseClicked() {
             game.balistas[i].draw();
           }
         }
+        //reset bullets shot when not in same room 
+        else{
+          game.balistas[i].bullet.fired = false; 
+        }
       }
       
       for(var i = 0; i < game.walls.length; i++){
