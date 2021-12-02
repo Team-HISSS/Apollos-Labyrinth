@@ -329,17 +329,20 @@ function mouseClicked() {
         }
       }      
      
-      //draw snakes 
+      // draw harpies 
       for(let harpy of game.harpies){
         if(!harpy.dead){
           harpy.draw();
           harpy.wanderAnimate();
         }
       }
-
+      
+      // draw snakes
       for(var i = 0; i < game.snakes.length; i++){
-        game.snakes[i].draw();
-        game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
+        if(!game.snakes[i].dead){
+          game.snakes[i].draw();
+          game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
+        }
       }
 
       game.hydra.draw();

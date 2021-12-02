@@ -103,6 +103,7 @@ class GameObj {
               numEnemies += 1;
               break;
             case "B":
+              print("Hydra created");
               this.hydra = new Hydra(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k);
               break;
             case "t":
