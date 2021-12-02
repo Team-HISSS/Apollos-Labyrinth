@@ -40,15 +40,17 @@ class FloorObj{
 }
 
 class EasterEgg{
-  constructor(x, y, index){
+  constructor(x, y, index, w=20, h=20){
     this.x = x;
     this.y = y;
+    this.w = w;
+    this.h = h;
     this.index = index;
     this.size = 20;
     this.taken = false;
   }
   draw(){
-    image(easterEggCapture[this.index], this.x, this.y, 20, 20);
+    image(easterEggCapture[this.index], this.x, this.y, this.w, this.h);
   }
 }
     
