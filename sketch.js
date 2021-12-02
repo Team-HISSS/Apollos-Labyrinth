@@ -337,11 +337,19 @@ function mouseClicked() {
         game.snakes[i].draw();
         game.snakes[i].state[game.snakes[i].currState].execute(game.snakes[i]);
       }
+
+      print("balista size: " + game.balistas.length);
+      //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
+      //b1.draw();
+      for(var i = 0; i < game.balistas.length; i++){
+        game.balistas[i].draw();
+        //game.balistas[i].state[game.balistas[i].currState].execute(game.balistas[i]);
+      }
       
       for(var i = 0; i < game.walls.length; i++){
         game.walls[i].draw();
       }
-      print(game.player.roomNumber);
+      //print(game.player.roomNumber);
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
         if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
@@ -402,7 +410,7 @@ function mouseClicked() {
         // }
       }
       if(game.tm.rooms[game.player.roomNumber].endRoom){
-        print("End Rooms -- sketch");
+        //print("End Rooms -- sketch");
       }
       // game.map.printMap();
       // game.updateNeighborDoor();
@@ -428,7 +436,7 @@ function mouseClicked() {
         text("Game Over", 100, 200);
     }
     //game.tm.printMap();
-    
+
     if(keyIsDown(77)){
       background(220, 220, 220, 75);
       game.tm.printMap();

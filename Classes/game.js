@@ -50,7 +50,7 @@ class GameObj {
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           print("Here2");
-          this.tm.rooms[i].grid[8] = "w    e   p         w";
+          this.tm.rooms[i].grid[8] = "w    b   p         w";
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){
@@ -61,10 +61,10 @@ class GameObj {
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
-          this.tm.rooms[i].grid[3] = "w  h             h w";
-          this.tm.rooms[i].grid[6] = "w        h         w";
-          this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "w  h             h w";
+          this.tm.rooms[i].grid[3] = "w  b               w";
+          this.tm.rooms[i].grid[6] = "w                  w";
+          this.tm.rooms[i].grid[14] = "w                  w";
+          this.tm.rooms[i].grid[17] = "w              b   w";
           setBalista = true;
         }
         else if(!this.tm.rooms[i].endRoom){
@@ -79,6 +79,8 @@ class GameObj {
     }
     //initially draw tile map onto canvas
   initializeTileMap() {
+    var enemyIndex = 0;
+    
     this.setRooms();
     for(var k = 0; k < this.tm.rooms.length; k++){
       //offset room location on entire map
@@ -124,7 +126,10 @@ class GameObj {
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 0));
               break;
             case "b":
-              break; 
+              this.balistas.push(new BalistaObj(roomOffsetX + j * 20 , roomOffsetY + j*20, this.tm.rooms[k].x, this.tm.rooms[k].y, enemyIndex));
+              enemyIndex++;
+              //numEnemies += 1;
+              break;
             case "o":
               // Power boost - easter egg
               this.easterEggs.push(new EasterEgg(roomOffsetX + j*20, roomOffsetY + i*20, 2, 13.33, 25));

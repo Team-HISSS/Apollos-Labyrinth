@@ -1,5 +1,7 @@
+//balista enemy class and functionality
 class BalistaObj{
     constructor(x, y, rx, ry, ind) {
+      print("HEREEEE");
         this.index = ind;
         this.x = x;
         this.y = y;
@@ -90,7 +92,6 @@ class BalistaObj{
           }
         }
       }
-
 }
 
 class particleObj{ // Particle Object to create the particles for fire

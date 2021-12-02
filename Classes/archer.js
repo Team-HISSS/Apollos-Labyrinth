@@ -186,19 +186,19 @@ class ArcherObj{
         
         switch(this.animationChoice){
           case 'rr':
-            image(shootRight[index], this.x, this.y, 126, 122);  
+            image(shootRight[index], this.x - 25, this.y - 15, 126, 122);  
             break;
           
           case 'ru':
-            image(shootUp[index], this.x, this.y, 126, 122);  
+            image(shootUp[index], this.x - 20, this.y, 126, 122);  
             break;
           
           case 'rl':
-            image(shootLeft[index], this.x, this.y, 126, 122);  
+            image(shootLeft[index], this.x - 20, this.y, 126, 122);  
             break;
           
           case 'rd':
-            image(shootDown[index], this.x, this.y, 126, 122);  
+            image(shootDown[index], this.x - 20, this.y, 126, 122);  
             break;
         }
 
