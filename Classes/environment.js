@@ -1,12 +1,30 @@
 class WallObj{
     constructor(x,y){
       this.x = x;
-      this.y = y; 
+      this.y = y;
+      this.cx = this.x + 10; 
+      this.cy = this.y + 10;  
       this.size = 20;
     }
     draw(){
     
       image(wall1, this.x, this.y, 20, 20);
+    }
+    checkCollision(x, y) {
+      // if the distance between there x and y values is less than 15 a collision is detected
+      if (abs(x - this.cx) < 20 && abs(y - this.cy) < 25) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+    
+    checkCollisionB(x, y) {
+      if (abs(x - this.cx) < 12 && abs(y - this.cy) < 12) {
+        return true;
+      } else {
+        return false;
+      }
     }
     
 }

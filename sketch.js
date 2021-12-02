@@ -276,7 +276,7 @@ function mouseClicked() {
         text("Rules", 150, 50);
         textSize(20);
         text("-Move with WASD.", 50, 80);
-        text("-Shoot with the arrow keys.", 50, 100);
+        text("-Shoot with the spacebar.", 50, 100);
         text("-Avoid enemies and their projectiles.", 50, 120);
         text("-Kill all enemies in a room to move on.", 50, 140);
         text("-Conquer each of the rooms.", 50, 160);
@@ -343,7 +343,13 @@ function mouseClicked() {
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
         game.balistas[i].draw();
-        //game.balistas[i].state[game.balistas[i].currState].execute(game.balistas[i]);
+        game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
+        if (game.balistas[i].bullet[0].fired) {
+          game.balistas[i].bullet[0].draw();
+        }
+        if (game.balistas[i].state != 3) { // if the enemy is not dead then draw its orginal shape and structure 
+          game.balistas[i].draw();
+        }
       }
       
       for(var i = 0; i < game.walls.length; i++){
@@ -366,7 +372,9 @@ function mouseClicked() {
       
       game.player.draw();
       game.player.checkMovement();
-      
+      if(game.player.health <= 0){
+        game.screen = 3; 
+      }
       let ind = 3 - game.player.health;
       // Display health bar
       if(ind < 3) {

@@ -24,7 +24,9 @@ class BalistaObj{
         push();
         translate(this.x, this.y);
         rotate(this.angle - 3 * PI/2);
-        image(balista1, -10,-10,20,20);
+        image(balista1, -20,-20,40,40);
+        fill(255,255,0);
+        ellipse(0,0,10,10);
         rotate(-this.angle - 3 * PI/2);
         translate(-this.x, -this.y);
         pop();
@@ -34,8 +36,10 @@ class BalistaObj{
         stroke(0);
         translate(this.x, this.y);
         rotate(this.angle - 3 * PI/2);
-        image(balista3, -10,-10,20,20);
-        
+        image(balista3, -20,-20,40,40);
+        fill(255,255,0);
+        ellipse(0,0,10,10);
+
         pop();
       }
       decreaseAngle() {
@@ -45,7 +49,7 @@ class BalistaObj{
         this.angle += PI / 45;
       }
       updateAngle() { // update the angle of the tank to face the player tank.
-        this.vec.set(player[0].x - this.x, player[0].y - this.y);
+        this.vec.set((game.player.x + game.player.w / 2) - this.x, (game.player.y + game.player.h/2) - this.y);
         var projectedAngle = this.vec.heading();
         if (projectedAngle < 0) {
           projectedAngle += 2 * PI;
@@ -78,6 +82,7 @@ class BalistaObj{
           return false;
         }
       }
+      
       fire(){ // to start drawing the fire originating at the center of the enemy tank. 
             var p = new particleObj(this.x, this.y);
         // print(p);
@@ -109,7 +114,7 @@ class particleObj{ // Particle Object to create the particles for fire
   draw(){
      noStroke(); // drawing the particles with no stroke
     fill(this.r, this.g, this.b, this.alpha); // Color of fire
-    ellipse(this.x, this.y, 4, 6); // draw the particle
+    ellipse(this.x, this.y, 10, 10); // draw the particle
   }
   update(){ // updating the position of the particle
     this.x += this.vx;
@@ -195,23 +200,23 @@ class fireworkObj {
   }
 } 
 
-function checkFire() {
-  if (keyIsDown(32)) {
-    if (currFrameCount < frameCount - 10) {
-      currFrameCount = frameCount;
-      bullets[bulletIndex].fired = true;
-      bullets[bulletIndex].x = player[0].x;
-      bullets[bulletIndex].y = player[0].y;
-      bullets[bulletIndex].angle = player[0].angle - HALF_PI;
-      bullets[bulletIndex].blocked = false;
+// function checkFire() {
+//   if (keyIsDown(32)) {
+//     if (currFrameCount < frameCount - 10) {
+//       currFrameCount = frameCount;
+//       bullets[bulletIndex].fired = true;
+//       bullets[bulletIndex].x = game.player.x + game.player.w / 2;
+//       bullets[bulletIndex].y = game.player.y + game.player.h / 2;
+//       bullets[bulletIndex].angle = game.player.angle - HALF_PI;
+//       bullets[bulletIndex].blocked = false;
 
-      bulletIndex++;
-      if (bulletIndex > 3) {
-        bulletIndex = 0;
-      }
-    }
-  }
-}
+//       bulletIndex++;
+//       if (bulletIndex > 3) {
+//         bulletIndex = 0;
+//       }
+//     }
+//   }
+// }
 
 
 class bulletObj {
@@ -230,19 +235,28 @@ class bulletObj {
     translate(this.x, this.y);
     rotate(this.angle + PI);
     image(balArrow, -2.5, -10, 5, 20);
+    fill(255,255,0);
+    ellipse(0,0,10,10);
     rotate(-this.angle);
     this.vec.setMag(2);
     this.vec.setHeading(this.angle + HALF_PI);
     this.x += this.vec.x;
     this.y += this.vec.y;
     pop();
-    for (var i = 0; i < walls.length; i++) {
+    for (var i = 0; i < game.walls.length; i++) {
       // checking for collision with the walls
-      if (walls[i].checkCollisionB(this.x, this.y)) {
+      if (game.walls[i].checkCollisionB(this.x, this.y)) {
         this.blocked = true; // checks if the bullet has been blocked or not
         wallCollision = true;
       }
     }
+    // for (var i = 0; i < game.doors.length; i++) {
+    //   // checking for collision with the walls
+    //   if (game.doors[i].checkCollisionB(this.x, this.y)) {
+    //     this.blocked = true; // checks if the bullet has been blocked or not
+    //     wallCollision = true;
+    //   }
+    // }
     if (this.blocked) {
       this.fired = false;
       if (wallCollision) {
@@ -276,33 +290,33 @@ class bulletObj {
 class BalistaShootState {
   constructor(x, y) {
     this.move = 1;
-    this.velocisty = createVector(1, 1);
   }
   execute(me) {
     var rand = int(random(0, 50)); // generating a random int between 0 and 50 for shooting
-    if (dist(me.x, me.y, player[0].x, player[0].y) > 150) { // change state if the distance is greater than 150
+    if (dist(me.x, me.y, game.player.x + game.player.w / 2, game.player.y + game.player.h / 2) > 150) { // change state if the distance is greater than 150
       me.state = 1;
     }
     me.updateAngle(); // update the angle of the tank to face the player
     for (var i = 0; i < 4; i++) { // check collision with the players bullets
-      if(bullets[i].fired){
-      if (bullets[i].los(me.x, me.y, me.index)) { // if the tank is in the players line of sight switch to avoid state
+      if(game.arrows[i].fired){
+      if (game.arrows[i].los(me.x, me.y, me.index)) { // if the tank is in the players line of sight switch to avoid state
         me.state = 2;
       }
-      if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-        bullets[i].fired = false;
+      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+        game.arrows[i].fired = false;
         me.state = 3;
       }
     }
     if (me.bullet[0].fired) { // check if the tanks bullet hits the player or not
-      if (dist(player[0].x, player[0].y, me.bullet[0].x, me.bullet[0].y) < 20) {
-        gameOver = true;
-        player[0].dead = true;
+      if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
+        //gameOver = true;
+        me.bullet[0].fired = false; 
+        game.player.health--;
       }
-      for(var i = 0 ; i < enemy.length; i++){ //stop the bullet if it hits a destroyed enemy tank 
+      for(var i = 0 ; i < game.balistas.length; i++){ //stop the bullet if it hits a destroyed enemy tank 
         if (i != me.index) {
-          if (enemy[i].state == 3){
-            if (dist(enemy[i].x, enemy[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
+          if (game.balistas[i].state == 3){
+            if (dist(game.balistas[i].x, game.balistas[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
               me.bullet[0].fired = false;
             }
           }
@@ -310,10 +324,10 @@ class BalistaShootState {
       }
     }
     //checking collision with the player
-      if (dist(me.x, me.y, player[0].x, player[0].y) < 20){
+      if (dist(me.x, me.y, game.player.x + game.player.w/2, game.player.y + game.player.h/2) < 20){
         this.velocity.setHeading(me.angle);
         this.velocity.setMag(-0.5);
-        me.x+= this.velocity.x;
+        me.x += this.velocity.x;
         me.y += this.velocity.y;
       }
       // shooting action
@@ -338,7 +352,10 @@ class BalistaShootState {
 }
 }
 
-// The tank is in the Chase State when the distance between the enemy tank and the player is greater than 150 pixels. Int this state the enemy tank chases the playeer tank. In the state the tank checks for collisions with enemy, player and the walls. The tank also checks if it is in a bullets line of sight or if it is dead and changes to a different state accordingly. (As done in the chase state)
+// The tank is in the Chase State when the distance between the enemy tank and the player is greater than 150 pixels. 
+//Int this state the enemy tank chases the playeer tank. In the state the tank checks for collisions with enemy, 
+//player and the walls. The tank also checks if it is in a bullets line of sight or if it is dead and changes to 
+//a different state accordingly. (As done in the chase state)
 class BalistaChaseState {
   constructor() {
     this.move = 0.5;
@@ -347,27 +364,29 @@ class BalistaChaseState {
   execute(me) {
     this.move = 0.5;
     for (var i = 0; i < 4; i++) {
-      if (bullets[i].fired){
-      if (bullets[i].los(me.x, me.y, me.index)) {
+      if (game.arrows[i].fired){
+      if (game.arrows[i].los(me.x, me.y, me.index)) {
         me.state = 2;
-      } else if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-        bullets[i].fired = false;
+      } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+        game.arrows[i].fired = false;
         me.state = 3;
       }
       }
     }
-    if (dist(me.x, me.y, player[0].x, player[0].y) <= 150) {
+    if (dist(me.x, me.y, game.player.x + game.player.w /2, game.player.y + game.player.h/2) <= 150) {
       me.state = 0;
     }
     if (me.bullet[0].fired) {
-      if (dist(player[0].x, player[0].y, me.bullet[0].x, me.bullet[0].y) < 20) {
-        gameOver = true;
-        player[0].dead = true;
+      if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
+        
+        //gameOver = true;
+        me.bullet[0].fired = false; 
+        game.player.health--;
       }
-      for(var i = 0 ; i < enemy.length; i++){
+      for(var i = 0 ; i < game.balistas.length; i++){
         if (i != me.index) {
-          if (enemy[i].state == 3){
-            if (dist(enemy[i].x, enemy[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
+          if (game.balistas[i].state == 3){
+            if (dist(game.balistas[i].x, game.balistas[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
               me.bullet[0].fired = false;
             }
           }
@@ -377,19 +396,19 @@ class BalistaChaseState {
     me.updateAngle();
     this.velocity.setHeading(me.angle);
     this.velocity.setMag(this.move);
-    for (i = 0; i < walls.length; i++) {
+    for (i = 0; i < game.walls.length; i++) {
       if (
-        walls[i].checkCollision(me.x + this.velocity.x, me.y + this.velocity.y)
+        game.walls[i].checkCollision(me.x + this.velocity.x, me.y + this.velocity.y)
       ) {
         me.angle += PI / 180;
         this.move = -this.move;
         this.velocity.setMag(this.move);
       }
     }
-    for (i = 0; i < enemy.length; i++) {
+    for (i = 0; i < game.balistas.length; i++) {
       if (i != me.index) {
         if (
-          enemy[i].checkCollision(
+          game.balistas[i].checkCollision(
             me.x + this.velocity.x,
             me.y + this.velocity.y
           )
@@ -419,14 +438,15 @@ class BalistaAvoidState {
   execute(me) {
     this.move = 1;
     if (me.bullet[0].fired) {
-      if (dist(player[0].x, player[0].y, me.bullet[0].x, me.bullet[0].y) < 20) {
-        gameOver = true;
-        player[0].dead = true;
+      if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
+        //gameOver = true;
+        me.bullet[0].fired = false; 
+        game.player.health--;
       }
-      for(var i = 0 ; i < enemy.length; i++){
+      for(var i = 0 ; i < game.balistas.length; i++){
         if (i != me.index) {
-          if (enemy[i].state == 3){
-            if (dist(enemy[i].x, enemy[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
+          if (game.balistas[i].state == 3){
+            if (dist(game.balistas[i].x, game.balistas[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
               me.bullet[0].fired = false;
             }
           }
@@ -454,7 +474,7 @@ class BalistaAvoidState {
       // if there is a difference of atleast 45 degrees then just move
       this.velocity.setHeading(me.angle);
       this.velocity.setMag(this.move);
-      for (i = 0; i < walls.length; i++) {
+      for (i = 0; i < game.walls.length; i++) {
         if (
           walls[i].checkCollision(
             me.x + this.velocity.x,
@@ -466,10 +486,10 @@ class BalistaAvoidState {
           this.velocity.setMag(this.move);
         }
       }
-      for (i = 0; i < enemy.length; i++) {
+      for (i = 0; i < game.balistas.length; i++) {
         if (i != me.index) {
           if (
-            enemy[i].checkCollision(
+            game.balistas[i].checkCollision(
               me.x + this.velocity.x,
               me.y + this.velocity.y
             )
@@ -539,14 +559,15 @@ class BalistaDeathState {
       }
     }
     if (me.bullet[0].fired) {
-      if (dist(player[0].x, player[0].y, me.bullet[0].x, me.bullet[0].y) < 20) {
-        gameOver = true;
-        player[0].dead = true;
+      if (dist(game.player.x + game.player.w / 2, game.player.y + game.player.h / 2, me.bullet[0].x, me.bullet[0].y) < 20) {
+        //gameOver = true;
+        me.bullet[0].fired = false; 
+        game.player.health--;
       }
-      for(var i = 0 ; i < enemy.length; i++){
+      for(var i = 0 ; i < game.balistas.length; i++){
         if (i != me.index) {
-          if (enemy[i].state == 3){
-            if (dist(enemy[i].x, enemy[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
+          if (game.balistas[i].state == 3){
+            if (dist(game.balistas[i].x, game.balistas[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
               me.bullet[0].fired = false;
             }
           }
@@ -554,8 +575,8 @@ class BalistaDeathState {
       }
     }
     for (var i = 0; i < 4; i++) {
-      if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-        bullets[i].fired = false;
+      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 20) {
+        game.arrows[i].fired = false;
         me.state = 3;
       }
     }

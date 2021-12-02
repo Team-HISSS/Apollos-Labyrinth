@@ -88,7 +88,10 @@ class ArrowObj {
                     rotate(this.angle);
                     image(arrowCapture, 0, 0, arrowWidth, arrowHeight);
                 }
-            pop();
+
+                fill (255,255,0);
+                ellipse(0,0,10,10);
+                pop();
             }
     }
     los(x, y, ind) { //checking if a arrow is in an enemy's line of sight

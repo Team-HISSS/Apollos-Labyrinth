@@ -108,6 +108,7 @@ class RoomObj{
     }
     return isEnd; 
   }
+  
   /*setGrid(){
     //this.grid = grid;
     this.numEnemies = 0;
