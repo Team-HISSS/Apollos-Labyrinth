@@ -288,14 +288,19 @@ function mouseClicked() {
         fill(0);
         stroke(0);
         textSize(30);
-        text("Rules", 150, 50);
-        textSize(20);
-        text("-Move with WASD.", 50, 80);
-        text("-Shoot with the spacebar.", 50, 100);
-        text("-Avoid enemies and their projectiles.", 50, 120);
-        text("-Kill all enemies in a room to move on.", 50, 140);
-        text("-Conquer each of the rooms.", 50, 160);
-        text("-Collect all 3 keys to win.", 50, 180);
+        text("Rules", 150, 25);
+        textSize(15);
+        text("-Move with WASD.", 80, 70);
+        text("-Shoot with the spacebar.", 80, 85);
+        text("-Press P to pause.", 80, 100);
+        text("-Press m to pull up map.", 80, 115);
+        text("-Gems make you temporarily", 80, 130);
+        text("  invincible to melee attacks.", 80, 145)
+        text("-Collect pots to gain health." , 80 , 160)
+        text("-Avoid enemies and their projectiles.", 80, 175);
+        text("-Kill all enemies in a room to move on.", 80, 190);
+        text("-Conquer each of the rooms.", 80, 205);
+        text("-Collect all 3 keys to win.", 80, 220);
         fill(255);
         text("Click the arrow to go the to main menu.", 25, 340);
   

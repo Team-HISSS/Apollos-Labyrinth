@@ -52,14 +52,14 @@ class GameObj {
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           //print("Here2");
-          this.tm.rooms[i].grid[8] = "w    s s   p   s s   w";
+          this.tm.rooms[i].grid[8] = "w         p        w";
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){
           this.tm.rooms[i].grid[3] = "w  h             h w";
           this.tm.rooms[i].grid[6] = "w        h         w";
           this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "wo h             h w";
+          this.tm.rooms[i].grid[17] = "w  h     o       h w";
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
@@ -76,7 +76,7 @@ class GameObj {
           this.tm.rooms[i].grid[17] = "w  q            q  w";
         }
         if (this.tm.rooms[i].endRoom){
-          this.tm.rooms[i].grid[8] = "w        Bko       w";
+          this.tm.rooms[i].grid[8] = "wo       Bk        w";
           this.tm.rooms[i].grid[18] = "w                 aw";
         }
       }
