@@ -1,3 +1,4 @@
+// Creates Hydra Object class which the is used to create and move the hydra
 class Hydra{
     constructor(x, y, rx, ry, roomNum){
         this.rx = rx;
@@ -26,6 +27,7 @@ class Hydra{
         }
     }
 
+    // Drawing the hydra frames
     draw(){
         if (this.xMove > 0){
             push();
@@ -43,58 +45,30 @@ class Hydra{
             ellipse(this.x, this.y, 20, 20);
         pop();
     }
-    fly() {
-        this.x += this.speed; 
-    }
-    flyAnimate() {
-        this.index += 0.12;
-        if(this.index >= 3){
-            this.index = 0;
-        }
-        this.x += this.speed;
-        if (this.x > width) {
-            this.x = 10;
-        }
-    }
-    wanderAnimate(){
-        if (game.player.roomNumber == this.roomNum){
-            this.index+= 0.12;
-            if(this.index >= 3){
-                this.index = 0;
-            }
-
-            if (this.x + this.xMove >= this.rx*400 +340){
-                this.xMove = -this.xMove
-            }
-            else if (this.x + this.xMove <= this.rx*400 + 40){
-                this.xMove = -this.xMove;
-            }
-            if (this.y + this.yMove >= this.ry*400 + 340){
-                this.yMove = -this.yMove
-            }
-            else if (this.y + this.yMove <= this.ry*400 + 40){
-                this.yMove = -this.yMove;
-            }
-            this.x += this.xMove;
-            this.y += this.yMove;
-        }
-    }
+    
+    // Spawns snakes from the hydra
     spawnSnakes(){
+        // Spawns snakes at every 180 frames i.e. 3 seconds
         if(frameCount % 180 == 0){
             game.snakes.push(new SnakeObj(this.x, this.y, this.rx, this.ry));
-            game.tm.rooms[game.player.roomNumber].numEnemies += 1; // check what happens if the player exits the room
+            // Adds the snake to the total enemy count for the room
+            game.tm.rooms[game.player.roomNumber].numEnemies += 1;
         }
 
     }
 }
 
+// Wander state for the Hydra
 class hydraWanderState{
     constructor(){
         this.away = false;
     }
-    execute(me){ // executing the wander state
-        // print("Here");
+    // executing the wander state
+    execute(me){ 
+        
+        // Checks if the hydra collided with the archer
         if (me.collided){
+            // Checks if the hydra is not away from the archer
             if(!this.away){
                 me.xMove = int(random(-1, 1));
                 me.yMove = int(random(-1, 1));
@@ -106,26 +80,19 @@ class hydraWanderState{
                 }
                 this.away = true;
             }
-            if(dist(me.x, me.y, game.player.x, game.player.y) > 190){
+
+            // Checks if the hydra beyond the collision distance from the archer
+            if(dist(me.x, me.y, game.player.x + game.player.w/2, game.player.y+ game.player.h/2) > 190){
                 me.collided = false;
             }
 
         }
         else {
             this.away = false;
-            if (dist(me.x, me.y, game.player.x, game.player.y) <= 150){ // if the distance between any enemy and the player is less than 15 pixels switch to chase state
-            //    if(me.collided){
-            //     if(dist(me.x, me.y, game.player.x, gameplayer.y) > 190){
-            //         print("Hmmm");
-            //         me.collided = false;
-            //         // me.currState = 1;
-            //         // this.frame = frameCount;
-            //     }
-            //    }
-            
-                me.currState = 0;
-            
-                
+            // Checks if the distance between any enemy and the player is less than 150 pixels, 
+            // then switch to chase state
+            if (dist(me.x, me.y, game.player.x + game.player.w/2, game.player.y+ game.player.h/2) <= 150){ 
+                me.currState = 0; 
             }
         }
         // check the line of sight of the arrow to avoid it 
@@ -155,6 +122,7 @@ class hydraWanderState{
     }
 }
 
+// Chase state for the Hydra
 class hydraChaseState{
     constructor(){
         this.move = 0.5;
@@ -162,8 +130,7 @@ class hydraChaseState{
     }
     execute(me){
         this.move = 0.5;
-        print('chasing')
-        if (dist(me.x, me.y, game.player.x, game.player.y) > 150 || game.player.check_collision_with_hydra(0, 0)){
+        if (dist(me.x, me.y, game.player.x + game.player.w/2, game.player.y+ game.player.h/2) > 150 || game.player.check_collision_with_hydra(0, 0)){
             me.currState = 1;
             
             if (!me.collided && game.player.check_collision_with_hydra(0, 0)){
@@ -174,7 +141,7 @@ class hydraChaseState{
 
         // Death transition to death state to be implemented in main/arrow
         // also check the line of sight of the arrow in order to avoid it
-        this.velocity.set(game.player.x - me.x, game.player.y - me.y);
+        this.velocity.set((game.player.x + game.player.w/2) - me.x, (game.player.y+ game.player.h/2) - me.y);
         this.velocity.setMag(1.5);
         // Frame count
         me.index+= 0.12; // move the enemy

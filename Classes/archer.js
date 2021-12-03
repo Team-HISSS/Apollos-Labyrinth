@@ -524,7 +524,7 @@ class ArcherObj{
         this.transition = true;
       }
     }
-    if (this.y < this.futureHeight - 120){
+    if (this.y < this.futureHeight - 140){
       this.transition = true;
       this.futureHeight = 0;
     }

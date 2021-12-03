@@ -1,7 +1,7 @@
 //balista enemy class and functionality
 class BalistaObj{
     constructor(x, y, rx, ry, ind, roomNum) {
-      // print("HEREEEE");
+      
         this.index = ind;
         this.x = x;
         this.y = y;
