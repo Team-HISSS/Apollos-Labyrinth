@@ -169,6 +169,18 @@ function captureHealthBar(){
   pop();
 }
 
+function captureEnemyBar(){
+  push();
+    background(220, 220, 220, 0);
+    image(enemyHud, 0, 0);
+    for(let i = 0; i < 6; i ++){
+      if(i != 2){
+        enemyHudCapture.push(get(43, 175 + i * 18, 108, 18));
+      }
+    }
+  pop();
+}
+
 function captureEasterEgg(){
   push();
     image(architSheet, 0, 0);
@@ -226,6 +238,8 @@ function captureHydraMirror(){
 // Captures all the animation of the archer
 // Function has to be called before creating canvas
 function captureAllAnimation(){
+  createCanvas(640, 480);
+    captureEnemyBar();
   createCanvas(626, 583);
     captureHealthBar();
   createCanvas(640, 640);

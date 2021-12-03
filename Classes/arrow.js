@@ -102,9 +102,9 @@ class ArrowObj {
                         if (hydra.hit == 5){
                             hydra.dead = true;
                             game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                            // switch the enemy to its death state
+                            break;
                         }
-                        // switch the enemy to its death state
-                        break;
                     }
                 }
                 
@@ -242,8 +242,8 @@ class ArrowObj {
     }
 
     check_collision_with_hydra(enemy){
-        let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x));
-        let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y));
+        let horizontalDistance = abs((this.x) - (enemy.x));
+        let verticalDistance = abs((this.y) - (enemy.y));
         // print('Enemy.x ' + enemy.x)
         if(verticalDistance < hydra_constraint_y && horizontalDistance < hydra_constraint_x){
         //   print('Arrow: Collision with snake');
