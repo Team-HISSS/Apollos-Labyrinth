@@ -5,16 +5,15 @@ let half_arrowWidth = arrowWidth/2;
 let half_arrowHeight = arrowHeight/2;
 let numberBal = 0;
 class ArrowObj {
-// constructor(x, y, angle) {
     constructor(){
-        // this.x = x;
-        // this.y = y;
-        // this.angle = angle;
+        
         this.vec = new p5.Vector(0, -1);
         this.vec.set(cos(this.angle), sin(this.angle));
         this.direction = 0;
+        
         this.x = 0;
         this.y = 0;
+        
         this.fired = false;
         this.angle = 0;
         this.step = new p5.Vector(1, 1);
@@ -24,22 +23,14 @@ class ArrowObj {
         this.centerY = 0;
     }
     draw() {
-        // push();
-        // translate(this.x, this.y);
-        // rotate(this.angle);
-
-        // image(arrowImg, this.x, this.y, 25, 25);
-
-        // rotate(-this.angle);
-        // translate(-this.x, -this.y);
-        // pop();
-        // if(this.x > 900){
-        //     this.fired = false;
-        // }
-
+        
+        // Checks if the arrow has been fired
         if(this.fired){
             push();
+                // Checks if the arrow has been blocked by any object
                 let blocked = false;
+                
+                // Checking if arrow is blocked by the wall
                 for (let wall of game.walls){
                     if(this.check_collision(wall)){
                         blocked = true;
@@ -56,6 +47,7 @@ class ArrowObj {
                     }
                 }
 
+                // Checking if arrow hit the harpy
                 for (let harpy of game.harpies){
                     if(!harpy.dead && this.check_collision_with_harpy(harpy)){
                         blocked = true;
@@ -67,6 +59,7 @@ class ArrowObj {
                     }
                 }
 
+                // Checking if arrow hit the snake
                 for(let snake of game.snakes){
                     if(!snake.dead && this.check_collision_with_snake(snake)){
                         blocked = true;
@@ -78,11 +71,14 @@ class ArrowObj {
                     }
                 }
 
+                // Checking if arrow hit the balista
                 for(let balista of game.balistas){
                     if(!balista.dead && this.check_collision_with_balista(balista)){
                         blocked = true;
                         this.fired = false;
                         balista.numHits += 1;
+                        // If the hits is greater than or equal to 3,
+                        // balista dies
                         if (balista.numHits >= 2){
                             balista.state = 3;
                             numberBal++;
@@ -94,12 +90,15 @@ class ArrowObj {
                     }
                 }
 
+                // Checking if arrow hit the hydra
                 for(let hydra of game.hydras){
                     if(!hydra.dead && this.check_collision_with_hydra(hydra)){
                         blocked = true;
                         this.fired = false;
                         hydra.hit += 1;
-                        if (hydra.hit == 5){
+                        // If the hits is greater than or equal to 5,
+                        // hydra dies
+                        if (hydra.hit >= 5){
                             hydra.dead = true;
                             game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
                             // switch the enemy to its death state
@@ -108,12 +107,13 @@ class ArrowObj {
                     }
                 }
                 
-
-                
+                // Checks if the arrow has not been blocked,
+                // then keeps moving
                 if(!blocked){
                     translate(this.x, this.y);
                     this.step.setMag(3);
                     this.step.setHeading(this.angle);
+                    
                     // Updates after image is drawn
                     this.x += this.step.x;
                     this.y += this.step.y;
@@ -121,21 +121,28 @@ class ArrowObj {
 
                     image(arrowCapture, -25, -7.5, arrowWidth, arrowHeight);
                 }
-
+                // Only for developers!
                 //fill(255,255,0);
                 //ellipse(0,0,10,10);
                 pop();
             }
     }
-    los(x, y, ind) { //checking if a arrow is in an enemy's line of sight
+
+    // Checking if a arrow is in an enemy's line of sight
+    los(x, y, ind) { 
         var projectiony = 0; // projected y position of the arrow
-    
         var projectionx = 0; // projected x position of the arrow 
-        if (this.fired) { // Check for los only if the arrow is fired
+        
+        // Check for los only if the arrow is fired
+        if (this.fired) {
+
           // Need to change the angle depending on the direction in which the arrow is shot, 4 if conditions
           projectiony = tan(this.angle + HALF_PI) * (x - this.x) + this.y; // get the projected y location using y = mx +c
           projectionx = (y - this.y) / tan(this.angle + HALF_PI) + this.x; // get the projected x location using x = (y-c)/m
-          if (dist(x, y, projectionx, projectiony) < 90) { // if the distance between the projected coordinates and the actual coordinates is less than 90, then the arrow is in sight
+          
+          // Checks if the distance between the projected coordinates and the actual coordinates is less than 90, 
+          // then the arrow is in sight
+          if (dist(x, y, projectionx, projectiony) < 90) { 
             return true;
           } else {
             return false;
@@ -197,54 +204,57 @@ class ArrowObj {
         }
     }
 
+    // Checks collision with the wall or door
     check_collision(boundary){
-        // for(let wall of game.walls){
-        // for(let i = 0; i < game.walls.length; i++){
-            let horizontalDistance = abs((this.x) - (boundary.x + wall_center_radius));
-            let verticalDistance = abs((this.y) - (boundary.y + wall_center_radius));
+    
+        let horizontalDistance = abs((this.x) - (boundary.x + wall_center_radius));
+        let verticalDistance = abs((this.y) - (boundary.y + wall_center_radius));
+        
+        if(verticalDistance < wall_center_radius && horizontalDistance < wall_center_radius){
             
-            if(verticalDistance < wall_center_radius && horizontalDistance < wall_center_radius){
-              
-            //   print('Arrow: Collision with boundary');
-              return true;
+        //   print('Arrow: Collision with boundary');
+            return true;
         }
         return false;
     }
 
     // Check collision with the harpy
     check_collision_with_harpy(enemy){
-            let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius));
-            let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius));
-            // print('Enemy.x ' + enemy.x)
-            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 5 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
-            //   print('Arrow: Collision with harpy');
-              return true;
+        
+        let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius));
+        let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius));
+        // print('Enemy.x ' + enemy.x)
+        if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 5 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
+        //   print('Arrow: Collision with harpy');
+            return true;
         }
         return false;
     }
 
     // Check collision with the snake
     check_collision_with_snake(enemy){
+        
         if(dist(this.x, this.y, enemy.x, enemy.y) < 20){
             return true;
         }
-        //if(verticalDistance < this.enemy_constraint_y + 15/2 && horizontalDistance < this.enemy_constraint_x + 15/2){
-        //   print('Arrow: Collision with snake');
-        //}
         return false;
     }
 
+    // Check collision with the balista
     check_collision_with_balista(enemy){
+        
         if (dist(enemy.x, enemy.y, this.x, this.y) < 40) {
             return true;
         }
         return false;
     }
 
+    // Check collision with the hydra
     check_collision_with_hydra(enemy){
+        
         let horizontalDistance = abs((this.x) - (enemy.x));
         let verticalDistance = abs((this.y) - (enemy.y));
-        // print('Enemy.x ' + enemy.x)
+        
         if(verticalDistance < hydra_constraint_y && horizontalDistance < hydra_constraint_x){
         //   print('Arrow: Collision with snake');
           return true;
@@ -252,8 +262,4 @@ class ArrowObj {
         return false;
     }
 
-    
-    fall(range) {
-
-    }
 }
