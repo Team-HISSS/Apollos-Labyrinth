@@ -100,6 +100,7 @@ function mouseClicked() {
   var objectSheet;
 
   var olympus; 
+  var clouds = [];
   
   var hydrasheet;
   var hydrasheetMirror;
@@ -177,7 +178,7 @@ function mouseClicked() {
     harpy = new HarpyObj(200, 50);
     knight = new knightObj(-100, 300, 0.3);
     
-    
+    clouds = [new CloudObj(-100, 200) , new CloudObj(100, 300)];
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
@@ -510,6 +511,10 @@ function mouseClicked() {
     else if (game.screen == 4) {
       push();
       image(olympus, 0,0,400,400);
+      for(var i = 0; i < clouds.length; i++){
+        clouds[i].draw();
+        clouds[i].move();
+      }
       textSize(75);
       stroke(0);
       fill(0,99,65);
