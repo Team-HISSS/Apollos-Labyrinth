@@ -391,6 +391,7 @@ function mouseClicked() {
       for(let hydra of game.hydras){
         if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
           hydra.draw();
+          hydra.spawnSnakes();
           hydra.state[hydra.currState].execute(hydra);
           // Displaying the Hydra HUD i.e. health of the hydra
           let hitIndex = hydra.hit;
@@ -530,8 +531,8 @@ function mouseClicked() {
       fill('#EB3C3C');
       textSize(64);
       text("Game Over", 30, 200);
-      textSize(30);
-      text("You have died in the labyrinth", 5, 300);
+      textSize(25);
+      text("You have died in the labyrinth", 38, 300);
       for(var i = 0; i < snakesList.length; i++){
         snakesList[i].snakeEndMove();
         snakesList[i].draw();

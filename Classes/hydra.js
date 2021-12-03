@@ -79,6 +79,12 @@ class Hydra{
             this.y += this.yMove;
         }
     }
+    spawnSnakes(){
+        if(frameCount % 180 == 0){
+            game.snakes.push(new SnakeObj(this.x, this.y, this.rx, this.ry));
+        }
+
+    }
 }
 
 class hydraWanderState{
@@ -148,7 +154,7 @@ class hydraWanderState{
     }
 }
 
-class  hydraChaseState{
+class hydraChaseState{
     constructor(){
         this.move = 0.5;
         this.velocity = createVector(1, 1);
