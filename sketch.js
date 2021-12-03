@@ -467,7 +467,7 @@ function mouseClicked() {
       //print(game.player.roomNumber);
       for(var i = 0; i < game.doors.length; i++){
         //print(game.doors[i].x);
-        if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
+        if(game.tm.rooms[game.player.roomNumber].numEnemies <= 0){
           // if(!game.player.transiion){
             game.doors[i].open = true;
           // }
