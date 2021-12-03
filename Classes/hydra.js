@@ -40,17 +40,17 @@ class Hydra{
             pop();
         }
 
-        push();
-            fill(255,255, 0);
-            ellipse(this.x, this.y, 20, 20);
-        pop();
+        // push();
+        //     fill(255,255, 0);
+        //     ellipse(this.x, this.y, 20, 20);
+        // pop();
     }
     
     // Spawns snakes from the hydra
     spawnSnakes(){
         // Spawns snakes at every 180 frames i.e. 3 seconds
         if(frameCount % 180 == 0){
-            game.snakes.push(new SnakeObj(this.x, this.y, this.rx, this.ry));
+            game.snakes.push(new SnakeObj(this.x, this.y, this.rx, this.ry, this.roomNum));
             // Adds the snake to the total enemy count for the room
             game.tm.rooms[game.player.roomNumber].numEnemies += 1;
         }

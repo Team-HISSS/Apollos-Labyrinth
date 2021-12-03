@@ -1,12 +1,13 @@
 // Creates Harpy Object class which is used to create and move the harpy
 class SnakeObj {
-    constructor(x, y, rx, ry){
+    constructor(x, y, rx, ry, roomNum){
         this.x = x;
         this.y = y;
         this.rx = rx; 
         this.ry = ry; 
         this.dead = false; // Changed from isAlive = true 
         this.speed = 1;
+        this.roomNum = roomNum;
         //direction can be 0, 1, 2, 3. 
         //1,2,3,4 = facing right, left, up, down
         this.index = 0;  
@@ -131,65 +132,67 @@ class DirectionState{
 class SnakeWanderState{ // To make any enemy wander around in the room
     constructor(){}
     execute(me){
-        switch (me.direction) {
-            case "r":
-                if(me.x + 5 >= me.rx*400 +350){
-                    me.direction = "l";
-                }
-                else{
-                    me.x++; 
-                }
-                break;
-            case "l":
-                if(me.x - 5 <= me.rx*400 + 30){
-                    me.direction = "r";
-                }
-                else{
-                    me.x--; 
-                }
-                break;
-            case "d":
-                if(me.y + 5 >= me.ry * 400 + 350){
+        if (game.player.roomNumber == me.roomNum){
+            switch (me.direction) {
+                case "r":
+                    if(me.x + 5 >= me.rx*400 +350){
+                        me.direction = "l";
+                    }
+                    else{
+                        me.x++; 
+                    }
+                    break;
+                case "l":
+                    if(me.x - 5 <= me.rx*400 + 30){
+                        me.direction = "r";
+                    }
+                    else{
+                        me.x--; 
+                    }
+                    break;
+                case "d":
+                    if(me.y + 5 >= me.ry * 400 + 350){
+                        me.direction = "u";
+                    }
+                    else{
+                        me.y++; 
+                    }
+                    break;
+                case "u":
+                    if(me.y - 5 <= me.ry*400 + 30){
+                        me.direction = "d";
+                    }
+                    else{
+                        me.y--; 
+                    }
+                    break;
+            }
+            me.randDist--; 
+
+            if(me.x - game.player.x - game.player.w/2 < 10 && me.x - game.player.x - game.player.w/2 > -10 ) {
+                me.currState = 2;
+                //print("GO LEFT" + me.x + " -- " + game.player.x + game.player.w/2 );
+                if(me.y > game.player.y + game.player.h/2){
                     me.direction = "u";
                 }
-                else{
-                    me.y++; 
-                }
-                break;
-            case "u":
-                if(me.y - 5 <= me.ry*400 + 30){
+                else if(me.y <= game.player.y + game.player.h/2){
                     me.direction = "d";
+                    //print("GO RIGHT");
                 }
-                else{
-                    me.y--; 
+            }
+            else if(abs(me.y - game.player.y - game.player.h/2) < 2){
+                me.currState = 2;
+                if(me.x > game.player.x + game.player.w/2){
+                    me.direction = "l";
                 }
-                break;
-        }
-        me.randDist--; 
+                else if(me.x <= game.player.x + game.player.w/2){
+                    me.direction = "r";
+                }
+            }
 
-        if(me.x - game.player.x - game.player.w/2 < 10 && me.x - game.player.x - game.player.w/2 > -10 ) {
-            me.currState = 2;
-            //print("GO LEFT" + me.x + " -- " + game.player.x + game.player.w/2 );
-            if(me.y > game.player.y + game.player.h/2){
-                me.direction = "u";
+            if(me.randDist <= 0){
+                me.currState = 0; 
             }
-            else if(me.y <= game.player.y + game.player.h/2){
-                me.direction = "d";
-                //print("GO RIGHT");
-            }
-        }
-        else if(abs(me.y - game.player.y - game.player.h/2) < 2){
-            me.currState = 2;
-            if(me.x > game.player.x + game.player.w/2){
-                me.direction = "l";
-            }
-            else if(me.x <= game.player.x + game.player.w/2){
-                me.direction = "r";
-            }
-        }
-
-        if(me.randDist <= 0){
-            me.currState = 0; 
         }
 
     }

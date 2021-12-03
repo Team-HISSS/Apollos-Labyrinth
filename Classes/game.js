@@ -66,6 +66,20 @@ class GameObj {
           this.tm.rooms[i].grid[17] = "wo h             h w";
           setHarpy = true;
         }
+        else if(!this.tm.rooms[i].endRoom && !setSnake){
+          this.tm.rooms[i].grid[4] = "w a  s        s    w";
+          this.tm.rooms[i].grid[6] = "w        s  s      w";
+          this.tm.rooms[i].grid[14] = "w       s  s       w";
+          this.tm.rooms[i].grid[16] = "w   s          s  ow";
+          setSnake = true;
+        }
+        else if (!this.tm.rooms[i].endRoom && !setSnakeHar){
+          this.tm.rooms[i].grid[3] = "w a s        s     w";
+          this.tm.rooms[i].grid[6] = "w      h s  h      w";
+          this.tm.rooms[i].grid[14] = "w     s h  s       w";
+          this.tm.rooms[i].grid[17] = "w  h            h  w";
+          setSnakeHar = true;
+        }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
           this.tm.rooms[i].grid[3] = "w  q            q  w";
           this.tm.rooms[i].grid[6] = "w                  w";
@@ -80,22 +94,8 @@ class GameObj {
           this.tm.rooms[i].grid[17] = "w  q            q  w";
           setBalHarp = true;
         }
-        else if(!this.tm.rooms[i].endRoom && !setSnake){
-          this.tm.rooms[i].grid[3] = "w as             s w";
-          this.tm.rooms[i].grid[6] = "w        s  s      w";
-          this.tm.rooms[i].grid[14] = "w       s  s       w";
-          this.tm.rooms[i].grid[17] = "w  s            s ow";
-          setSnake = true;
-        }
-        else if (!this.tm.rooms[i].endRoom && !setSnakeHar){
-          this.tm.rooms[i].grid[3] = "w as             s w";
-          this.tm.rooms[i].grid[6] = "w      h s  h      w";
-          this.tm.rooms[i].grid[14] = "w     s h  s       w";
-          this.tm.rooms[i].grid[17] = "w  h            h  w";
-          setSnakeHar = true;
-        }
         else if (!this.tm.rooms[i].endRoom){
-          this.tm.rooms[i].grid[3] = "w aq             s w";
+          this.tm.rooms[i].grid[3] = "w aq          s    w";
           this.tm.rooms[i].grid[6] = "w      h q  h      w";
           this.tm.rooms[i].grid[14] = "w     s h  s       w";
           this.tm.rooms[i].grid[17] = "w  h            q ow";
@@ -106,7 +106,7 @@ class GameObj {
           setSnakeHar = false;
         }
         if (this.tm.rooms[i].endRoom){
-          this.tm.rooms[i].grid[8] = "wo       Bk        w";
+          this.tm.rooms[i].grid[8] = "w        Bko       w";
           this.tm.rooms[i].grid[18] = "w                 aw";
         }
       }
@@ -151,8 +151,8 @@ class GameObj {
               break;
             case "s":
               //print(this.tm.rooms[k].x);
-              this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y));
-              // numEnemies++; 
+              this.snakes.push(new SnakeObj(roomOffsetX + j * 20, roomOffsetY + i * 20, this.tm.rooms[k].x, this.tm.rooms[k].y, k));
+              numEnemies += 1; 
               break;
             case "t":
               this.doors.push(new DoorObj(roomOffsetX + j * 20, roomOffsetY +  i * 20, k, 0));
