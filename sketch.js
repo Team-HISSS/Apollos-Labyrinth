@@ -236,8 +236,8 @@ function mouseClicked() {
         // knight and archer running
         // harpy flying
   
-        knight.run();
-        knight.runAnimate();
+        // knight.run();
+        // knight.runAnimate();
         
         harpiesList[0].flyAnimate();
         harpiesList[0].drawTitleScreen();
@@ -320,8 +320,8 @@ function mouseClicked() {
         triangle(195, 355, 195, 385, 165, 370);
         stroke(255);
         noFill();
-        knight.run();
-        knight.runAnimate();
+        // knight.run();
+        // knight.runAnimate();
         harpy.fly();
         harpy.flyAnimate();
         archer.draw();

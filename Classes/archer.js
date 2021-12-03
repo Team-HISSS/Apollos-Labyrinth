@@ -592,13 +592,21 @@ class ArcherObj{
   // Moves the archer relative to the canvas
   // For starting screen
   move(){
+    // this.action = 'r';
+    // this.animationChoice = 'rr';
+    // this.index += this.frameRate/2;
+    // this.x += this.speed - 1.60; 
+    // this.x += int(this.x) 
+    // if(this.x > width){
+    //   this.x = -this.w;
+    // }
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate/2;
-    this.x += this.speed - 1.60; 
-    this.x += int(this.x) 
-    if(this.x > width){
-      this.x = -this.w;
+    this.index += 0.25; // * 0.17;
+    this.x += 1; ///* 1.50;
+
+    if(this.x > 450){
+      this.x = -50;
     }
   }
   
@@ -626,6 +634,7 @@ class ArcherObj{
     if(frameCount % 90 == 0){
       changeDirEndScreen = !changeDirEndScreen; 
     }
+  
 
     if(changeDirEndScreen){
       image(left[index], this.x + this.w/2, this.y + this.h/2, 50, 50);
