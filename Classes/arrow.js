@@ -86,7 +86,7 @@ class ArrowObj {
                         if (balista.numHits >= 2){
                             balista.state = 3;
                             numberBal++;
-                            print('Balistas ' + numberBal);
+                            // print('Balistas ' + numberBal);
                             game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
                             break;
                         }
