@@ -42,13 +42,17 @@ class GameObj {
       this.keys = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(5,5, 10);
+      this.tm = new Tilemap(5,5, 5);
       this.currRoom = 0;
     }
     setRooms(){
       var setplayer = false;
       var setHarpy = false;
       var setBalista = false;
+      var setBalHarp = false;
+      var setSnake = false;
+      var setSnakeHar = false;
+
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           //print("Here2");
@@ -59,7 +63,7 @@ class GameObj {
           this.tm.rooms[i].grid[3] = "w  h     h       h w";
           this.tm.rooms[i].grid[6] = "w        h         w";
           this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "w  h     o       h w";
+          this.tm.rooms[i].grid[17] = "wo h             h w";
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
@@ -69,13 +73,37 @@ class GameObj {
           this.tm.rooms[i].grid[17] = "wa      q      q   w";
           setBalista = true;
         }
-        else if(!this.tm.rooms[i].endRoom){
+        else if(!this.tm.rooms[i].endRoom && !setBalHarp){
           this.tm.rooms[i].grid[3] = "w  h             h w";
           this.tm.rooms[i].grid[6] = "w        h  h      w";
           this.tm.rooms[i].grid[14] = "w                  w";
           this.tm.rooms[i].grid[17] = "w  q            q  w";
+          setBalHarp = true;
+        }
+        else if(!this.tm.rooms[i].endRoom && !setSnake){
+          this.tm.rooms[i].grid[3] = "w as             s w";
+          this.tm.rooms[i].grid[6] = "w        s  s      w";
+          this.tm.rooms[i].grid[14] = "w       s  s       w";
+          this.tm.rooms[i].grid[17] = "w  s            s ow";
+          setSnake = true;
+        }
+        else if (!this.tm.rooms[i].endRoom && !setSnakeHar){
+          this.tm.rooms[i].grid[3] = "w as             s w";
+          this.tm.rooms[i].grid[6] = "w      h s  h      w";
+          this.tm.rooms[i].grid[14] = "w     s h  s       w";
+          this.tm.rooms[i].grid[17] = "w  h            h  w";
+          setSnakeHar = true;
+        }
+        else if (!this.tm.rooms[i].endRoom){
+          this.tm.rooms[i].grid[3] = "w aq             s w";
+          this.tm.rooms[i].grid[6] = "w      h q  h      w";
+          this.tm.rooms[i].grid[14] = "w     s h  s       w";
+          this.tm.rooms[i].grid[17] = "w  h            q ow";
           setHarpy = false;
           setBalista = false;
+          setSnake = false;
+          setBalHarp = false;
+          setSnakeHar = false;
         }
         if (this.tm.rooms[i].endRoom){
           this.tm.rooms[i].grid[8] = "wo       Bk        w";
