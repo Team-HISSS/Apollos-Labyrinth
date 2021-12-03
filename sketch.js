@@ -98,6 +98,8 @@ function mouseClicked() {
   var heartCapture = [];
 
   var objectSheet;
+
+  var olympus; 
   
   var hydrasheet;
   var hydrasheetMirror;
@@ -115,7 +117,7 @@ function mouseClicked() {
   var balSheet; 
   var balista1, balista2, balista3, balista4;
   var balList = [];
-  var balArrow
+  var balArrow;
 
   var doorway = 0;
   var door = 0;
@@ -147,6 +149,7 @@ function mouseClicked() {
     hydraSheet = loadImage('/resources/HydraSprite.png');
     keySheet = loadImage('/resources/Key.png');
     hydraSheetMirror = loadImage('/resources/HydraSprite_mirror.png');
+    olympus = loadImage('/resources/olympus.jpg');
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -173,6 +176,7 @@ function mouseClicked() {
     // Creates the harpy, snake, and knight
     harpy = new HarpyObj(200, 50);
     knight = new knightObj(-100, 300, 0.3);
+    
     
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
@@ -417,10 +421,11 @@ function mouseClicked() {
         keyList[i] = true; 
       }
       //if(keyList)
-      
+
       //winning condition
       if(keyCount >= 3){
         game.screen = 4;
+        game.player.setEndArcher();
       }
 
       // If the game.player.health is 0, the player is dead
@@ -493,10 +498,38 @@ function mouseClicked() {
     }
 
     else if (game.screen == 4) {
-      background(220);
-      stroke('#7E570E');
-      fill('#EB3C3C');
+      push();
+      image(olympus, 0,0,400,400);
+      textSize(75);
+      stroke(0);
+      fill(0,99,65);
       text("Winner!", 100, 200);
+      textSize(25)
+      text("Apollo has safely" , 100 , 275);  
+      text("returned to Olympus!", 100, 300);
+      game.player.endDraw();
+      for (var i = 0; i < beamChoice.length; i++) {
+  
+        if (beamChoice[i] <= 20) {
+            image(sunBeam2, 0, 0, 100, 100);
+            beamChoice[i]++;
+        }
+        else {
+            image(sunBeam1, 0, 0, 100, 100);
+            beamChoice[i]++;
+            if (beamChoice[i] >= 40) {
+                beamChoice[i] = 0;
+            }
+        }
+        rotate(PI / 4);
+        //print(beamChoice[i]);
+      }
+
+      //draw sun
+      //image(sunImage, -25, -25, 150, 150);
+
+      pop();
+
   }
 
     // game.tm.printMap();
