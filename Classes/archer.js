@@ -374,11 +374,22 @@ class ArcherObj{
   check_collision_with_snake(thetaX, thetaY){
     for(let snake of game.snakes){
 
-      let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 15, 15, harpy_constraint_x - 10, harpy_constraint_y - 10);
-      
-      if(returnFlag){
+      //let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 15, 15, harpy_constraint_x - 10, harpy_constraint_y - 10);
+      //print(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 20)
+      if(!snake.dead){
+        if(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 20){
+          if (currFrameCount < frameCount - 100) {
+            currFrameCount = frameCount;
+          // Removes a health level
+            this.health -= 1;
+          // print('number of times in contact with the enemies')
+        }
         return true;
       }
+      // if(returnFlag){
+      //   return true;
+      // }
+    }
     }    
     return false;
   }

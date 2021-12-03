@@ -70,13 +70,13 @@ class HarpyObj {
         if (this.x + this.xMove >= this.rx*400 +340){
             this.xMove = -this.xMove
         }
-        else if (this.x + this.xMove <= this.rx*400 + 40){
+        else if (this.x + this.xMove <= this.rx*400 + 20){
             this.xMove = -this.xMove;
         }
         if (this.y + this.yMove >= this.ry*400 + 340){
             this.yMove = -this.yMove
         }
-        else if (this.y + this.yMove <= this.ry*400 + 40){
+        else if (this.y + this.yMove <= this.ry*400 + 20){
             this.yMove = -this.yMove;
         }
         this.x += this.xMove;
