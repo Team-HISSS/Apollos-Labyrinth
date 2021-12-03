@@ -3,7 +3,7 @@ let arrowWidth = 50;
 let arrowHeight = 14.29;
 let half_arrowWidth = arrowWidth/2;
 let half_arrowHeight = arrowHeight/2;
-
+let numberBal = 0;
 class ArrowObj {
 // constructor(x, y, angle) {
     constructor(){
@@ -83,12 +83,14 @@ class ArrowObj {
                         blocked = true;
                         this.fired = false;
                         balista.numHits += 1;
-                        if (balista.numHits == 2){
+                        if (balista.numHits >= 2){
                             balista.state = 3;
+                            numberBal++;
+                            // print('Balistas ' + numberBal);
                             game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                            break;
                         }
                         // switch the enemy to its death state
-                        break;
                     }
                 }
 
@@ -238,8 +240,12 @@ class ArrowObj {
     }
 
     check_collision_with_hydra(enemy){
-        if (dist(enemy.x, enemy.y, this.x, this.y) < 40) {
-            return true;
+        let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x));
+        let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y));
+        // print('Enemy.x ' + enemy.x)
+        if(verticalDistance < hydra_constraint_y && horizontalDistance < hydra_constraint_x){
+        //   print('Arrow: Collision with snake');
+          return true;
         }
         return false;
     }

@@ -59,14 +59,14 @@ class GameObj {
           this.tm.rooms[i].grid[3] = "w  h             h w";
           this.tm.rooms[i].grid[6] = "w        h         w";
           this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "w  h             h w";
+          this.tm.rooms[i].grid[17] = "w  h     o       h w";
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
           this.tm.rooms[i].grid[3] = "w  q            q  w";
           this.tm.rooms[i].grid[6] = "w                  w";
           this.tm.rooms[i].grid[14] = "w          q       w";
-          this.tm.rooms[i].grid[17] = "w       q      q   w";
+          this.tm.rooms[i].grid[17] = "wa      q      q   w";
           setBalista = true;
         }
         else if(!this.tm.rooms[i].endRoom){
@@ -76,7 +76,8 @@ class GameObj {
           this.tm.rooms[i].grid[17] = "w  q            q  w";
         }
         if (this.tm.rooms[i].endRoom){
-          this.tm.rooms[i].grid[8] = "w        Bk        w";
+          this.tm.rooms[i].grid[8] = "wo       Bk        w";
+          this.tm.rooms[i].grid[18] = "w                 aw";
         }
       }
       

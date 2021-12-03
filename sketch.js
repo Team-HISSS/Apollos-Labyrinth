@@ -360,7 +360,7 @@ function mouseClicked() {
       for(let hydra of game.hydras){
         if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
           hydra.draw();
-          hydra.wanderAnimate();
+          hydra.state[hydra.currState].execute(hydra);
         }
       }
 
@@ -402,7 +402,7 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      //print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
+      // print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
       game.player.checkMovement();

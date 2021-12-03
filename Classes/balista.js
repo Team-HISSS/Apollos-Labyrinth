@@ -81,7 +81,7 @@ class BalistaObj{
       }
 
       checkCollision(x, y) {
-        if (dist(this.x, this.y, x, y) < 25) {
+        if (dist(this.x, this.y, x, y) < 40) {
           return true;
         } else {
           return false;
@@ -327,7 +327,7 @@ class BalistaShootState {
       me.state = 3;
     }
 
-    var rand = int(random(0, 50)); // generating a random int between 0 and 50 for shooting
+    var rand = int(random(0, 10)); // generating a random int between 0 and 50 for shooting
     if (dist(me.x, me.y, game.player.x + game.player.w / 2, game.player.y + game.player.h / 2) > 150) { // change state if the distance is greater than 150
       me.state = 1;
     }
@@ -397,7 +397,7 @@ class BalistaShootState {
 //a different state accordingly. (As done in the chase state)
 class BalistaChaseState {
   constructor() {
-    this.move = 0.5;
+    this.move = 1;
     this.velocity = createVector(1, 1);
   }
   execute(me) {
@@ -408,15 +408,16 @@ class BalistaChaseState {
     this.move = 0.5;
     for (var i = 0; i < 4; i++) {
       if (game.arrows[i].fired){
-      if (game.arrows[i].los(me.x, me.y, me.index)) {
-        me.state = 2;
-      } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
-        game.arrows[i].fired = false;
-        me.numHits += 1;
-        if (me.numHits == 2){
-          me.state = 3;
-        }
-      }
+        if (game.arrows[i].los(me.x, me.y, me.index)) {
+          me.state = 2;
+        } 
+      // else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
+      //   game.arrows[i].fired = false;
+      //   me.numHits += 1;
+      //   if (me.numHits == 2){
+      //     me.state = 3;
+      //   }
+      // }
       }
     }
     if (dist(me.x, me.y, game.player.x + game.player.w /2, game.player.y + game.player.h/2) <= 150) {
@@ -460,7 +461,7 @@ class BalistaChaseState {
           )
         ) {
           me.angle += PI / 180;
-          this.move = -this.move;
+          this.move = -2*this.move;
           this.velocity.setMag(this.move);
           // print("Here");
         }
@@ -574,13 +575,13 @@ class BalistaAvoidState {
         for (var i = 0; i < 4; i++) {
       if (bullets[i].fired) {
         this.bulletAngle = (bullets[i].angle + HALF_PI) * (180 / PI);
-        if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-          bullets[i].fired = false;
-          me.numHits += 1;
-          if (me.numHits == 2){
-            me.state = 3;
-          }
-        }
+        // if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
+        //   bullets[i].fired = false;
+        //   me.numHits += 1;
+        //   if (me.numHits == 2){
+        //     me.state = 3;
+        //   }
+        // }
       }
     }
     
@@ -630,12 +631,12 @@ class BalistaDeathState {
         }
       }
     }
-    for (var i = 0; i < 4; i++) {
-      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
-        game.arrows[i].fired = false;
-        me.state = 3;
-      }
-    }
+    // for (var i = 0; i < 4; i++) {
+    //   if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
+    //     game.arrows[i].fired = false;
+    //     me.state = 3;
+    //   }
+    // }
     // if (!me.dead){
     //     game.tm.rooms[me.roomNum].numEnemies -= 1;
     // }
