@@ -210,10 +210,10 @@ class ArrowObj {
 
     // Check collision with the harpy
     check_collision_with_harpy(enemy){
-            let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius/2));
-            let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius/2));
+            let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius));
+            let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius));
             // print('Enemy.x ' + enemy.x)
-            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 10 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
+            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 5 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
             //   print('Arrow: Collision with harpy');
               return true;
         }
