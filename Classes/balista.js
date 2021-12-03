@@ -408,15 +408,16 @@ class BalistaChaseState {
     this.move = 0.5;
     for (var i = 0; i < 4; i++) {
       if (game.arrows[i].fired){
-      if (game.arrows[i].los(me.x, me.y, me.index)) {
-        me.state = 2;
-      } else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
-        game.arrows[i].fired = false;
-        me.numHits += 1;
-        if (me.numHits == 2){
-          me.state = 3;
-        }
-      }
+        if (game.arrows[i].los(me.x, me.y, me.index)) {
+          me.state = 2;
+        } 
+      // else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
+      //   game.arrows[i].fired = false;
+      //   me.numHits += 1;
+      //   if (me.numHits == 2){
+      //     me.state = 3;
+      //   }
+      // }
       }
     }
     if (dist(me.x, me.y, game.player.x + game.player.w /2, game.player.y + game.player.h/2) <= 150) {
@@ -574,13 +575,13 @@ class BalistaAvoidState {
         for (var i = 0; i < 4; i++) {
       if (bullets[i].fired) {
         this.bulletAngle = (bullets[i].angle + HALF_PI) * (180 / PI);
-        if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-          bullets[i].fired = false;
-          me.numHits += 1;
-          if (me.numHits == 2){
-            me.state = 3;
-          }
-        }
+        // if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
+        //   bullets[i].fired = false;
+        //   me.numHits += 1;
+        //   if (me.numHits == 2){
+        //     me.state = 3;
+        //   }
+        // }
       }
     }
     
@@ -630,12 +631,12 @@ class BalistaDeathState {
         }
       }
     }
-    for (var i = 0; i < 4; i++) {
-      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
-        game.arrows[i].fired = false;
-        me.state = 3;
-      }
-    }
+    // for (var i = 0; i < 4; i++) {
+    //   if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
+    //     game.arrows[i].fired = false;
+    //     me.state = 3;
+    //   }
+    // }
     // if (!me.dead){
     //     game.tm.rooms[me.roomNum].numEnemies -= 1;
     // }

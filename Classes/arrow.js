@@ -3,7 +3,7 @@ let arrowWidth = 50;
 let arrowHeight = 14.29;
 let half_arrowWidth = arrowWidth/2;
 let half_arrowHeight = arrowHeight/2;
-
+let numberBal = 0;
 class ArrowObj {
 // constructor(x, y, angle) {
     constructor(){
@@ -83,12 +83,14 @@ class ArrowObj {
                         blocked = true;
                         this.fired = false;
                         balista.numHits += 1;
-                        if (balista.numHits == 2){
+                        if (balista.numHits >= 2){
                             balista.state = 3;
+                            numberBal++;
+                            print('Balistas ' + numberBal);
                             game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                            break;
                         }
                         // switch the enemy to its death state
-                        break;
                     }
                 }
 
