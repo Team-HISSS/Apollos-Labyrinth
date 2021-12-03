@@ -42,7 +42,7 @@ class GameObj {
       this.keys = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(8,8, 10);
+      this.tm = new Tilemap(5,5, 10);
       this.currRoom = 0;
     }
     setRooms(){

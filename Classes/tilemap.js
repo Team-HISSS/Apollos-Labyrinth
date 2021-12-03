@@ -218,20 +218,37 @@ class Tilemap{
       for(var j = 0; j < this.height; j++){
         if(this.map[i][j] == 1){
           push();
-          fill(255,0,0);
-          ellipse(i*20 + 200, j*20 + 200, 20,20);
+          fill(190);
+          stroke(255);
+          rect(i*20 + 150, j*20 + 200, 20,20);
           pop();
           if(i == rx && j == ry){
             push();
-              fill(0,255,0);
-              ellipse(i*20 + 200, j*20 + 200, 20,20);
+              fill(0,0,255);
+              stroke(255);
+              rect(i*20 + 150, j*20 + 200, 20,20);
             pop();
           }
+          // var count = 0; 
+          //print("ind: " + (i * this.height + j) + " length: " + this.neighbors.length);
+          // for(var k = 0; k < 4; k++){
+          //   if(this.neighbors[(i * this.width) + j][k] == 1){
+          //     count++;
+          //   }
+          // }
+          // if(count == 1){
+          //   push();
+          //   fill(255, 0, 0 );
+          //   stroke(255);
+          //   rect(i*20 + 150, j*20 + 200, 20,20);
+          //   pop();
+          // }
         }
         else {
           push();
           fill(0);
-          ellipse(i*20+200, j*20+200, 20, 20);
+          stroke(255);
+          rect(i*20+150, j*20+200, 20, 20);
           pop();
         }
       }

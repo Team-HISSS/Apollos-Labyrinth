@@ -56,12 +56,36 @@ class SnakeObj {
                 translate(this.x + 15 , this.y + 15);
                 scale(this.scalex, this.scaley);
                 image(snakeAnimations[this.index], -15, -15, 30, 30);
-                fill(255,255,0);
-                ellipse(0,0,5,5);
+                //fill(255,255,0);
+                //ellipse(0,0,5,5);
                 scale(-this.scalex, -this.scaley);
                 translate(-this.x - 15, -this.y - 15); 
             pop();
         }
+    }
+
+    
+    snakeEndMove(){
+        if(this.randDist <= 0){
+            this.randDist = 80;
+            if(this.direction == "r"){
+                this.direction = "l";
+            } 
+            else{
+                this.direction = "r";
+            }
+        }
+
+        if(this.direction == "r"){
+            this.x++;
+        }
+        else{
+            this.x--; 
+        }
+
+        this.randDist--; 
+        
+
     }
     
 }
@@ -205,6 +229,7 @@ class SnakeChaseState{ // To make any enemy wander around in the room
         }
         //me.currState = 0; 
     }
+
 
 }
 

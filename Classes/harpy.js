@@ -50,8 +50,8 @@ class HarpyObj {
             this.index = 0;
         }
         this.x += this.speed;
-        if (this.x > width) {
-            this.x = 10;
+        if (this.x > width + 50) {
+            this.x = -50;
         }
     }
     wanderAnimate(){
