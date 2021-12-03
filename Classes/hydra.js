@@ -9,6 +9,7 @@ class Hydra{
         this.frame = 0;
         this.roomNum = roomNum;
         this.collided = false;
+        this.hit = 0;
         //this.state = [new WanderState(), new ChaseState()];
         this.currState = 0;
         this.dead = false;
