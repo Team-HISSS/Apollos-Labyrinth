@@ -356,8 +356,10 @@ function mouseClicked() {
         }
       }
 
-      game.hydra.draw();
-      game.hydra.wanderAnimate();
+      for(let hydra of game.hydras){
+        hydra.draw();
+        hydra.wanderAnimate();
+      }
 
       // print("balista size: " + game.balistas.length);
       //b1 = new BalistaObj(game.player.x, game.player.y, 0,0, 1);
@@ -398,16 +400,19 @@ function mouseClicked() {
       
       game.player.draw();
       game.player.checkMovement();
-
+      print(game.tm.rooms[game.player.roomNumber].numEnemies);
       //draw keys
       //print("length: " + game.keys.length);
       keyCount = 0; 
+      push();
+
       for(var i = 0; i < game.keys.length; i++){
-        push();
+        
         game.keys[i].draw();
         if(game.keys[i].collected){
           keyCount++;
         }
+        
       }
 
       //draw keys in top left of screen
@@ -538,6 +543,7 @@ function mouseClicked() {
     // Displays the map when the key "M" is held down
     if(keyIsDown(KEY_M) && !game_paused){
       background(220, 220, 220, 75);
+      print("Here");
       game.tm.printMap(game.player.rx, game.player.ry);
     }
   

@@ -21,6 +21,11 @@ let harpy_constraint_y = (122/6 + harpy_center_radius/2);
 let balista_constraint_x = 40; 
 let balista_constraint_y = 40;
 
+let hydra_center_radius_x = 75;
+let hydra_center_radius_y = 90;
+let hydra_constraint_x = hydra_center_radius_x + 126/6;
+let hydra_constraint_y = hydra_center_radius_y + 122/6;
+
 let easterEgg_center_radius = 10;
 let easterEgg_constraint_x = easterEgg_center_radius + 126/3;
 let easterEgg_constraint_y = easterEgg_center_radius + 122/3;
@@ -130,15 +135,15 @@ class ArcherObj{
       }
     }
     this.check_collision_with_easterEgg(); 
-
+    this.check_collision_with_hydra(0, 0);
+    this.check_collision_with_snake(0, 0);
     // If player wants to move
     // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
     if(theta != [0, 0]){
       // If player is not colliding with an open door and colliding with walls
       if((!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])) ||
           (this.check_collision_with_balista(theta[0], theta[1])) ||
-          (this.check_collision_with_harpy(theta[0], theta[1])) ||
-          (this.check_collision_with_snake(theta[0], theta[1]))){
+          (this.check_collision_with_harpy(0, 0))){
         theta = [0,0];
       }
     }
@@ -153,12 +158,6 @@ class ArcherObj{
   draw(){
     this.chooseAction();
     push();
-    // var roomOffsetX = game.player.rx * 400;
-    // var roomOffsetY = game.player.ry *400;
-    // translate(roomOffsetX, roomOffsetY)
-    
-    // Temporary: Boundary
-    // rect(this.x, this.y, this.w, this.h);
     
     // Run
     if(this.action == ' '){
@@ -252,7 +251,7 @@ class ArcherObj{
       // If door is open, i.e. true
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-          //print('Player: Collision with door');
+          print('Player: Collision with door');
           return true;
         }
       }
@@ -261,35 +260,75 @@ class ArcherObj{
     return false;
   }
 
+  check_collision_with_easterEgg(){
+    // If harpy is not dead
+    for( let egg of game.easterEggs){
+      let horizontalDistance = abs((this.x + this.w/2) - (egg.x + easterEgg_center_radius));
+      let verticalDistance = abs((this.y + this.h/2) - (egg.y + easterEgg_center_radius));
+      if (!egg.taken){ 
+        if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
+          //print('Player: Collision with easter egg');
+          egg.taken = true;
+          
+          // Health boost
+          if(egg.index == 1 && this.health < 3){
+            this.health += 1;
+          }
+          // Power boost
+          else if(egg.index == 2){
+            powerBoost = true;
+            pbCurrFrameCount = frameCount;
+          }
+        }
+      }
+    }
+  }
+
+  // Checks collision with each enemy with the following parameters
+  // thetaX : projection of x coordinate
+  // thetaY : projection of y coordinate
+  // radius_x : radius of the object('s frame) in the horizontal direction
+  // radius_y : radius of the object('s frame) in the vertical direction
+  // constraint_x : threshold for collision of the object in the horizontal direction
+  // constraint_y : threshold for collision of the object in the vertical direction
   check_collision_with_enemy(enemy, thetaX, thetaY, radius_x, radius_y, constraint_x, constraint_y){
 
     let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (enemy.x + radius_x));
     let verticalDistance = abs((this.y + this.h/2 + thetaY) - (enemy.y + radius_y));
 
-    if(verticalDistance <  constraint_x && horizontalDistance < constraint_y){
+    if(verticalDistance <  constraint_y && horizontalDistance < constraint_x){
         
       // If enemy is not dead
       if (!enemy.dead){ 
         
-        // If the easter egg for ultimate kill power is found
+        // If the Cataclyst or the Power boost is found
         let flag = false;
         
         for(let egg of game.easterEggs){
-          // If the easter egg is taken, the archer can kill the snakes on contact
-          // !!! Only for developers !!!
+          // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
+          // !!! Cataclyst is only for developers !!!
           if(egg.taken && egg.index == 0){
             enemy.dead = true;
-            game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+            if(game.tm.rooms[this.roomNumber].numEnemies > 0){
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+            }
             flag = true;
             break;
           }
         }
+
+        // If the easter eggs for killing on contact are not found
         if(!flag){
-          if (currFrameCount < frameCount - 30) {
+
+          // Checks if the consecutive collisions are 100 frames apart
+          if (currFrameCount < frameCount - 100) {
             currFrameCount = frameCount;
+            // Removes a health level
             this.health -= 1;
             print('number of times in contact with the enemies')
           }
+          // If the health level is low i.e. is zero,
+          // the player dies
           if(this.health <= 0)
           {
             this.dead = true;
@@ -310,46 +349,6 @@ class ArcherObj{
       if(returnFlag){
         return true;
       }
-
-      // let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (harpy.x + harpy_center_radius));
-      // let verticalDistance = abs((this.y + this.h/2 + thetaY) - (harpy.y + harpy_center_radius));
-
-      // if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
-          
-      //   // If harpy is not dead
-      //   if (!harpy.dead){ 
-                    
-      //     // If the easter egg for Ultimate Kill Power (Cataclyst) is found
-      //     let flag = false;
-            
-      //     for(let egg of game.easterEggs){
-      //       // If the Cataclyst or Power boost egg is taken, the archer can kill the harpies on contact
-      //       // !!! Cataclyst is only for developers !!!
-      //       if(egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
-      //         harpy.dead = true;
-      //         game.tm.rooms[this.roomNumber].numEnemies -= 1;  
-      //         flag = true;
-      //         break;
-      //       }
-      //     }
-      //     // If there are no blocks on damage by enemy
-      //     if(!flag){
-      //       // Checking if enemy collision is beyond 100 frames
-      //       if (currFrameCount < frameCount - 100) {
-      //         currFrameCount = frameCount;
-      //         this.health -= 1;
-      //       }
-      //       // If the health is less than 0
-      //       if(this.health <= 0)
-      //       {
-      //         this.dead = true;
-      //         print('number of times in contact with the harpy')
-
-      //       }
-      //     }
-      //     return true;
-      //   }
-      // }
     } 
     return false;
   }
@@ -362,41 +361,6 @@ class ArcherObj{
       if(returnFlag){
         return true;
       }
-
-      // let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (balista.x));
-      // let verticalDistance = abs((this.y + this.h/2 + thetaY) - (balista.y));
-
-      // if(verticalDistance <  balista_constraint_y && horizontalDistance < balista_constraint_x){
-                
-      //   // If the easter egg for Ultimate Kill Power (Cataclyst) is found
-      //   let flag = false;
-        
-      //   for(let egg of game.easterEggs){
-      //     // If the Cataclyst or Power boost egg is taken, the archer can kill the ballistas on contact
-      //     // !!! Cataclyst is only for developers !!!
-      //     if(egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
-      //       balista.dead = true;
-      //       game.tm.rooms[this.roomNumber].numEnemies -= 1;  
-      //       flag = true;
-      //       break;
-      //     }
-      //     // If there are no blocks on damage by enemy
-      //     if(!flag){
-      //       // Checking if enemy collision is beyond 100 frames
-      //       if (currFrameCount < frameCount - 100) {
-      //         currFrameCount = frameCount;
-      //         this.health -= 1;
-      //       }
-      //       // If the health is less than 0
-      //       if(this.health <= 0)
-      //       {
-      //         this.dead = true;
-      //         //print('number of times in contact with the balista');
-      //       }
-      //     }
-      //   }
-      //   return true;
-      // }
     }
     return false;    
   }
@@ -409,41 +373,18 @@ class ArcherObj{
       if(returnFlag){
         return true;
       }
-      // let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (snake.x + 15));
-      // let verticalDistance = abs((this.y + this.h/2 + thetaY) - (snake.y + 15));
+    }    
+    return false;
+  }
 
-      // if(verticalDistance <  harpy_constraint_y && horizontalDistance < harpy_constraint_x){
-          
-      //   // If snake is not dead
-      //   if (!snake.dead){ 
-          
-      //     // If the easter egg for ultimate kill power is found
-      //     let flag = false;
-          
-      //     for(let egg of game.easterEggs){
-      //       // If the easter egg is taken, the archer can kill the snakes on contact
-      //       // !!! Only for developers !!!
-      //       if(egg.taken && egg.index == 0){
-      //         harpy.dead = true;
-      //         game.tm.rooms[this.roomNumber].numEnemies -= 1;  
-      //         flag = true;
-      //         break;
-      //       }
-      //     }
-      //     if(!flag){
-      //       if (currFrameCount < frameCount - 30) {
-      //         currFrameCount = frameCount;
-      //         this.health -= 1;
-      //         print('number of times in contact with the snakes')
-      //       }
-      //       if(this.health <= 0)
-      //       {
-      //         this.dead = true;
-      //       }
-      //     }
-      //     return true;
-      //   }
-      // }
+  check_collision_with_hydra(thetaX, thetaY){
+    for(let hydra of game.hydras){
+
+      let returnFlag = this.check_collision_with_enemy(hydra, thetaX, thetaY, hydra_center_radius_x, hydra_center_radius_y, hydra_constraint_x, hydra_constraint_y);
+      
+      if(returnFlag){
+        return true;
+      }
     }    
     return false;
   }
@@ -486,32 +427,6 @@ class ArcherObj{
       }   
   }
 
-  
-
-  check_collision_with_easterEgg(){
-    // If harpy is not dead
-    for( let egg of game.easterEggs){
-      let horizontalDistance = abs((this.x + this.w/2) - (egg.x + easterEgg_center_radius));
-      let verticalDistance = abs((this.y + this.h/2) - (egg.y + easterEgg_center_radius));
-      if (!egg.taken){ 
-        if(verticalDistance < easterEgg_constraint_y && horizontalDistance < easterEgg_constraint_x){
-          //print('Player: Collision with easter egg');
-          egg.taken = true;
-          
-          // Health boost
-          if(egg.index == 1 && this.health < 3){
-            this.health += 1;
-          }
-          // Power boost
-          else if(egg.index == 2){
-            powerBoost = true;
-            pbCurrFrameCount = frameCount;
-          }
-        }
-      }
-    }
-  }
-
   // Moves the archer relative to the canvas
   run_right(){
     let delta = 0;
@@ -522,7 +437,7 @@ class ArcherObj{
     delta += this.speed;
 
     // Edge case
-    if(this.x > this.width + 40){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
@@ -556,7 +471,7 @@ class ArcherObj{
     delta -= this.speed;
 
     //Edge case
-    if(this.x > this.width + 40){
+    if(this.x > this.width + 20){
       this.rx += 1;
       this.width = this.rx*400 + 400;
       for(var k = 0; k < this.rooms.length; k++){
