@@ -1,8 +1,8 @@
 // Speed and Frame Rates of the archer in different actions
 let archerWalkSpeed = 0.3;
 let archerWalkFrameRate = 0.3;
-let archerRunSpeed = 3.10;
-let archerRunFrameRate = 0.34;
+let archerRunSpeed = 2.0;
+let archerRunFrameRate = 0.22;
 let archerShootSpeed = 0;
 let archerShootFrameRate = 0.17;
 
@@ -310,7 +310,7 @@ class ArcherObj{
         for(let egg of game.easterEggs){
           // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
           // !!! Cataclyst is only for developers !!!
-          if(egg.taken && (egg.index == 0 || egg.index == 2)){
+          if(egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
             if(!enemy.dead && game.tm.rooms[this.roomNumber].numEnemies > 0){
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
             }

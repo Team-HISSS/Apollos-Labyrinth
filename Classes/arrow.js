@@ -197,10 +197,10 @@ class ArrowObj {
     check_collision(boundary){
         // for(let wall of game.walls){
         // for(let i = 0; i < game.walls.length; i++){
-            let horizontalDistance = abs((this.x + half_arrowWidth) - (boundary.x + wall_center_radius));
-            let verticalDistance = abs((this.y + half_arrowHeight) - (boundary.y + wall_center_radius));
+            let horizontalDistance = abs((this.x) - (boundary.x + wall_center_radius));
+            let verticalDistance = abs((this.y) - (boundary.y + wall_center_radius));
             
-            if(verticalDistance < this.wall_constraint_y + wall_center_radius && horizontalDistance < this.wall_constraint_x + wall_center_radius){
+            if(verticalDistance < wall_center_radius && horizontalDistance < wall_center_radius){
               
             //   print('Arrow: Collision with boundary');
               return true;
