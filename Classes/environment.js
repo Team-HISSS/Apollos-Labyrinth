@@ -102,3 +102,45 @@ class KeyObj{
     pop();
   }
 }
+
+
+
+//clouds move across screen once the program goes into the sky
+class CloudObj {
+  //base x and y coordinate for the rectangle
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+  }
+  draw() {
+    //white
+    fill(255, 255, 255);
+    noStroke();
+    //base rectangle of cloud
+    rect(this.x, this.y, 75, 40);
+    //top semicircles part of cloud
+    arc(this.x + 10, this.y, 25, 25, PI, 0);
+    arc(this.x + 25, this.y, 40, 40, PI, 0);
+    arc(this.x + 45, this.y, 30, 35, PI, 0);
+    arc(this.x + 65, this.y, 25, 25, PI, 0);
+    //left semicircles of cloud
+    arc(this.x, this.y + 5, 25, 25, PI / 2, (3 * PI) / 2);
+    arc(this.x, this.y + 25, 30, 30, PI / 2, (3 * PI) / 2);
+    //bottom semicircles of cloud
+    arc(this.x + 10, this.y + 40, 25, 25, 0, PI);
+    arc(this.x + 30, this.y + 40, 25, 25, 0, PI);
+    arc(this.x + 45, this.y + 40, 25, 25, 0, PI);
+    arc(this.x + 65, this.y + 40, 25, 25, 0, PI);
+    //right semicircles of cloud
+    arc(this.x + 75, this.y + 5, 25, 25, (3 * PI) / 2, PI / 2);
+    arc(this.x + 75, this.y + 25, 30, 30, (3 * PI) / 2, PI / 2);
+  }
+  //makes cloud continously move left to right across the screen
+  move() {
+    this.x += 1;
+    //once cloud is off screen it reappears again on left side
+    if (this.x > 450) {
+      this.x = -100;
+    }
+  }
+}

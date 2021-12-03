@@ -66,7 +66,7 @@ class HarpyObj {
         // else{
         //     this.x -= this.xMove;
         // }
-
+        //print("harpy " + this.rx);
         if (this.x + this.xMove >= this.rx*400 +340){
             this.xMove = -this.xMove
         }
