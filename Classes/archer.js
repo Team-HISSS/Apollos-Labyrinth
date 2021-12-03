@@ -34,6 +34,8 @@ let currFrameCount = 0; // Arrow
 let pbCurrFrameCount = 0; // PowerBoost
 let powerBoost = false;
 
+var changeDirEndScreen = true; 
+
 // Keys codes
 let KEY_W = 87;
 let KEY_A = 65;
@@ -608,4 +610,44 @@ class ArcherObj{
       this.y = height + this.h/2
     }
   }
+  setEndArcher(){
+    this.x = 120;
+    this.y = 50; 
+  }
+  endDraw(){
+    let index = floor(this.index * 0.5) % runningFrameCount;
+    if(frameCount % 90 == 0){
+      changeDirEndScreen = !changeDirEndScreen; 
+    }
+
+    if(changeDirEndScreen){
+      image(left[index], this.x + this.w/2, this.y + this.h/2, 50, 50);
+      this.action = 'r';
+      this.animationChoice = 'rl';
+      this.index += 1; // * 0.17
+      // print('Capture.js: this.x ' + this.x)
+      this.x -= 1; ///* 1.50;
+      //this.x += int(this.x) ///* 1.50;
+      // if(this.x > width){
+      //   this.x = -this.w;
+      // }
+    }
+    else{
+      image(right[index], this.x + this.w/2, this.y + this.h/2, 50, 50);
+      this.action = 'r';
+      this.animationChoice = 'rr';
+      this.index += 1; // * 0.17
+      // print('Capture.js: this.x ' + this.x)
+      this.x += 1; ///* 1.50;
+      //this.x += int(this.x) ///* 1.50;
+      // if(this.x > width){
+      //   this.x = -this.w;
+      // }
+
+    }
+
+  }
+
 }
+
+
