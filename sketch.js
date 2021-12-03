@@ -359,7 +359,7 @@ function mouseClicked() {
       for(let hydra of game.hydras){
         if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
           hydra.draw();
-          hydra.wanderAnimate();
+          hydra.state[hydra.currState].execute(hydra);
         }
       }
 
