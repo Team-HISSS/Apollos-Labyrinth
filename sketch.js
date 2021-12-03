@@ -99,6 +99,9 @@ function mouseClicked() {
 
   var objectSheet;
 
+  let enemyHudCapture = [];
+  let enemyHud;
+
   var olympus; 
   var clouds = [];
   
@@ -151,6 +154,7 @@ function mouseClicked() {
     keySheet = loadImage('/resources/Key.png');
     hydraSheetMirror = loadImage('/resources/HydraSprite_mirror.png');
     olympus = loadImage('/resources/olympus.jpg');
+    enemyHud = loadImage('/resources/enemy_hud2.png')
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -192,7 +196,6 @@ function mouseClicked() {
   
     //   //starting screen for game
     if (game.screen == 0) {
-  
         background(135, 206, 235);
         noStroke();
   
@@ -362,10 +365,32 @@ function mouseClicked() {
         }
       }
 
+      for(var i = 0; i < game.walls.length; i++){
+        game.walls[i].draw();
+      }
+
+      //print(game.player.roomNumber);
+      for(var i = 0; i < game.doors.length; i++){
+        //print(game.doors[i].x);
+        if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
+          // if(!game.player.transiion){
+            game.doors[i].open = true;
+          // }
+        }
+        if (!game.doors[i].open){ // checking if the door is open or not: True if open, False is closed
+          game.doors[i].draw();
+        }
+      }
+
       for(let hydra of game.hydras){
         if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
           hydra.draw();
           hydra.state[hydra.currState].execute(hydra);
+          // Displaying the Hydra HUD i.e. health of the hydra
+          let hitIndex = hydra.hit;
+          if(hitIndex < 5){
+            image(enemyHudCapture[hitIndex], roomOffsetX + 224, roomOffsetY + 0, 108, 18);
+          }
         }
       }
 
@@ -392,21 +417,7 @@ function mouseClicked() {
         }
       }
       
-      for(var i = 0; i < game.walls.length; i++){
-        game.walls[i].draw();
-      }
-      //print(game.player.roomNumber);
-      for(var i = 0; i < game.doors.length; i++){
-        //print(game.doors[i].x);
-        if(game.tm.rooms[game.player.roomNumber].numEnemies == 0){
-          // if(!game.player.transiion){
-            game.doors[i].open = true;
-          // }
-        }
-        if (!game.doors[i].open){ // checking if the door is open or not: True if open, False is closed
-          game.doors[i].draw();
-        }
-      }
+      
       // print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
@@ -500,10 +511,10 @@ function mouseClicked() {
       fill('#EB3C3C');
       text("Game Paused", 90, 100);
       
-      push();  
-        translate(-70, 0);
+      // push();  
+        // translate(-70, 0);
         game.tm.printMap(game.player.rx, game.player.ry);
-      pop();
+      // pop();
     }
     //game over screen
     else if (game.screen == 3) {
