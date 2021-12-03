@@ -224,8 +224,8 @@ class ArcherObj{
       }
     }
 
-    fill(255,255,0);
-    ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
+    //fill(255,255,0);
+    //ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
     pop();
   }
 
@@ -373,7 +373,7 @@ class ArcherObj{
   check_collision_with_snake(thetaX, thetaY){
     for(let snake of game.snakes){
 
-      let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 15, 15, harpy_constraint_x, harpy_constraint_y);
+      let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 15, 15, harpy_constraint_x - 10, harpy_constraint_y - 10);
       
       if(returnFlag){
         return true;
