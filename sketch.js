@@ -92,7 +92,7 @@ function mouseClicked() {
   var harpySprite;
   var flyHarpyLeft = [];
   var flyHarpyRight = [];
-  var harpy;
+  //var harpy;
 
   var heartSheet;
   var heartCapture = [];
@@ -109,7 +109,7 @@ function mouseClicked() {
 
   var snakeSheet; 
   var snakeAnimations;
-
+  var snakesList = [];
   var keySheet; 
   var keyImage; 
   var keyList = [false, false, false];
@@ -175,7 +175,9 @@ function mouseClicked() {
     snakeAnimations = [snake_1, snake_2, snake_3, snake_5, snake_6];
     
     // Creates the harpy, snake, and knight
-    harpy = new HarpyObj(200, 50);
+    //harpy = new HarpyObj(200, 50);
+    harpiesList = [new HarpyObj(200, 50), new HarpyObj(-100, 100), new HarpyObj(260, 250), new HarpyObj(400, 175), new HarpyObj(300, 137.5)]; 
+    snakesList = [new SnakeObj(100, 250), new SnakeObj(220, 350), new SnakeObj(350, 250)];
     knight = new knightObj(-100, 300, 0.3);
     
     clouds = [new CloudObj(-100, 200) , new CloudObj(100, 300)];
@@ -234,8 +236,12 @@ function mouseClicked() {
         knight.run();
         knight.runAnimate();
         
-        harpy.flyAnimate();
-        harpy.drawTitleScreen();
+        harpiesList[0].flyAnimate();
+        harpiesList[0].drawTitleScreen();
+        for(var i = 0; i < snakesList.length; i++){
+          snakesList[i].snakeEndMove();
+          snakesList[i].draw();
+        }
 
         archer.draw();
         archer.move();
@@ -507,10 +513,27 @@ function mouseClicked() {
     }
     //game over screen
     else if (game.screen == 3) {
-        background(220);
-        stroke('#7E570E');
-        fill('#EB3C3C');
-        text("Game Over", 100, 200);
+      push();
+      createWalls();
+      stroke('#7E570E');
+      fill('#EB3C3C');
+      textSize(64);
+      text("Game Over", 30, 200);
+      textSize(30);
+      text("You have died in the labyrinth", 5, 300);
+      for(var i = 0; i < snakesList.length; i++){
+        snakesList[i].snakeEndMove();
+        snakesList[i].draw();
+      }
+      for(var i = 0; i < harpiesList.length; i++){
+        harpiesList[i].flyAnimate();
+        harpiesList[i].drawTitleScreen();
+      }
+      
+      pop();
+
+
+
     }
 
     else if (game.screen == 4) {
