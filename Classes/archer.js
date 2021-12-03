@@ -141,8 +141,8 @@ class ArcherObj{
       if((!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])) ||
           (this.check_collision_with_balista(theta[0], theta[1])) ||
           (this.check_collision_with_harpy(0, 0)) ||
-          (this.check_collision_with_snake(theta[0], theta[1])) ||
-          (this.check_collision_with_hydra(theta[0], theta[1]))){
+          (this.check_collision_with_snake(0 , 0)) ||
+          (this.check_collision_with_hydra(0, 0))){
         theta = [0,0];
       }
     }
