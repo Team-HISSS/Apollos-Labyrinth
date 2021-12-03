@@ -401,7 +401,7 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
+      // print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
       game.player.checkMovement();
