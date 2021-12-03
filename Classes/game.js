@@ -26,7 +26,7 @@ var genGrid = [
 
 class GameObj {
     //Game object class
-    constructor() {
+    constructor(numberRooms) {
       //private members of game
       this.screen = 0;
       this.player = 0;
@@ -40,9 +40,10 @@ class GameObj {
       this.easterEggs = [];
       this.hydras = [];
       this.keys = [];
+      this.playingRooms = numberRooms; 
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(5,5, 5);
+      this.tm = new Tilemap(6,6, this.playingRooms);
       this.currRoom = 0;
     }
     setRooms(){

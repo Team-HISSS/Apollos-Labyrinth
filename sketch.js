@@ -10,6 +10,7 @@
 // Link to demo: https://preview.p5js.org/sarang_r/present/UL5m8Ulab
 
 
+
 function createWalls(){
 
   for (var i = 0; i < 20; i++) {
@@ -34,17 +35,47 @@ function mouseClicked() {
 
     //start game is pressed to start the game screen
     if (game.screen == 0) {
+      //difficulty screen
         if (x >= 20 && x <= 170 && y >= 345 && y <= 380) {
-            game.screen = 2;
-            mapSong.play();
+          //print("HERE SCREEN CHANEG");
+            game.screen = 5;
+            print(game.screen);
+            //mapSong.play();
         }
         //rules are pressed to go to rules screen
-        if (x >= 200 && x <= 380 && y >= 345 && y <= 380) {
+        else if (x >= 200 && x <= 380 && y >= 345 && y <= 380) {
             game.screen = 1;
         }
     }
+    else if(game.screen == 5){
+      //easy
+      if (x >= 20 && x <= 120 && y >= 345 && y <= 380) {
+        mapSong.play();
+        game = new GameObj(5);
+        game.screen = 2;
+        game.initializeTileMap();
+      }
+      //medium
+      else if (x >= 140 && x <= 260 && y >= 345 && y <= 380) {
+          game.screen = 2;
+          mapSong.play();
+          game = new GameObj(10);
+          game.screen = 2;
+          game.initializeTileMap();
+      }
+      //hard
+      else if (x >= 290 && x <= 380 && y >= 345 && y <= 380) {
+        game.screen = 2;
+        mapSong.play();
+        playingRooms = 20; 
+        game = new GameObj(20);
+        game.screen = 2;
+        game.initializeTileMap();
+      }
+
+    }
     //back arrow in rules screen goes to main screen
-    if (game.screen == 1) {
+    else if (game.screen == 1) {
         if (x >= 160 && x <= 240 && y >= 350 && y <= 392) {
             game.screen = 0;
         }
@@ -88,6 +119,7 @@ function mouseClicked() {
   var knight;
   let archer;
   let architSheet;
+  var playingRooms = 0; 
 
   var harpySprite;
   var flyHarpyLeft = [];
@@ -181,15 +213,14 @@ function mouseClicked() {
     // Creates the harpy, snake, and knight
     //harpy = new HarpyObj(200, 50);
     harpiesList = [new HarpyObj(200, 50), new HarpyObj(-100, 100), new HarpyObj(260, 250), new HarpyObj(400, 175), new HarpyObj(300, 137.5)]; 
-    snakesList = [new SnakeObj(100, 250), new SnakeObj(220, 350), new SnakeObj(350, 250)];
+    snakesList = [new SnakeObj(100, 250), new SnakeObj(350, 250), new SnakeObj(220, 350)];
     knight = new knightObj(-100, 300, 0.3);
     
     clouds = [new CloudObj(-100, 200) , new CloudObj(100, 300)];
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
     name = new NameObj(35, 395);
-    game = new GameObj();
-  
+    game = new GameObj(5);
     //initialize tilemap
     game.initializeTileMap();
   }
@@ -211,6 +242,7 @@ function mouseClicked() {
         //Title
         fill(255, 0, 0);
         stroke(255, 0, 0);
+        textSize(35);
         text("Apollo's Labyrinth", 65, 50);
   
         textSize(20);
@@ -322,12 +354,68 @@ function mouseClicked() {
         noFill();
         // knight.run();
         // knight.runAnimate();
-        harpy.fly();
-        harpy.flyAnimate();
+        harpiesList[0].fly();
+        harpiesList[0].flyAnimate();
         archer.draw();
         archer.move();
         //bounding box for back screen
         rect(160, 350, 80, 42);
+    }
+    else if(game.screen == 5){
+      background(135, 206, 235);
+      noStroke();
+      createWalls();
+
+      startScreenGreen += 2;
+      if (startScreenGreen >= 165) {
+          startScreenGreen = 0;
+      }
+
+      //Title
+      fill(255, 0, 0);
+      stroke(255, 0, 0);
+      textSize(35);
+      text("Apollo's Labyrinth", 65, 50);
+
+      textSize(20);
+      text("Choose your difficulty level:", 75, 335);
+
+
+      fill(255, startScreenGreen, 0);
+      stroke(255, startScreenGreen, 0);
+      //rect around start
+      textSize(25);
+      text("EASY", 35, 375);
+      text("HARD", 300, 375);
+      text("MEDIUM", 149, 375);
+      push();
+        
+      pop();
+      noFill();
+      //rect around easy
+      rect(20, 345, 100, 35);
+      //rect around hard
+      rect(290, 345, 90, 35);
+
+      //rect around medium
+      rect(140, 345, 120, 35);
+
+      // knight and archer running
+      // harpy flying
+
+      // knight.run();
+      // knight.runAnimate();
+      
+      harpiesList[0].flyAnimate();
+      harpiesList[0].drawTitleScreen();
+      for(var i = 0; i < snakesList.length - 1; i++){
+        snakesList[i].snakeEndMove();
+        snakesList[i].draw();
+      }
+
+      archer.draw();
+      archer.move();
+      name.draw();
     }
     //game screen
     else if (game.screen == 2 && !game_paused) {

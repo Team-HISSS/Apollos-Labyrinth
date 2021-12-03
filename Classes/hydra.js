@@ -117,7 +117,6 @@ class hydraWanderState{
             // Changing the position of the enemy
             me.x += me.xMove;
             me.y += me.yMove;
-        
         }
     }
 }
@@ -134,7 +133,7 @@ class hydraChaseState{
             me.currState = 1;
             
             if (!me.collided && game.player.check_collision_with_hydra(0, 0)){
-                // this.frame = frameCount;
+                //game.player.health--;
                 me.collided = true;
             }
         }
@@ -142,7 +141,7 @@ class hydraChaseState{
         // Death transition to death state to be implemented in main/arrow
         // also check the line of sight of the arrow in order to avoid it
         this.velocity.set((game.player.x + game.player.w/2) - me.x, (game.player.y+ game.player.h/2) - me.y);
-        this.velocity.setMag(1.5);
+        this.velocity.setMag(2);
         // Frame count
         me.index+= 0.12; // move the enemy
         if(me.index >= 3){
