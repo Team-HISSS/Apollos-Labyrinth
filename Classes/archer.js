@@ -33,6 +33,7 @@ let easterEgg_constraint_y = easterEgg_center_radius + 122/3;
 let currFrameCount = 0; // Arrow 
 let pbCurrFrameCount = 0; // PowerBoost
 let powerBoost = false;
+let isHydra = false;
 
 var changeDirEndScreen = true; 
 
@@ -310,7 +311,7 @@ class ArcherObj{
         for(let egg of game.easterEggs){
           // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
           // !!! Cataclyst is only for developers !!!
-          if(egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
+          if(!isHydra && egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
             if(!enemy.dead && game.tm.rooms[this.roomNumber].numEnemies > 0){
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
             }
@@ -382,14 +383,19 @@ class ArcherObj{
   }
 
   check_collision_with_hydra(thetaX, thetaY){
+    isHydra = true;
+    
     for(let hydra of game.hydras){
 
       let returnFlag = this.check_collision_with_enemy(hydra, thetaX, thetaY, hydra_center_radius_x, hydra_center_radius_y, hydra_constraint_x, hydra_constraint_y);
       
+      
       if(returnFlag){
+        isHydra = false;
         return true;
       }
     }    
+    isHydra = false;
     return false;
   }
 
