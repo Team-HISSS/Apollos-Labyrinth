@@ -82,6 +82,7 @@ class Hydra{
     spawnSnakes(){
         if(frameCount % 180 == 0){
             game.snakes.push(new SnakeObj(this.x, this.y, this.rx, this.ry));
+            game.tm.rooms[game.player.roomNumber].numEnemies += 1; // check what happens if the player exits the room
         }
 
     }
