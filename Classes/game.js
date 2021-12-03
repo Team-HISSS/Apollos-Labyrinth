@@ -52,7 +52,7 @@ class GameObj {
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           //print("Here2");
-          this.tm.rooms[i].grid[8] = "w         p        w";
+          this.tm.rooms[i].grid[8] = "w    s s   p   s s   w";
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){

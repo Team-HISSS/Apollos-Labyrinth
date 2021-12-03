@@ -56,6 +56,8 @@ class SnakeObj {
                 translate(this.x + 15 , this.y + 15);
                 scale(this.scalex, this.scaley);
                 image(snakeAnimations[this.index], -15, -15, 30, 30);
+                fill(255,255,0);
+                ellipse(0,0,5,5);
                 scale(-this.scalex, -this.scaley);
                 translate(-this.x - 15, -this.y - 15); 
             pop();

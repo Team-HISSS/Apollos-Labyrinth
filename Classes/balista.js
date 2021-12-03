@@ -27,8 +27,8 @@ class BalistaObj{
         translate(this.x, this.y);
         rotate(this.angle - 3 * PI/2);
         image(balista1, -20,-20,40,40);
-        fill(255,255,0);
-        ellipse(0,0,10,10);
+        //fill(255,255,0);
+        //ellipse(0,0,10,10);
         rotate(-this.angle - 3 * PI/2);
         translate(-this.x, -this.y);
         pop();
@@ -42,8 +42,8 @@ class BalistaObj{
         translate(this.x, this.y);
         rotate(this.angle - 3 * PI/2);
         image(balista3, -20,-20,40,40);
-        fill(255,255,0);
-        ellipse(0,0,10,10);
+        //fill(255,255,0);
+        //ellipse(0,0,10,10);
 
         pop();
       }
@@ -258,8 +258,8 @@ class bulletObj {
     translate(this.x, this.y);
     rotate(this.angle + PI);
     image(balArrow, -2.5, -10, 5, 20);
-    fill(255,255,0);
-    ellipse(0,0,10,10);
+    //fill(255,255,0);
+    //ellipse(0,0,10,10);
     rotate(-this.angle);
     this.vec.setMag(2);
     this.vec.setHeading(this.angle + HALF_PI);

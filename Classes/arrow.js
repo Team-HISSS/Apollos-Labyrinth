@@ -119,8 +119,8 @@ class ArrowObj {
                     image(arrowCapture, -25, -7.5, arrowWidth, arrowHeight);
                 }
 
-                fill (255,255,0);
-                ellipse(0,0,10,10);
+                //fill(255,255,0);
+                //ellipse(0,0,10,10);
                 pop();
             }
     }
@@ -222,13 +222,12 @@ class ArrowObj {
 
     // Check collision with the snake
     check_collision_with_snake(enemy){
-        let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x + 15));
-        let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + 15));
-        // print('Enemy.x ' + enemy.x)
-        if(verticalDistance < this.enemy_constraint_y + 15/2 && horizontalDistance < this.enemy_constraint_x + 15/2){
-        //   print('Arrow: Collision with snake');
-          return true;
+        if(dist(this.x, this.y, enemy.x, enemy.y) < 20){
+            return true;
         }
+        //if(verticalDistance < this.enemy_constraint_y + 15/2 && horizontalDistance < this.enemy_constraint_x + 15/2){
+        //   print('Arrow: Collision with snake');
+        //}
         return false;
     }
 
