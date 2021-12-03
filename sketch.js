@@ -98,6 +98,8 @@ function mouseClicked() {
   var heartCapture = [];
 
   var objectSheet;
+
+  var olympus; 
   
   var hydrasheet;
   var hydrasheetMirror;
@@ -115,7 +117,7 @@ function mouseClicked() {
   var balSheet; 
   var balista1, balista2, balista3, balista4;
   var balList = [];
-  var balArrow
+  var balArrow;
 
   var doorway = 0;
   var door = 0;
@@ -147,6 +149,7 @@ function mouseClicked() {
     hydraSheet = loadImage('/resources/HydraSprite.png');
     keySheet = loadImage('/resources/Key.png');
     hydraSheetMirror = loadImage('/resources/HydraSprite_mirror.png');
+    olympus = loadImage('/resources/olympus.jpg');
   }
   
   // Puts the song on loop, so that the music plays throughout the game
@@ -173,6 +176,7 @@ function mouseClicked() {
     // Creates the harpy, snake, and knight
     harpy = new HarpyObj(200, 50);
     knight = new knightObj(-100, 300, 0.3);
+    
     
     // Creates archer and moving names of authors
     archer = new ArcherObj(100, 250);
@@ -353,8 +357,10 @@ function mouseClicked() {
       }
 
       for(let hydra of game.hydras){
-        hydra.draw();
-        hydra.wanderAnimate();
+        if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
+          hydra.draw();
+          hydra.wanderAnimate();
+        }
       }
 
       // print("balista size: " + game.balistas.length);
@@ -362,8 +368,11 @@ function mouseClicked() {
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
         game.balistas[i].draw();
+
         if(game.player.roomNumber == game.balistas[i].roomNum){
+          
           game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
+
           if (game.balistas[i].bullet[0].fired) {
             game.balistas[i].bullet[0].draw();
           }
@@ -392,20 +401,23 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      // print(game.tm.rooms[game.player.roomNumber].numEnemies)
+      print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
       game.player.checkMovement();
-
+      
       //draw keys
       //print("length: " + game.keys.length);
       keyCount = 0; 
+      push();
+
       for(var i = 0; i < game.keys.length; i++){
-        push();
+        
         game.keys[i].draw();
         if(game.keys[i].collected){
           keyCount++;
         }
+        
       }
 
       //draw keys in top left of screen
@@ -419,10 +431,11 @@ function mouseClicked() {
         keyList[i] = true; 
       }
       //if(keyList)
-      
+
       //winning condition
       if(keyCount >= 3){
         game.screen = 4;
+        game.player.setEndArcher();
       }
 
       // If the game.player.health is 0, the player is dead
@@ -495,10 +508,38 @@ function mouseClicked() {
     }
 
     else if (game.screen == 4) {
-      background(220);
-      stroke('#7E570E');
-      fill('#EB3C3C');
+      push();
+      image(olympus, 0,0,400,400);
+      textSize(75);
+      stroke(0);
+      fill(0,99,65);
       text("Winner!", 100, 200);
+      textSize(25)
+      text("Apollo has safely" , 100 , 275);  
+      text("returned to Olympus!", 100, 300);
+      game.player.endDraw();
+      for (var i = 0; i < beamChoice.length; i++) {
+  
+        if (beamChoice[i] <= 20) {
+            image(sunBeam2, 0, 0, 100, 100);
+            beamChoice[i]++;
+        }
+        else {
+            image(sunBeam1, 0, 0, 100, 100);
+            beamChoice[i]++;
+            if (beamChoice[i] >= 40) {
+                beamChoice[i] = 0;
+            }
+        }
+        rotate(PI / 4);
+        //print(beamChoice[i]);
+      }
+
+      //draw sun
+      //image(sunImage, -25, -25, 150, 150);
+
+      pop();
+
   }
 
     // game.tm.printMap();
@@ -507,7 +548,7 @@ function mouseClicked() {
     // Displays the map when the key "M" is held down
     if(keyIsDown(KEY_M) && !game_paused){
       background(220, 220, 220, 75);
-      print("Here");
+      // print("Here");
       game.tm.printMap(game.player.rx, game.player.ry);
     }
   
