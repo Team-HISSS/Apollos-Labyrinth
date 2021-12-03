@@ -420,7 +420,7 @@ function mouseClicked() {
     //game screen
     else if (game.screen == 2 && !game_paused) {
       push();
-      
+      print(game.tm.rooms[game.player.roomNumber].numEnemies);
       var roomOffsetX = game.player.rx * 400;
       var roomOffsetY = game.player.ry * 400;
       // print(roomOffsetX, roomOffsetY);
