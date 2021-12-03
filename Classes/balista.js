@@ -335,7 +335,7 @@ class BalistaShootState {
     for (var i = 0; i < 4; i++) { // check collision with the players bullets
       if(game.arrows[i].fired){
       if (game.arrows[i].los(me.x, me.y, me.index)) { // if the tank is in the players line of sight switch to avoid state
-        me.state = 2;
+        // me.state = 2;
       }
       // if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
       //   game.arrows[i].fired = false;
@@ -409,7 +409,7 @@ class BalistaChaseState {
     for (var i = 0; i < 4; i++) {
       if (game.arrows[i].fired){
         if (game.arrows[i].los(me.x, me.y, me.index)) {
-          me.state = 2;
+          // me.state = 2;
         } 
       // else if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
       //   game.arrows[i].fired = false;
@@ -485,106 +485,6 @@ class BalistaAvoidState {
   }
   execute(me) {
 
-    if(me.dead){
-      me.state = 3;
-    }
-
-    this.move = 1;
-    if (me.bullet[0].fired) {
-      if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
-        //gameOver = true;
-        me.bullet[0].fired = false; 
-        game.player.health--;
-      }
-      for(var i = 0 ; i < game.balistas.length; i++){
-        if (i != me.index) {
-          if (game.balistas[i].state == 3){
-            if (dist(game.balistas[i].x, game.balistas[i].y, me.bullet[0].x, me.bullet[0].y) < 20){
-              me.bullet[0].fired = false;
-            }
-          }
-        }
-      }
-    }
-    // check if the tank is pointing in the same direction
-    this.tankAngle = me.angle * (180 / PI);
-    if (this.tankAngle >= 180) {
-      this.tankAngle = this.tankAngle - 180;
-    }
-    if (this.bulletAngle >= 180) {
-      this.bulletAngle = this.bulletAngle - 180;
-    }
-    // print(this.tankAngle, this.bulletAngle);
-    if (abs(this.bulletAngle - this.tankAngle) <= 80) {
-      if (this.bulletAngle > this.tankAngle) {
-        me.decreaseAngle(); // if so rotate
-        // print("here");
-      } else if (this.bulletAngle < this.tankAngle) {
-        me.increaseAngle(); // if so rotate
-        // print("here2");
-      }
-    } else {
-      // if there is a difference of atleast 45 degrees then just move
-      this.velocity.setHeading(me.angle);
-      this.velocity.setMag(this.move);
-      for (i = 0; i < game.walls.length; i++) {
-        if (
-          walls[i].checkCollision(
-            me.x + this.velocity.x,
-            me.y + this.velocity.y
-          )
-        ) {
-          me.increaseAngle();
-          this.move = -this.move;
-          this.velocity.setMag(this.move);
-        }
-      }
-      for (i = 0; i < game.balistas.length; i++) {
-        if (i != me.index) {
-          if (
-            game.balistas[i].checkCollision(
-              me.x + this.velocity.x,
-              me.y + this.velocity.y
-            )
-          ) {
-            me.increaseAngle();
-            this.move = -this.move;
-            this.velocity.setMag(this.move);
-          }
-        }
-      }
-      me.x += this.velocity.x;
-      me.y += this.velocity.y;
-      for (var i = 0; i < 4; i++) {
-        if (bullets[i].fired) {
-          this.fire[i] = true;
-        } else {
-          this.fire[i] = false;
-        }
-      }
-      this.noFire = true;
-      for (var i = 0; i < 4; i++) {
-        if (this.fire[i]) {
-          this.noFire = false;
-        }
-      }
-      if (this.noFire) {
-        me.state = 0;
-      }
-    }
-        for (var i = 0; i < 4; i++) {
-      if (bullets[i].fired) {
-        this.bulletAngle = (bullets[i].angle + HALF_PI) * (180 / PI);
-        // if (dist(me.x, me.y, bullets[i].x, bullets[i].y) < 20) {
-        //   bullets[i].fired = false;
-        //   me.numHits += 1;
-        //   if (me.numHits == 2){
-        //     me.state = 3;
-        //   }
-        // }
-      }
-    }
-    
   }
 }
 

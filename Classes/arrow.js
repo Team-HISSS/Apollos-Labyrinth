@@ -197,10 +197,10 @@ class ArrowObj {
     check_collision(boundary){
         // for(let wall of game.walls){
         // for(let i = 0; i < game.walls.length; i++){
-            let horizontalDistance = abs((this.x + half_arrowWidth) - (boundary.x + wall_center_radius));
-            let verticalDistance = abs((this.y + half_arrowHeight) - (boundary.y + wall_center_radius));
+            let horizontalDistance = abs((this.x) - (boundary.x + wall_center_radius));
+            let verticalDistance = abs((this.y) - (boundary.y + wall_center_radius));
             
-            if(verticalDistance < this.wall_constraint_y + wall_center_radius && horizontalDistance < this.wall_constraint_x + wall_center_radius){
+            if(verticalDistance < wall_center_radius && horizontalDistance < wall_center_radius){
               
             //   print('Arrow: Collision with boundary');
               return true;
@@ -210,10 +210,10 @@ class ArrowObj {
 
     // Check collision with the harpy
     check_collision_with_harpy(enemy){
-            let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius));
-            let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius));
+            let horizontalDistance = abs((this.x) - (enemy.x + harpy_center_radius/2));
+            let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius/2));
             // print('Enemy.x ' + enemy.x)
-            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 5 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
+            if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 10 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
             //   print('Arrow: Collision with harpy');
               return true;
         }
