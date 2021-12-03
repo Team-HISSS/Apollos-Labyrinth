@@ -371,28 +371,64 @@ class ArcherObj{
     return false;    
   }
 
-  check_collision_with_snake(thetaX, thetaY){
-    for(let snake of game.snakes){
+  check_distance_with_snake(snake)
+  {
+    if(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 20){
+        
+      // If only alive enemies are checked (check_only_alive) and enemy is not dead
+      // or if any enemy can be checked (!check_only_alive)
+      //if ((check_only_alive && !enemy.dead) || (!check_only_alive)){
+        // if(!enemy.dead){
+        
+        // If the Cataclyst or the Power boost is found
+        let flag = false;
+        
+        for(let egg of game.easterEggs){
+          // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
+          // !!! Cataclyst is only for developers !!!
+          if(!isHydra && egg.taken && (egg.index == 0 || (egg.index == 2 && powerBoost))){
+            if(!snake.dead && game.tm.rooms[this.roomNumber].numEnemies > 0){
+              game.tm.rooms[this.roomNumber].numEnemies -= 1;  
+            }
+            snake.dead = true;
+            flag = true;
+            break;
+          }
+        }
 
-      //let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 15, 15, harpy_constraint_x - 10, harpy_constraint_y - 10);
-      //print(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 20)
-      if(!snake.dead){
-        if(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 20){
+        // If the easter eggs for killing on contact are not found
+        // and the enemies are not dead
+        if(!flag && !snake.dead){
+
+          // Checks if the consecutive collisions are 100 frames apart
           if (currFrameCount < frameCount - 100) {
             currFrameCount = frameCount;
-          // Removes a health level
+            // Removes a health level
             this.health -= 1;
-          // print('number of times in contact with the enemies')
+            // print('number of times in contact with the enemies')
+          }
+          // If the health level is low i.e. is zero,
+          // the player dies
+          if(this.health <= 0)
+          {
+            this.dead = true;
+          }
         }
         return true;
-      }
-      // if(returnFlag){
-      //   return true;
-      // }
+      //}
     }
-    }    
+
     return false;
   }
+  check_collision_with_snake(thetaX, thetaY){
+    for(let snake of game.snakes){
+      let returnFlag = this.check_distance_with_snake(snake);
+      if(returnFlag){
+        return true;
+      }
+    }
+    return false; 
+}
 
   check_collision_with_hydra(thetaX, thetaY){
     isHydra = true;
