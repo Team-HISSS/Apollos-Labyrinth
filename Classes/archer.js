@@ -21,10 +21,10 @@ let harpy_constraint_y = (122/6 + harpy_center_radius/2);
 let balista_constraint_x = 40; 
 let balista_constraint_y = 40;
 
-let hydra_center_radius_x = 75;
-let hydra_center_radius_y = 90;
-let hydra_constraint_x = hydra_center_radius_x + 126/6;
-let hydra_constraint_y = hydra_center_radius_y + 122/6;
+let hydra_center_radius_x = 76.5/2;
+let hydra_center_radius_y = 90/2;
+let hydra_constraint_x = hydra_center_radius_x;
+let hydra_constraint_y = hydra_center_radius_y;
 
 let easterEgg_center_radius = 10;
 let easterEgg_constraint_x = easterEgg_center_radius + 126/3;
@@ -310,7 +310,7 @@ class ArcherObj{
         for(let egg of game.easterEggs){
           // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
           // !!! Cataclyst is only for developers !!!
-          if(egg.taken && egg.index == 0){ // Include index 2
+          if(egg.taken && (egg.index == 0 || egg.index == 2)){
             if(!enemy.dead && game.tm.rooms[this.roomNumber].numEnemies > 0){
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
             }

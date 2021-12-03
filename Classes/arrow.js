@@ -240,8 +240,12 @@ class ArrowObj {
     }
 
     check_collision_with_hydra(enemy){
-        if (dist(enemy.x, enemy.y, this.x, this.y) < 40) {
-            return true;
+        let horizontalDistance = abs((this.x + half_arrowWidth) - (enemy.x));
+        let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y));
+        // print('Enemy.x ' + enemy.x)
+        if(verticalDistance < hydra_constraint_y && horizontalDistance < hydra_constraint_x){
+        //   print('Arrow: Collision with snake');
+          return true;
         }
         return false;
     }

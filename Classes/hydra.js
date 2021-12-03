@@ -26,14 +26,19 @@ class Hydra{
     draw(){
         if (this.xMove > 0){
             push();
-                image(hydraRight[int(this.index)], this.x, this.y, harpySize, harpySize);
+                image(hydraRight[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, harpySize, harpySize);
             pop();
         }
         else{
             push();
-                image(hydraLeft[int(this.index)], this.x, this.y, harpySize, harpySize);
+                image(hydraLeft[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, harpySize, harpySize);
             pop();
         }
+
+        push();
+            fill(255,255, 0);
+            ellipse(this.x, this.y, 20, 20);
+        pop();
     }
     fly() {
         this.x += this.speed; 
