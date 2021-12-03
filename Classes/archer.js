@@ -96,7 +96,8 @@ class ArcherObj{
         this.frameRate = 0;
     }
   }
-  
+
+  // Checks the movement of the player based on the keys 
   checkMovement(){
     let theta = [0,0];
     
@@ -132,16 +133,18 @@ class ArcherObj{
         }
       }
     }
+
+    // Checks collision with easter eggs and enemies
     this.check_collision_with_easterEgg(); 
     this.check_collision_with_hydra(0, 0);
     this.check_collision_with_snake(0, 0);
+    this.check_collision_with_harpy(0, 0);
+
     // If player wants to move
-    // if(theta != [0, 0] && (this.check_collision_with_door(theta[0], theta[1]) || this.check_collision_with_walls(theta[0], theta[1]))){
     if(theta != [0, 0]){
-      // If player is not colliding with an open door and colliding with walls
+      // If player is not colliding with an open door and colliding with walls, or a ballista
       if((!this.check_collision_with_open_door(theta[0], theta[1]) && this.check_collision_with_walls(theta[0], theta[1])) ||
-          (this.check_collision_with_balista(theta[0], theta[1])) ||
-          (this.check_collision_with_harpy(0, 0))){
+          (this.check_collision_with_balista(theta[0], theta[1]))){
         theta = [0,0];
       }
     }
@@ -218,9 +221,6 @@ class ArcherObj{
       }
     }
 
-
-    
-    //fill(100,0,0);
     fill(255,255,0);
     ellipse(this.x + this.w / 2, this.y + this.w / 2, 5, 5);
     pop();
@@ -249,7 +249,7 @@ class ArcherObj{
       // If door is open, i.e. true
       if (door.open){ 
         if(verticalDistance < wall_constraint_y && horizontalDistance < wall_constraint_x){
-          print('Player: Collision with door');
+          // print('Player: Collision with door');
           return true;
         }
       }
@@ -289,15 +289,18 @@ class ArcherObj{
   // radius_y : radius of the object('s frame) in the vertical direction
   // constraint_x : threshold for collision of the object in the horizontal direction
   // constraint_y : threshold for collision of the object in the vertical direction
-  check_collision_with_enemy(enemy, thetaX, thetaY, radius_x, radius_y, constraint_x, constraint_y){
+  // check_only_alive : boolean check for only alive enemies
+  check_collision_with_enemy(enemy, thetaX, thetaY, radius_x, radius_y, constraint_x, constraint_y, check_only_alive= true){
 
     let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (enemy.x + radius_x));
     let verticalDistance = abs((this.y + this.h/2 + thetaY) - (enemy.y + radius_y));
 
     if(verticalDistance <  constraint_y && horizontalDistance < constraint_x){
         
-      // If enemy is not dead
-      if (!enemy.dead){ 
+      // If only alive enemies are checked (check_only_alive) and enemy is not dead
+      // or if any enemy can be checked (!check_only_alive)
+      if ((check_only_alive && !enemy.dead) || (!check_only_alive)){
+        // if(!enemy.dead){
         
         // If the Cataclyst or the Power boost is found
         let flag = false;
@@ -305,25 +308,26 @@ class ArcherObj{
         for(let egg of game.easterEggs){
           // If the easter egg (Cataclyst or Power boost) is taken, the archer can kill the enemies on contact
           // !!! Cataclyst is only for developers !!!
-          if(egg.taken && egg.index == 0){
-            enemy.dead = true;
-            if(game.tm.rooms[this.roomNumber].numEnemies > 0){
+          if(egg.taken && egg.index == 0){ // Include index 2
+            if(!enemy.dead && game.tm.rooms[this.roomNumber].numEnemies > 0){
               game.tm.rooms[this.roomNumber].numEnemies -= 1;  
             }
+            enemy.dead = true;
             flag = true;
             break;
           }
         }
 
         // If the easter eggs for killing on contact are not found
-        if(!flag){
+        // and the enemies are not dead
+        if(!flag && !enemy.dead){
 
           // Checks if the consecutive collisions are 100 frames apart
           if (currFrameCount < frameCount - 100) {
             currFrameCount = frameCount;
             // Removes a health level
             this.health -= 1;
-            print('number of times in contact with the enemies')
+            // print('number of times in contact with the enemies')
           }
           // If the health level is low i.e. is zero,
           // the player dies
@@ -354,7 +358,7 @@ class ArcherObj{
   check_collision_with_balista(thetaX, thetaY){
     for(let balista of game.balistas){
 
-      let returnFlag = this.check_collision_with_enemy(balista, thetaX, thetaY, 0, 0, balista_constraint_x, balista_constraint_y);
+      let returnFlag = this.check_collision_with_enemy(balista, thetaX, thetaY, 0, 0, balista_constraint_x, balista_constraint_y, false);
       
       if(returnFlag){
         return true;
@@ -431,7 +435,6 @@ class ArcherObj{
     this.action = 'r';
     this.animationChoice = 'rr';
     this.index += this.frameRate;
-    // this.x += this.speed * 3.00;
     delta += this.speed;
 
     // Edge case
@@ -465,7 +468,6 @@ class ArcherObj{
     this.action = 'r';
     this.animationChoice = 'rl';
     this.index += this.frameRate;
-    // this.x -= this.speed * 3.00;
     delta -= this.speed;
 
     //Edge case
@@ -498,7 +500,6 @@ class ArcherObj{
     this.action = 'r';
     this.animationChoice = 'ru';
     this.index += this.frameRate;
-    // this.y -= this.speed * 2.00;
     delta -= this.speed;
     
     // Edge case
@@ -519,10 +520,6 @@ class ArcherObj{
       this.futureHeight = 0;
     }
     if (this.y< this.ry*400){
-      // print(this.y, this.ry*400+50);
-      // if (this.y < this.ry*400 + 50){
-      //   this.transition = true;
-      // }
       this.futureHeight = (this.ry -1)*400 + 400;
       if(this.transition){
         this.ry -= 1;
@@ -572,10 +569,6 @@ class ArcherObj{
           this.roomNumber = this.rooms[k].roomNumber;
         } 
       }
-      // print(this.y, this.height+ 30);
-      // if (this.y > this.height +30){
-      //   this.transition = true;
-      // }
     }
 
     return [0, delta];
@@ -592,10 +585,9 @@ class ArcherObj{
   move(){
     this.action = 'r';
     this.animationChoice = 'rr';
-    this.index += this.frameRate/2; // * 0.17
-    // print('Capture.js: this.x ' + this.x)
-    this.x += this.speed - 1.60; ///* 1.50;
-    this.x += int(this.x) ///* 1.50;
+    this.index += this.frameRate/2;
+    this.x += this.speed - 1.60; 
+    this.x += int(this.x) 
     if(this.x > width){
       this.x = -this.w;
     }
