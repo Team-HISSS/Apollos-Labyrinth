@@ -358,8 +358,10 @@ function mouseClicked() {
       }
 
       for(let hydra of game.hydras){
-        hydra.draw();
-        hydra.wanderAnimate();
+        if(!hydra.dead && game.player.roomNumber == hydra.roomNum){
+          hydra.draw();
+          hydra.wanderAnimate();
+        }
       }
 
       // print("balista size: " + game.balistas.length);
@@ -367,8 +369,11 @@ function mouseClicked() {
       //b1.draw();
       for(var i = 0; i < game.balistas.length; i++){
         game.balistas[i].draw();
+
         if(game.player.roomNumber == game.balistas[i].roomNum){
+          
           game.balistas[i].states[game.balistas[i].state].execute(game.balistas[i]);
+
           if (game.balistas[i].bullet[0].fired) {
             game.balistas[i].bullet[0].draw();
           }
@@ -397,11 +402,11 @@ function mouseClicked() {
           game.doors[i].draw();
         }
       }
-      // print(game.tm.rooms[game.player.roomNumber].numEnemies)
+      print('Number of enemies in the room ' + game.tm.rooms[game.player.roomNumber].numEnemies)
       
       game.player.draw();
       game.player.checkMovement();
-      print(game.tm.rooms[game.player.roomNumber].numEnemies);
+      
       //draw keys
       //print("length: " + game.keys.length);
       keyCount = 0; 
@@ -548,7 +553,7 @@ function mouseClicked() {
     // Displays the map when the key "M" is held down
     if(keyIsDown(KEY_M) && !game_paused){
       background(220, 220, 220, 75);
-      print("Here");
+      // print("Here");
       game.tm.printMap(game.player.rx, game.player.ry);
     }
   

@@ -1,12 +1,12 @@
 class Hydra{
-    constructor(x, y, rx, ry){
+    constructor(x, y, rx, ry, roomNum){
         this.rx = rx;
         this.ry = ry;
         this.speed = 1;
         this.index = 0;
         this.x = x;
         this.y = y;
-
+        this.roomNum = roomNum;
         //this.state = [new WanderState(), new ChaseState()];
         this.currState = 0;
         this.dead = false;

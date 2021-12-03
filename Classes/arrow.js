@@ -68,10 +68,35 @@ class ArrowObj {
                 }
 
                 for(let snake of game.snakes){
-                    if(!snake.isAlive && this.check_collision_with_snake(snake)){
+                    if(!snake.dead && this.check_collision_with_snake(snake)){
                         blocked = true;
                         this.fired = false;
-                        snake.isAlive = false;
+                        snake.dead = true;
+                        game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        // switch the enemy to its death state
+                        break;
+                    }
+                }
+
+                for(let balista of game.balistas){
+                    if(!balista.dead && this.check_collision_with_balista(balista)){
+                        blocked = true;
+                        this.fired = false;
+                        balista.numHits += 1;
+                        if (balista.numHits == 2){
+                            balista.state = 3;
+                            game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        }
+                        // switch the enemy to its death state
+                        break;
+                    }
+                }
+
+                for(let hydra of game.hydras){
+                    if(!hydra.dead && this.check_collision_with_hydra(hydra)){
+                        blocked = true;
+                        this.fired = false;
+                        hydra.dead = true;
                         game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
                         // switch the enemy to its death state
                         break;
@@ -175,7 +200,7 @@ class ArrowObj {
             
             if(verticalDistance < this.wall_constraint_y + wall_center_radius && horizontalDistance < this.wall_constraint_x + wall_center_radius){
               
-              print('Arrow: Collision with boundary');
+            //   print('Arrow: Collision with boundary');
               return true;
         }
         return false;
@@ -187,7 +212,7 @@ class ArrowObj {
             let verticalDistance = abs((this.y) - (enemy.y + harpy_center_radius));
             // print('Enemy.x ' + enemy.x)
             if(verticalDistance < this.enemy_constraint_y + harpy_center_radius/2 - 5 && horizontalDistance < this.enemy_constraint_x + harpy_center_radius/2 - 10){
-              print('Arrow: Collision with harpy');
+            //   print('Arrow: Collision with harpy');
               return true;
         }
         return false;
@@ -199,11 +224,25 @@ class ArrowObj {
         let verticalDistance = abs((this.y + half_arrowHeight) - (enemy.y + 15));
         // print('Enemy.x ' + enemy.x)
         if(verticalDistance < this.enemy_constraint_y + 15/2 && horizontalDistance < this.enemy_constraint_x + 15/2){
-          print('Arrow: Collision with snake');
+        //   print('Arrow: Collision with snake');
           return true;
+        }
+        return false;
     }
-    return false;
-}
+
+    check_collision_with_balista(enemy){
+        if (dist(enemy.x, enemy.y, this.x, this.y) < 40) {
+            return true;
+        }
+        return false;
+    }
+
+    check_collision_with_hydra(enemy){
+        if (dist(enemy.x, enemy.y, this.x, this.y) < 40) {
+            return true;
+        }
+        return false;
+    }
 
     
     fall(range) {

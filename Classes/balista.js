@@ -323,6 +323,10 @@ class BalistaShootState {
     this.velocity = createVector(1, 1);
   }
   execute(me) {
+    if(me.dead){
+      me.state = 3;
+    }
+
     var rand = int(random(0, 50)); // generating a random int between 0 and 50 for shooting
     if (dist(me.x, me.y, game.player.x + game.player.w / 2, game.player.y + game.player.h / 2) > 150) { // change state if the distance is greater than 150
       me.state = 1;
@@ -333,13 +337,13 @@ class BalistaShootState {
       if (game.arrows[i].los(me.x, me.y, me.index)) { // if the tank is in the players line of sight switch to avoid state
         me.state = 2;
       }
-      if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
-        game.arrows[i].fired = false;
-        me.numHits += 1;
-        if (me.numHits == 2){
-          me.state = 3;
-        }
-      }
+      // if (dist(me.x, me.y, game.arrows[i].x, game.arrows[i].y) < 40) {
+      //   game.arrows[i].fired = false;
+      //   me.numHits += 1;
+      //   if (me.numHits == 2){
+      //     me.state = 3;
+      //   }
+      // }
     }
     if (me.bullet[0].fired) { // check if the tanks bullet hits the player or not
       if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
@@ -397,6 +401,9 @@ class BalistaChaseState {
     this.velocity = createVector(1, 1);
   }
   execute(me) {
+    if(me.dead){
+      me.state = 3;
+    }
 
     this.move = 0.5;
     for (var i = 0; i < 4; i++) {
@@ -476,6 +483,11 @@ class BalistaAvoidState {
     this.move = 1;
   }
   execute(me) {
+
+    if(me.dead){
+      me.state = 3;
+    }
+
     this.move = 1;
     if (me.bullet[0].fired) {
       if (dist(game.player.x + game.player.w/2, game.player.y + game.player.h/2, me.bullet[0].x, me.bullet[0].y) < 20) {
@@ -624,9 +636,9 @@ class BalistaDeathState {
         me.state = 3;
       }
     }
-    if (!me.dead){
-        game.tm.rooms[me.roomNum].numEnemies -= 1;
-    }
+    // if (!me.dead){
+    //     game.tm.rooms[me.roomNum].numEnemies -= 1;
+    // }
     me.dead = true; // kill  the tank 
     me.killed(); // draw its destroyed state
     me.fire(); // draw the fire originating from the tank
