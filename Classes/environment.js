@@ -92,8 +92,9 @@ class KeyObj{
     this.collected = false; 
   }
   draw(){
-    if(dist(game.player.x + game.player.w/2 , game.player.y + game.player.h/2, this.x, this.y) < 40){
+    if(!this.collected && dist(game.player.x + game.player.w/2 , game.player.y + game.player.h/2, this.x, this.y) < 40){
       this.collected = true; 
+      game.player.keyCount++;
     }
     push();
     if(!this.collected){

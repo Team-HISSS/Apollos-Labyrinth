@@ -116,7 +116,7 @@ function mouseClicked() {
   var keySheet; 
   var keyImage; 
   var keyList = [false, false, false];
-  var keyCount;  
+  var keyCount = 0;  
 
   var balSheet; 
   var balista1, balista2, balista3, balista4;
@@ -331,7 +331,8 @@ function mouseClicked() {
     }
     //game screen
     else if (game.screen == 2 && !game_paused) {
-      push()
+      push();
+      
       var roomOffsetX = game.player.rx * 400;
       var roomOffsetY = game.player.ry * 400;
       // print(roomOffsetX, roomOffsetY);
@@ -409,6 +410,14 @@ function mouseClicked() {
               scale(-1, 1);
               image(enemyHudCapture[5], -96, 0, 96, 18);
           pop();
+          
+          // Checking the room for keys
+          for(var i = 0; i < game.keys.length; i++){
+            if(game.keys[i].roomNum == hydra.roomNum){
+              game.keys[i].draw();
+              break;
+            }
+          }
         }
       }
 
@@ -443,17 +452,8 @@ function mouseClicked() {
       
       //draw keys
       //print("length: " + game.keys.length);
-      keyCount = 0; 
       push();
 
-      for(var i = 0; i < game.keys.length; i++){
-        
-        game.keys[i].draw();
-        if(game.keys[i].collected){
-          keyCount++;
-        }
-        
-      }
 
       //draw keys in top left of screen
       textSize(20); 
@@ -461,14 +461,14 @@ function mouseClicked() {
       fill(255,255,255);
       text("Keys:" , roomOffsetX + 10 , roomOffsetY + 15);
       pop();
-      for(var i = 0; i < keyCount; i++){
+      for(var i = 0; i < game.player.keyCount; i++){
         image(keyImage, roomOffsetX + 60 + i * 20, roomOffsetY, 20, 20); 
         keyList[i] = true; 
       }
       //if(keyList)
 
       //winning condition
-      if(keyCount >= 3){
+      if(game.player.keyCount >= 3){
         game.screen = 4;
         game.player.setEndArcher();
       }

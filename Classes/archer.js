@@ -73,6 +73,7 @@ class ArcherObj{
     this.inRoom = false;
     this.transition = false;
     this.futureHeight = 0;
+    this.keyCount = 0;
   }
   
   // Chooses the action of the archer
