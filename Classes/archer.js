@@ -387,7 +387,7 @@ class ArcherObj{
     
     for(let hydra of game.hydras){
 
-      let returnFlag = this.check_collision_with_enemy(hydra, thetaX, thetaY, hydra_center_radius_x, hydra_center_radius_y, hydra_constraint_x, hydra_constraint_y);
+      let returnFlag = this.check_collision_with_enemy(hydra, thetaX, thetaY, 0, 0, hydra_constraint_x, hydra_constraint_y);
       
       
       if(returnFlag){

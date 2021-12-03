@@ -389,8 +389,19 @@ function mouseClicked() {
           // Displaying the Hydra HUD i.e. health of the hydra
           let hitIndex = hydra.hit;
           if(hitIndex < 5){
-            image(enemyHudCapture[hitIndex], roomOffsetX + 224, roomOffsetY + 0, 108, 18);
+            push();
+              translate((roomOffsetX + 224), roomOffsetY + 0)
+              scale(-1, 1);
+              image(enemyHudCapture[hitIndex], -96, 0, 96, 18);
+            pop();
           }
+        }
+        else if(hydra.dead && game.player.roomNumber == hydra.roomNum){
+          push();
+              translate((roomOffsetX + 224), roomOffsetY + 0)
+              scale(-1, 1);
+              image(enemyHudCapture[5], -96, 0, 96, 18);
+          pop();
         }
       }
 
@@ -469,7 +480,7 @@ function mouseClicked() {
       
       // Displaying power boost on HUD
       if(powerBoost){
-        image(easterEggCapture[2], roomOffsetX + 312, roomOffsetY + 0, 10.67, 20);
+        image(easterEggCapture[2], roomOffsetX + 322, roomOffsetY + 0, 10.67, 20);
         if (pbCurrFrameCount < frameCount - 600){
           powerBoost = false;
           pbCurrFrameCount = 0;

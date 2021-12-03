@@ -29,12 +29,12 @@ class Hydra{
     draw(){
         if (this.xMove > 0){
             push();
-                image(hydraRight[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, harpySize, harpySize);
+                image(hydraRight[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, hydra_center_radius_x*2, hydra_center_radius_y*2);
             pop();
         }
         else{
             push();
-                image(hydraLeft[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, harpySize, harpySize);
+                image(hydraLeft[int(this.index)], this.x - hydra_center_radius_x, this.y - hydra_center_radius_y, hydra_center_radius_x*2, hydra_center_radius_y*2);
             pop();
         }
 
@@ -155,7 +155,7 @@ class  hydraChaseState{
     }
     execute(me){
         this.move = 0.5;
-        
+        print('chasing')
         if (dist(me.x, me.y, game.player.x, game.player.y) > 150 || game.player.check_collision_with_hydra(0, 0)){
             me.currState = 1;
             
@@ -169,10 +169,12 @@ class  hydraChaseState{
         // also check the line of sight of the arrow in order to avoid it
         this.velocity.set(game.player.x - me.x, game.player.y - me.y);
         this.velocity.setMag(1.5);
+        // Frame count
         me.index+= 0.12; // move the enemy
         if(me.index >= 3){
             me.index = 0;
         }
+        // Checking boundaries
         if (me.x + this.velocity.x >= me.rx*400 +340){
             this.velocity.x = -this.velocity.x;
             me.xMove = this.velocity.x;
@@ -187,11 +189,9 @@ class  hydraChaseState{
         else if (this.y + this.yMove <= this.ry*400 + 40){
             this.velocity.y = -this.velocity.y;
         }
-        me.xMove = this.velocity.x;
+        me.xMove = this.velocity.x; //seems redundant
         me.x += this.velocity.x;
         me.y += this.velocity.y;
-        // if (game.player.check_collision_with_hydra(0, 0);
-        // if ()
     }
 }
 

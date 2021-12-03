@@ -173,7 +173,8 @@ function captureEnemyBar(){
   push();
     background(220, 220, 220, 0);
     image(enemyHud, 0, 0);
-    for(let i = 0; i < 6; i ++){
+    enemyHudCapture.push(get(43, 32, 108, 16));
+    for(let i = 5; i >=0 ; i--){
       if(i != 2){
         enemyHudCapture.push(get(43, 175 + i * 18, 108, 18));
       }
