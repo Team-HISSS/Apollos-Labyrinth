@@ -42,7 +42,7 @@ class GameObj {
       this.keys = [];
       
       //Tilemap class instance. Contains a large map full of Room objects
-      this.tm = new Tilemap(8,8, 6);
+      this.tm = new Tilemap(8,8, 10);
       this.currRoom = 0;
     }
     setRooms(){
@@ -52,14 +52,14 @@ class GameObj {
       for (var i = 0; i < this.tm.rooms.length; i++){
         if (!this.tm.rooms[i].endRoom && !setplayer){
           //print("Here2");
-          this.tm.rooms[i].grid[8] = "w    s s   p   s s   w";
+          this.tm.rooms[i].grid[8] = "w        p         w";
           setplayer = true;
         }
         else if (!this.tm.rooms[i].endRoom && !setHarpy){
-          this.tm.rooms[i].grid[3] = "w  h             h w";
+          this.tm.rooms[i].grid[3] = "w  h     h       h w";
           this.tm.rooms[i].grid[6] = "w        h         w";
           this.tm.rooms[i].grid[14] = "w        h         w";
-          this.tm.rooms[i].grid[17] = "wo h             h w";
+          this.tm.rooms[i].grid[17] = "wo h     h       h w";
           setHarpy = true;
         }
         else if(!this.tm.rooms[i].endRoom && !setBalista){
@@ -71,9 +71,11 @@ class GameObj {
         }
         else if(!this.tm.rooms[i].endRoom){
           this.tm.rooms[i].grid[3] = "w  h             h w";
-          this.tm.rooms[i].grid[6] = "w        h         w";
+          this.tm.rooms[i].grid[6] = "w        h  h      w";
           this.tm.rooms[i].grid[14] = "w                  w";
           this.tm.rooms[i].grid[17] = "w  q            q  w";
+          setHarpy = false;
+          setBalista = false;
         }
         if (this.tm.rooms[i].endRoom){
           this.tm.rooms[i].grid[8] = "w        Bko       w";

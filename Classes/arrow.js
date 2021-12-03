@@ -98,8 +98,11 @@ class ArrowObj {
                     if(!hydra.dead && this.check_collision_with_hydra(hydra)){
                         blocked = true;
                         this.fired = false;
-                        hydra.dead = true;
-                        game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        hydra.hit += 1;
+                        if (hydra.hit == 5){
+                            hydra.dead = true;
+                            game.tm.rooms[game.player.roomNumber].numEnemies -= 1;
+                        }
                         // switch the enemy to its death state
                         break;
                     }
