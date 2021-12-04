@@ -1,13 +1,13 @@
 // sketch.js
 // Description: You will be teleported to Greece during the ancient times when man lived under the breath of Zeus and worshipped the Olympian Gods as part of daily life. This very moment, the city of Athens is feeling the wrath of Zeus. Apollo, the God of Sun, archery, music, prophecy and healing, has been punished for the third time, to be banished to Ogygia until only Zeus deems it not to be. With this, the prophecies have been obstructed and sickness is felling through the cities of Greece. The final prophecy, coming from the ancient woods of Dadona, was "Seek the sire of the Sun, let him qwell the flames of Helios, strike the head of the slythering one, and take back the seat at Delhpi."
 
-// Born among the peasants, you are shocked to hear the words that have been spoken by your mother on her death bed, "Your father is Apollo". Now it is your time to fight the way through the horrors that wait in the labyrinth.
+// Born among the peasants, you are shocked to hear the words that have been spoken by your mother on her death bed, "You were given to her by Zeus and you are non other than Apollo". Now it is your time to fight the way through the horrors that wait in the labyrinth to get to Olympus and become God again.
 //
 // AUTHOR:  Skyler Smith, Shlok Aggarwal, Sarang Vadi Rajeev
 // COURSE:  ECE 4525
-// DATE:    October 29, 2021
+// DATE:    December 03, 2021
 
-// Link to demo: https://preview.p5js.org/sarang_r/present/UL5m8Ulab
+// Link to demo: https://editor.p5js.org/sarang_r/full/6bSaNZR0m
 
 
 
@@ -420,7 +420,7 @@ function mouseClicked() {
     //game screen
     else if (game.screen == 2 && !game_paused) {
       push();
-      print(game.tm.rooms[game.player.roomNumber].numEnemies);
+      // print(game.tm.rooms[game.player.roomNumber].numEnemies);
       var roomOffsetX = game.player.rx * 400;
       var roomOffsetY = game.player.ry * 400;
       // print(roomOffsetX, roomOffsetY);
@@ -615,12 +615,12 @@ function mouseClicked() {
       background(220, 220, 220, 1);
       stroke('#7E570E');
       fill('#EB3C3C');
-      text("Game Paused", 90, 100);
+      text("Game Paused", 120, 100);
       
-      // push();  
-        // translate(-70, 0);
+      push();  
+        translate(-10, 0);
         game.tm.printMap(game.player.rx, game.player.ry);
-      // pop();
+      pop();
     }
     //game over screen
     else if (game.screen == 3) {
@@ -690,7 +690,7 @@ function mouseClicked() {
     //game.tm.printMap();
 
     // Displays the map when the key "M" is held down
-    if(keyIsDown(KEY_M) && !game_paused){
+    if(keyIsDown(KEY_M) && game.screen == 2 && !game_paused){
       background(220, 220, 220, 75);
       // print("Here");
       game.tm.printMap(game.player.rx, game.player.ry);
@@ -700,7 +700,7 @@ function mouseClicked() {
 
   // Enabling the pause screen
   function keyReleased() {
-    if(keyCode === KEY_P){
+    if(game.screen == 2 && keyCode === KEY_P){
       if(game_paused){
         game_paused = false;
       }
