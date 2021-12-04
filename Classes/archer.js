@@ -676,7 +676,7 @@ class ArcherObj{
     }
   }
   setEndArcher(){
-    this.x = 120;
+    this.x = 160;
     this.y = 50; 
   }
   endDraw(){
