@@ -373,7 +373,10 @@ class ArcherObj{
 
   check_distance_with_snake(snake)
   {
-    if(dist(snake.x, snake.y, this.x + this.w/2, this.y + this.h/2) < 30){
+    //var threshold1 = abs(snake.x - this.x + this.w/2);
+    //var threshold2 = abs(snake.y, - this.y + this.h/2);
+    //if(threshold1 < 35 || threshold2 < 60){
+    if(dist(snake.x, snake.y - 50, this.x + this.w/2, this.y + this.h/2 - 50) < 35){
         
       // If only alive enemies are checked (check_only_alive) and enemy is not dead
       // or if any enemy can be checked (!check_only_alive)

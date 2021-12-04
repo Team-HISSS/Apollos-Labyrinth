@@ -169,7 +169,7 @@ class SnakeWanderState{ // To make any enemy wander around in the room
             }
             me.randDist--; 
 
-            if(me.x - game.player.x - game.player.w/2 < 10 && me.x - game.player.x - game.player.w/2 > -10 ) {
+            if(abs(me.x - game.player.x - game.player.w/2) < 2) {
                 me.currState = 2;
                 //print("GO LEFT" + me.x + " -- " + game.player.x + game.player.w/2 );
                 if(me.y > game.player.y + game.player.h/2){
