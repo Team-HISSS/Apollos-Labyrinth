@@ -210,7 +210,7 @@ class ArrowObj {
         let horizontalDistance = abs((this.x) - (boundary.x + wall_center_radius));
         let verticalDistance = abs((this.y) - (boundary.y + wall_center_radius));
         
-        if(verticalDistance < wall_center_radius && horizontalDistance < wall_center_radius){
+        if(verticalDistance < wall_center_radius + 2 && horizontalDistance < wall_center_radius + 2){
             
         //   print('Arrow: Collision with boundary');
             return true;
