@@ -168,25 +168,25 @@ function mouseClicked() {
     mapSong = loadSound("../resources/Labyrinth.mp3");
     bossSong = loadSound("../resources/chase.mp3");
 
-    parthenon = loadImage('../resources/temple.png');
-    sunImage = loadImage('../resources/sun.png');
-    sunBeam1 = loadImage('../resources/sunbeam1.png');
-    sunBeam2 = loadImage('../resources/sunbeam2.png');
-    arrowImg = loadImage('../resources/arrow.png');
-    architSheet = loadImage('../resources/Ancient_Greek_Architecture.png');
+    parthenon = loadImage("../resources/temple.png");
+    sunImage = loadImage("../resources/sun.png");
+    sunBeam1 = loadImage("../resources/sunbeam1.png");
+    sunBeam2 = loadImage("../resources/sunbeam2.png");
+    arrowImg = loadImage("../resources/arrow.png");
+    architSheet = loadImage("../resources/Ancient_Greek_Architecture.png");
 
-    spriteSheet = loadImage('../resources/sprites/SpriteSheet.png');
-    harpySprite = loadImage('../resources/sprites/harpy_sprite.png');
-    archerSprite = loadImage('../resources/sprites/archer_spriteSheet.png');
-    snakeSheet = loadImage('../resources/snakeSheet.png');
-    heartSheet = loadImage('../resources/health_bars2.png');
-    balSheet = loadImage('../resources/sprites/BallistaSprite.png');
-    objectSheet = loadImage('../resources/objects2.png');
-    hydraSheet = loadImage('../resources/HydraSprite.png');
-    keySheet = loadImage('../resources/Key.png');
-    hydraSheetMirror = loadImage('../resources/HydraSprite_mirror.png');
-    olympus = loadImage('../resources/olympus.jpg');
-    enemyHud = loadImage('../resources/enemy_hud2.png')
+    spriteSheet = loadImage("../resources/sprites/SpriteSheet.png");
+    harpySprite = loadImage("../resources/sprites/harpy_sprite.png");
+    archerSprite = loadImage("../resources/sprites/archer_spriteSheet.png");
+    snakeSheet = loadImage("../resources/snakeSheet.png");
+    heartSheet = loadImage("../resources/health_bars2.png");
+    balSheet = loadImage("../resources/sprites/BallistaSprite.png");
+    objectSheet = loadImage("../resources/objects2.png");
+    hydraSheet = loadImage("../resources/HydraSprite.png");
+    keySheet = loadImage("../resources/Key.png");
+    hydraSheetMirror = loadImage("../resources/HydraSprite_mirror.png");
+    olympus = loadImage("../resources/olympus.jpg");
+    enemyHud = loadImage("../resources/enemy_hud2.png")
   }
   
   // Puts the song on loop, so that the music plays throughout the game
