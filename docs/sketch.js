@@ -164,29 +164,29 @@ function mouseClicked() {
   
   // Preloads the images and mp3 file for the game
   function preload() {
-    startSong = loadSound("Apollos-Labyrinth/resources/dark-forest.mp3", loaded);
-    mapSong = loadSound("Apollos-Labyrinth/resources/Labyrinth.mp3");
-    bossSong = loadSound("Apollos-Labyrinth/resources/chase.mp3");
+    startSong = loadSound("https://team-hisss.github.io/Apollos-Labyrinth/resources/dark-forest.mp3", loaded);
+    mapSong = loadSound("https://team-hisss.github.io/Apollos-Labyrinth/resources/Labyrinth.mp3");
+    bossSong = loadSound("https://team-hisss.github.io/Apollos-Labyrinth/resources/chase.mp3");
 
-    parthenon = loadImage("Apollos-Labyrinth/resources/temple.png");
-    sunImage = loadImage("Apollos-Labyrinth/resources/sun.png");
-    sunBeam1 = loadImage("Apollos-Labyrinth/resources/sunbeam1.png");
-    sunBeam2 = loadImage("Apollos-Labyrinth/resources/sunbeam2.png");
-    arrowImg = loadImage("Apollos-Labyrinth/resources/arrow.png");
-    architSheet = loadImage("Apollos-Labyrinth/resources/Ancient_Greek_Architecture.png");
+    parthenon = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/temple.png");
+    sunImage = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sun.png");
+    sunBeam1 = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sunbeam1.png");
+    sunBeam2 = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sunbeam2.png");
+    arrowImg = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/arrow.png");
+    architSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/Ancient_Greek_Architecture.png");
 
-    spriteSheet = loadImage("Apollos-Labyrinth/resources/sprites/SpriteSheet.png");
-    harpySprite = loadImage("Apollos-Labyrinth/resources/sprites/harpy_sprite.png");
-    archerSprite = loadImage("Apollos-Labyrinth/resources/sprites/archer_spriteSheet.png");
-    snakeSheet = loadImage("Apollos-Labyrinth/resources/snakeSheet.png");
-    heartSheet = loadImage("Apollos-Labyrinth/resources/health_bars2.png");
-    balSheet = loadImage("Apollos-Labyrinth/resources/sprites/BallistaSprite.png");
-    objectSheet = loadImage("Apollos-Labyrinth/resources/objects2.png");
-    hydraSheet = loadImage("Apollos-Labyrinth/resources/HydraSprite.png");
-    keySheet = loadImage("Apollos-Labyrinth/resources/Key.png");
-    hydraSheetMirror = loadImage("Apollos-Labyrinth/resources/HydraSprite_mirror.png");
-    olympus = loadImage("Apollos-Labyrinth/resources/olympus.jpg");
-    enemyHud = loadImage("Apollos-Labyrinth/resources/enemy_hud2.png")
+    spriteSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sprites/SpriteSheet.png");
+    harpySprite = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sprites/harpy_sprite.png");
+    archerSprite = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sprites/archer_spriteSheet.png");
+    snakeSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/snakeSheet.png");
+    heartSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/health_bars2.png");
+    balSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/sprites/BallistaSprite.png");
+    objectSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/objects2.png");
+    hydraSheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/HydraSprite.png");
+    keySheet = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/Key.png");
+    hydraSheetMirror = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/HydraSprite_mirror.png");
+    olympus = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/olympus.jpg");
+    enemyHud = loadImage("https://team-hisss.github.io/Apollos-Labyrinth/resources/enemy_hud2.png")
   }
   
   // Puts the song on loop, so that the music plays throughout the game
