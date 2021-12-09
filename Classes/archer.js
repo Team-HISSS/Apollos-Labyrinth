@@ -15,8 +15,11 @@ let wall_constraint_y = (122/3 + 20/2);
 let door_constraint_x = (126/3 + 20/2);
 let door_constraint_y = (122/3 + 20/2);
 
-let harpy_constraint_x = (126/6 + harpy_center_radius/2);
-let harpy_constraint_y = (122/6 + harpy_center_radius/2);
+// let harpy_constraint_x = (126/6 + harpy_center_radius/2);
+// let harpy_constraint_y = (122/6 + harpy_center_radius/2);
+
+let harpy_constraint_x = (harpy_center_radius/2);
+let harpy_constraint_y = (harpy_center_radius/2);
 
 let balista_constraint_x = 40; 
 let balista_constraint_y = 40;
@@ -25,6 +28,11 @@ let hydra_center_radius_x = 76.5/2;
 let hydra_center_radius_y = 90/2;
 let hydra_constraint_x = hydra_center_radius_x;
 let hydra_constraint_y = hydra_center_radius_y;
+
+let snake_center_radius_x = 30/2;
+let snake_center_radius_y = 30/2;
+let snake_constraint_x = snake_center_radius_x;
+let snake_constraint_y = snake_center_radius_y;
 
 let easterEgg_center_radius = 10;
 let easterEgg_constraint_x = easterEgg_center_radius + 126/3;
@@ -296,10 +304,12 @@ class ArcherObj{
   // check_only_alive : boolean check for only alive enemies
   check_collision_with_enemy(enemy, thetaX, thetaY, radius_x, radius_y, constraint_x, constraint_y, check_only_alive= true){
 
-    let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (enemy.x + radius_x));
-    let verticalDistance = abs((this.y + this.h/2 + thetaY) - (enemy.y + radius_y));
+    // let horizontalDistance = abs((this.x + this.w/2 + thetaX) - (enemy.x + radius_x));
+    // let verticalDistance = abs((this.y + this.h/2 + thetaY) - (enemy.y + radius_y));
 
-    if(verticalDistance <  constraint_y && horizontalDistance < constraint_x){
+    // if(verticalDistance <  constraint_y && horizontalDistance < constraint_x){
+    if(dist(this.x + this.w/2 + thetaX, 0, enemy.x + radius_x, 0) < constraint_x && dist(0, this.y + this.h/2 + thetaY, 0, enemy.y + radius_y) < constraint_y)
+    {
         
       // If only alive enemies are checked (check_only_alive) and enemy is not dead
       // or if any enemy can be checked (!check_only_alive)
@@ -350,7 +360,7 @@ class ArcherObj{
   check_collision_with_harpy(thetaX, thetaY){
     for(let harpy of game.harpies){
 
-      let returnFlag = this.check_collision_with_enemy(harpy, thetaX, thetaY, harpy_center_radius, harpy_center_radius, harpy_constraint_x, harpy_constraint_y);
+      let returnFlag = this.check_collision_with_enemy(harpy, thetaX, thetaY, 0, 0, harpy_constraint_x, harpy_constraint_y);
       
       if(returnFlag){
         return true;
@@ -425,7 +435,8 @@ class ArcherObj{
   }
   check_collision_with_snake(thetaX, thetaY){
     for(let snake of game.snakes){
-      let returnFlag = this.check_distance_with_snake(snake);
+      // let returnFlag = this.check_distance_with_snake(snake);
+      let returnFlag = this.check_collision_with_enemy(snake, thetaX, thetaY, 0, 0, snake_constraint_x, snake_constraint_y);
       if(returnFlag){
         return true;
       }
